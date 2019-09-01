@@ -1,0 +1,20 @@
+.button-link {
+    display: block;
+    background: transparent;
+    border: none;
+    text-align: center;
+    color: $font-color;
+    text-transform: uppercase;
+    position: relative;
+    padding: 10px 20px;
+    @include border-radius(3px);
+    @include transition-1;
+    &:hover {
+        background: $main-green-color;
+        color: white;
+    }
+
+    @media(min-width: 992px) and (max-width: 1199px) {
+        padding: 10px 0;
+    }
+}
