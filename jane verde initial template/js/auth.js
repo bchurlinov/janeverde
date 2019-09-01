@@ -8,7 +8,7 @@ $(document).ready(function () {
             if ($this.val() === '') {
                 label.removeClass('active highlight');
             } else {
-                label.addClass('active highlight');
+                //label.addClass('active highlight');
             }
         } else if (e.type === 'blur') {
             if ($this.val() === '') {
