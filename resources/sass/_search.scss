@@ -310,6 +310,10 @@
   flex: 0 0 100% !important;
   padding: 0 !important;
   padding-bottom: 10px!important;
+  
+  .product-template {
+    box-shadow: none;
+  }
 
   figure {
     display: none;

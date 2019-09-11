@@ -23,7 +23,7 @@
 }
 
 .outer-wrap-mobile {
-  @media (min-width: 767px) {
+  @media (min-width: 991px) {
     display: none;
   }
 }
@@ -33,7 +33,7 @@
   flex-flow: row wrap;
   border: 2px solid #cdcdcd;
   padding: 20px;
-  @media (max-width: 767px) {
+  @media (max-width: 991px) {
     display: none;
   }
   &__item {
@@ -42,12 +42,12 @@
       border-right: 15px solid $white-color;
       background: $grey-color;
       @media (max-width: 991px) {
-        flex: 0 0 100%;
+        display: none;
         border-right: none;
       }
       .inner-wrap {
         padding: 30px;
-        @media(max-width: 1199px){
+        @media (max-width: 1199px) {
           padding: 20px;
         }
         h1 {
@@ -61,7 +61,8 @@
           a {
             color: $font-color;
             text-decoration: none;
-            &:active, &:focus {
+            &:active,
+            &:focus {
               outline: none;
             }
           }
@@ -172,7 +173,7 @@ fieldset {
       color: #fff;
     }
   }
-  
+
   label {
     position: absolute;
     top: 0;
@@ -235,8 +236,9 @@ fieldset span.switch-labels:before {
       flex: 0 0 70%;
       h3 {
         margin-top: 5px;
-        @media(min-width: 767px) and (max-width: 1199px) {
-          font-size: 14px;
+        font-size: 15px !important;
+        @media (min-width: 767px) and (max-width: 1199px) {
+          font-size: 14px !important;
         }
       }
     }
@@ -245,6 +247,9 @@ fieldset span.switch-labels:before {
       flex: 0 0 30%;
       text-align: right;
       position: relative;
+      @media (max-width: 991px) {
+        display: none;
+      }
       input {
         height: 30px;
         width: 90%;
@@ -256,7 +261,7 @@ fieldset span.switch-labels:before {
         &:focus {
           outline: none;
         }
-        @media(max-width: 767px) {
+        @media (max-width: 767px) {
           width: 100%;
         }
       }
@@ -287,7 +292,7 @@ fieldset span.switch-labels:before {
   }
 }
 
-[data-account='verify'] {
+[data-account="verify"] {
   img {
     width: 22px;
     height: 22px;
@@ -310,9 +315,9 @@ fieldset span.switch-labels:before {
 
 .category-item {
   border: 1px solid #e0e0e0;
-  -webkit-box-shadow: 10px 10px 15px -5px rgba(204, 198, 204, 1);
-  -moz-box-shadow: 10px 10px 15px -5px rgba(204, 198, 204, 1);
-  box-shadow: 10px 10px 15px -5px rgba(204, 198, 204, 1);
+  -webkit-box-shadow: 10px 10px 27px -11px rgba(209, 209, 209, 1);
+  -moz-box-shadow: 10px 10px 27px -11px rgba(209, 209, 209, 1);
+  box-shadow: 10px 10px 27px -11px rgba(209, 209, 209, 1);
   @include border-radius(3px);
   padding: 15px;
   overflow: hidden;
@@ -541,7 +546,7 @@ footer {
 
 .home-wrap-mobile {
   display: none;
-  @media (max-width: 767px) {
+  @media (max-width: 991px) {
     display: block;
   }
 }
@@ -559,7 +564,8 @@ footer {
     a {
       color: $font-color;
       text-decoration: none;
-      &:active, &:focus {
+      &:active,
+      &:focus {
         outline: none;
       }
     }
@@ -784,7 +790,6 @@ footer {
 
 /* End Slick Slider */
 
-
 /* Static Page */
 
 .static-page-information {
@@ -805,7 +810,12 @@ footer {
   }
 
   ul {
-   margin-bottom: 20px;
+    margin-bottom: 20px;
   }
 }
 /* End Static Page */
+
+.special {
+  color: white !important;
+  background: $light-green-color;
+}

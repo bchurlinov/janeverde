@@ -39,8 +39,7 @@
                     <div class="search-mobile">
                         <div class="current-state-heading__item">
                             <form method="GET" action="product_search.html">
-                                <input type="text" name="keyword" placeholder="Search listings"
-                                    autocomplete="off" />
+                                <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />
                                 </button>
@@ -88,12 +87,11 @@
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
-                            <h3>Sign In</h3>
+                            <h3>My Account / Sign In</h3>
                         </div>
                         <div class="current-state-heading__item">
                             <form method="GET" action="product_search.html">
-                                <input type="text" name="keyword" placeholder="Search listings"
-                                    autocomplete="off" />
+                                <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />
                                 </button>
@@ -114,32 +112,39 @@
                                         @csrf
 
                                         <div class="form-group field-wrap">
-                                            <label>{{ __('Enter your first name') }}<span>(*)</span></label>
-                                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="off" autofocus>
+                                            <label>{{ __('First name') }}<span> (*)</span></label>
+                                            <input id="name" type="text"
+                                                class="form-control @error('name') is-invalid @enderror" name="name"
+                                                value="{{ old('name') }}" required autocomplete="off" autofocus>
 
-                                                @error('name')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                                @enderror
-                                        </div>
-
-                                        <div class="form-group field-wrap">
-                                            <label>{{ __('Enter your last name') }}<span>(*)</span></label>
-                                            <input id="lastname" type="text" class="form-control @error('lastname') is-invalid @enderror" name="lastname" value="{{ old('lastname') }}" required autocomplete="off" autofocus>
-
-                                            @error('lastname')
+                                            @error('name')
                                             <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
+                                                <strong>{{ $message }}</strong>
+                                            </span>
                                             @enderror
                                         </div>
 
                                         <div class="form-group field-wrap">
-                                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Enter your e-mail address') }}<span>(*)</span></label>
+                                            <label>{{ __('Last name') }}<span> (*)</span></label>
+                                            <input id="lastname" type="text"
+                                                class="form-control @error('lastname') is-invalid @enderror"
+                                                name="lastname" value="{{ old('lastname') }}" required
+                                                autocomplete="off" autofocus>
 
-                                            <div class="col-md-6">
-                                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off">
+                                            @error('lastname')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
+                                        </div>
+
+                                        <div class="form-group field-wrap">
+                                            <label for="email">{{ __('E-mail address') }}<span> (*)</span></label>
+
+                                            <div>
+                                                <input id="email" type="email"
+                                                    class="form-control @error('email') is-invalid @enderror"
+                                                    name="email" value="{{ old('email') }}" required autocomplete="off">
 
                                                 @error('email')
                                                 <span class="invalid-feedback" id="loginemail" role="alert">
@@ -150,10 +155,13 @@
                                         </div>
 
                                         <div class="form-group field-wrap">
-                                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Set up a password') }}<span>(*)</span></label>
+                                            <label for="password"
+                                                class="col-md-4 col-form-label text-md-right">{{ __('Set up a password') }}<span> (*)</span></label>
 
                                             <div class="col-md-6">
-                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="off">
+                                                <input id="password" type="password"
+                                                    class="form-control @error('password') is-invalid @enderror"
+                                                    name="password" required autocomplete="off">
 
                                                 @error('password')
                                                 <span class="invalid-feedback" id="loginpass" role="alert">
@@ -164,25 +172,34 @@
                                         </div>
 
                                         <div class="form-group field-wrap">
-                                            <label for="password-confirm" class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}<span>(*)</span></label>
+                                            <label for="password-confirm"
+                                                class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}<span>(*)</span></label>
 
                                             <div class="col-md-6">
-                                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="off">
+                                                <input id="password-confirm" type="password" class="form-control"
+                                                    name="password_confirmation" required autocomplete="off">
                                             </div>
                                         </div>
 
                                         <div class="form-group field-wrap">
-                                            <label style="top: -25px">{{ __('I want to') }}<span>(*)</span></label>
-                                                <select id="sell-buy-option" name="type">
-                                                    <option name="seller" value="seller">Sell products</option>
-                                                    <option name="buyer" value="buyer">Buy products</option>
-                                                </select>
+                                            <label style="top: -25px">{{ __('I want to') }}<span> (*)</span></label>
+                                            <select id="sell-buy-option" name="type">
+                                                <option name="buyer" value="buyer">Buy products</option>
+                                                <option name="seller" value="seller">Sell products</option>
+                                                <option name="buyer_seller" value="buyer_seller">Buy & Sell products</option>
+                                            </select>
                                         </div>
+
+                                        <div class="form-group field-wrap text-center">
+                                            <input type="checkbox" name="verify_account" value="verify_account">
+                                            <span>I would like to verify my account and have access to…</span>
+                                        </div>
+
                                         <div class="text-center">
-                                                <button type="submit" class="button-auth button-block">
-                                                    {{ __('SUBMIT') }}
-                                                </button>
-                                            </div>
+                                            <button type="submit" class="button-auth button-block">
+                                                Create Account
+                                            </button>
+                                        </div>
                                     </form>
                                 </div>
 
@@ -192,42 +209,45 @@
                                         @csrf
                                         <input type="hidden" name="field" id="field">
                                         <div class="form-group field-wrap">
-                                            <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('Enter your e-mail address') }}<span>(*)</span></label>
-                                            <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="off" autofocus>
+                                            <label for="email"
+                                                class="col-form-label text-md-right">{{ __('Enter your e-mail address') }}<span> (*)</span></label>
+                                            <input id="email" type="email"
+                                                class="form-control @error('email') is-invalid @enderror" name="email"
+                                                value="{{ old('email') }}" required autocomplete="off" autofocus>
                                             @error('email')
                                             <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $message }}</strong>
-                                                </span>
+                                            </span>
                                             @enderror
                                         </div>
 
                                         <div class="form-group field-wrap">
-                                            <label for="password" class="col-md-4 col-form-label text-md-right">{{ __('Password') }}<span>(*)</span></label>
-                                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="off">
+                                            <label for="password"
+                                                class="col-form-label text-md-right">{{ __('Password') }}<span> (*)</span></label>
+                                            <input id="password" type="password"
+                                                class="form-control @error('password') is-invalid @enderror"
+                                                name="password" required autocomplete="off">
 
-                                                @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @enderror
+                                            @error('password')
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                            @enderror
                                         </div>
 
-                                        <div class="form-group field-wrap">
-                                            <div class="form-check">
-                                                <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-
-                                                <label>
-                                                    {{ __('Remember Me') }}
-                                                </label>
-                                            </div>
+                                        <div class="form-group field-wrap text-center">
+                                            <input type="checkbox" name="remember" id="remember"
+                                                {{ old('remember') ? 'checked' : '' }}>
+                                            <span>Remember Me</span>
                                         </div>
+
 
                                         @if (Route::has('password.request'))
-                                            <div class="forgot">
-                                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                                    {{ __('Forgot Your Password?') }}
-                                                </a>
-                                            </div>
+                                        <div class="forgot">
+                                            <a class="btn btn-link" href="{{ route('password.request') }}">
+                                                {{ __('Forgot Your Password?') }}
+                                            </a>
+                                        </div>
                                         @endif
 
                                         <div class="form-group field-wrap">
@@ -236,8 +256,6 @@
                                                     {{ __('Log in') }}
                                                 </button>
                                             </div>
-
-
                                         </div>
                                     </form>
                                 </div>
@@ -249,7 +267,7 @@
                 </div>
             </div>
         </div>
-       @include('partials.footer')
+        @include('partials.footer')
     </div>
 </div>
 </div>
@@ -257,6 +275,7 @@
 @section('js_links')
 <script type="text/javascript" src={{asset('js/libraries/jquery.js')}}></script>
 <script type="text/javascript" src={{asset('js/libraries/selectric.js')}}></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script type="text/javascript" src={{asset('js/auth.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
 @endsection

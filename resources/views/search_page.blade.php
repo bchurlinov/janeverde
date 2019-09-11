@@ -108,7 +108,7 @@
                                     <input class="input-switch" id="view-all-verified" type="checkbox" />
                                     <label for="view-all-verified"></label>
                                     <span class="switch-bg"></span>
-                                    <span class="switch-labels" data-on="View All" data-off="Verified Only"></span>
+                                    <span class="switch-labels" data-on="View All" data-off="Verified"></span>
                                 </fieldset>
                             </div>
                             <div class="search-filters__pagination">
@@ -556,6 +556,7 @@
 <script type="text/javascript" src={{asset('js/libraries/jquery.js')}}></script>
 <script type="text/javascript" src={{asset('js/libraries/selectric.js')}}></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script type="text/javascript" src={{asset('js/search.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
 @endsection

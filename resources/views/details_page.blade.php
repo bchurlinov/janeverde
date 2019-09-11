@@ -217,6 +217,7 @@
 <script type="text/javascript" src={{asset('js/libraries/jquery.js')}}></script>
 <script type="text/javascript" src={{asset('js/libraries/selectric.js')}}></script>
 <script type="text/javascript" src={{asset('js/libraries/fotorama.min.js')}}></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script type="text/javascript" src={{asset('js/details.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
 @endsection
