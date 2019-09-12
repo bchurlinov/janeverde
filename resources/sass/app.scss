@@ -115,7 +115,7 @@ fieldset {
   padding: 0;
   margin: 0 auto;
   background: white;
-  @include border-radius(3px);
+  @include border-radius(1px);
 
   &:hover {
     border-color: #d5d5d5;
@@ -131,12 +131,13 @@ fieldset {
     position: absolute;
     z-index: 0;
     width: 50%;
-    height: 100%;
+    height: 35px;
     left: 50%;
     background: $main-green-color;
-    transition: all 0.3s;
-    -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
+    top: -1px;
+    -webkit-transition: all 0.3s ease-in-out;
+    -moz-transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease-in-out;
   }
 
   span.switch-labels {
@@ -256,7 +257,7 @@ fieldset span.switch-labels:before {
         padding-left: 10px;
         border: 1px solid lightgrey;
         cursor: pointer;
-        @include border-radius(0 5px 5px 0);
+        @include border-radius(3px);
         &:active,
         &:focus {
           outline: none;
@@ -273,7 +274,7 @@ fieldset span.switch-labels:before {
         top: 0;
         bottom: 0;
         padding: 5px;
-        @include border-radius(0px 5px 5px 0px);
+        @include border-radius(0px 3px 3px 0px);
         @include transition-1;
         cursor: pointer;
         &:active,
@@ -315,9 +316,9 @@ fieldset span.switch-labels:before {
 
 .category-item {
   border: 1px solid #e0e0e0;
-  -webkit-box-shadow: 10px 10px 27px -11px rgba(209, 209, 209, 1);
-  -moz-box-shadow: 10px 10px 27px -11px rgba(209, 209, 209, 1);
-  box-shadow: 10px 10px 27px -11px rgba(209, 209, 209, 1);
+  -webkit-box-shadow: 10px 10px 8px -8px rgba(204, 204, 204, 1);
+  -moz-box-shadow: 10px 10px 8px -8px rgba(204, 204, 204, 1);
+  box-shadow: 10px 10px 8px -8px rgba(204, 204, 204, 1);
   @include border-radius(3px);
   padding: 15px;
   overflow: hidden;
@@ -612,13 +613,13 @@ footer {
   flex-flow: row wrap;
   padding: 10px 15px 25px !important;
   justify-content: center;
-
+  
   .toggle-countries {
     flex: 0 0 calc(33.33% - 20px);
     padding: 10px;
     border-bottom: none;
     fieldset {
-      height: 30px;
+      height: 35px;
       span.switch-labels {
         margin-top: -5px;
         font-size: 12px;
@@ -656,12 +657,12 @@ footer {
 
     .selectric {
       margin-top: 10px;
-      height: 30px;
+      height: 36px;
       border: 1px solid $border-light-grey;
-      @include border-radius(2px);
+      @include border-radius(3px);
       .label {
         position: relative;
-        top: -4px;
+        top: -3px;
         @media (max-width: 685px) {
           font-size: 10px;
           margin: 0 10px 0 -20px;

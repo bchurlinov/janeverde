@@ -1,7 +1,6 @@
 
 var select_options = "";
 $(document).ready(function () {
-
     // Initialize Slick Slider
     $('.slider').slick();
 
@@ -49,6 +48,6 @@ function renderListView(t) {
 
     // Toggle Product Template Layout
     $(".product-template-wrap").addClass("product-template-wrap-listview");
-    $(".products-listing-wrap").css({margin: "0"});
+    $(".products-listing-wrap").css({ margin: "0" });
 }
 

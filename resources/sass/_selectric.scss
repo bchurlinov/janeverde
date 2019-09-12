@@ -16,6 +16,7 @@
   margin-top: 20px;
   background: $main-green-color;
   color: $white-color;
+  @include border-radius(3px);
 }
 
 .selectric .label {
@@ -23,21 +24,25 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0 10px 0 10px;
-  font-size: 14px;
+  margin: 0;
+  font-size: 10px;
+  margin: 0 0 0 3px;
+  width: 160px;
+  text-overflow: ellipsis;
+  overflow: hidden;
   text-transform: uppercase;
   font-weight: bold !important;
   letter-spacing: 1px;
   text-align: center;
   line-height: 38px;
   color: $white-color;
-  height: 38px;
+  height: 35px;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
   @media (min-width: 992px) and (max-width: 1199px) {
-    margin: 0 10px 0 -10px;
+    
   }
 }
 
