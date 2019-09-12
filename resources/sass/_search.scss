@@ -21,7 +21,7 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  padding: 25px 0;
+  padding: 18px 0 20px;
   margin-top: 5px;
 
   &__sorting {
@@ -333,6 +333,7 @@
 
   .qs-list-view {
     display: inline-block !important;
+    margin-left: 10px;
     img {
       width: 25px;
       height: 25px;
@@ -378,6 +379,11 @@
       }
     }
 
+    .product-location {
+      color: $font-color!important;
+      font-weight: bold;
+    }
+
     span {
       font-size: 13px !important;
     }
@@ -391,8 +397,7 @@
         @media (max-width: 525px) {
           padding-right: 5px;
         }
-        @media (max-width: 767px) {
-        }
+
         img {
           float: right;
         }

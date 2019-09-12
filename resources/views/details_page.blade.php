@@ -168,7 +168,8 @@
 
                         <div class="details-product__facts">
                             <div class="user-verification-info">
-                                <h5> <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" /> Verified Business</h5>
+                                <h5> <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
+                                    Verified Business</h5>
                                 <p>The bussiness has been verified for:</p>
                                 <ul>
                                     <li><i class="fas fa-check"></i>Bussiness Name</li>
@@ -202,7 +203,6 @@
                             <li>posted: 19 days ago</li>
                             <li>updated: about an hour ago</li>
                             <li>email to friend</li>
-                            <li>▽ best of</li>
                         </ul>
                     </div>
                 </div>

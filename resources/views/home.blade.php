@@ -14,7 +14,7 @@
             <div class="home-wrap-mobile">
                 <div class="home-wrap-mobile__navbar">
                     <div>
-                        <h1><a href="index.html">jane <span>Verde</span></a></h1>
+                        <h1><a href="/">jane <span>Verde</span></a></h1>
                     </div>
                     <div>
                         <a href="/auth" class="button-link" target="_blank">Create Listing</a>
@@ -218,7 +218,7 @@
                         <div class="current-state-heading__item">
                             <h3>California, USA / <span class="toggle-hemp-cannabis">CANNABIS</span></h3>
                         </div>
-                        <div class="current-state-heading__item">
+                        <div class="current-state-heading__item current-state-heading__desktop">
                             <form method="GET" action="/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">

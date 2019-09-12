@@ -1,6 +1,7 @@
 
 var select_options = "";
 $(document).ready(function () {
+
     // Initialize Slick Slider
     $('.slider').slick();
 

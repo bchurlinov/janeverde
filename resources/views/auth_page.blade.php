@@ -156,7 +156,8 @@
 
                                         <div class="form-group field-wrap">
                                             <label for="password"
-                                                class="col-md-4 col-form-label text-md-right">{{ __('Set up a password') }}<span> (*)</span></label>
+                                                class="col-md-4 col-form-label text-md-right">{{ __('Set up a password') }}<span>
+                                                    (*)</span></label>
 
                                             <div class="col-md-6">
                                                 <input id="password" type="password"
@@ -186,7 +187,8 @@
                                             <select id="sell-buy-option" name="type">
                                                 <option name="buyer" value="buyer">Buy products</option>
                                                 <option name="seller" value="seller">Sell products</option>
-                                                <option name="buyer_seller" value="buyer_seller">Buy & Sell products</option>
+                                                <option name="buyer_seller" value="buyer_seller">Buy & Sell products
+                                                </option>
                                             </select>
                                         </div>
 
@@ -210,7 +212,8 @@
                                         <input type="hidden" name="field" id="field">
                                         <div class="form-group field-wrap">
                                             <label for="email"
-                                                class="col-form-label text-md-right">{{ __('Enter your e-mail address') }}<span> (*)</span></label>
+                                                class="col-form-label text-md-right">{{ __('Enter your e-mail address') }}<span>
+                                                    (*)</span></label>
                                             <input id="email" type="email"
                                                 class="form-control @error('email') is-invalid @enderror" name="email"
                                                 value="{{ old('email') }}" required autocomplete="off" autofocus>
@@ -223,7 +226,8 @@
 
                                         <div class="form-group field-wrap">
                                             <label for="password"
-                                                class="col-form-label text-md-right">{{ __('Password') }}<span> (*)</span></label>
+                                                class="col-form-label text-md-right">{{ __('Password') }}<span>
+                                                    (*)</span></label>
                                             <input id="password" type="password"
                                                 class="form-control @error('password') is-invalid @enderror"
                                                 name="password" required autocomplete="off">

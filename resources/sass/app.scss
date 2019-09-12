@@ -223,6 +223,12 @@ fieldset span.switch-labels:before {
   }
 }
 
+.current-state-heading__desktop {
+  @media(max-width: 991px) {
+    display: none !important;
+  }
+}
+
 .current-state-heading {
   display: flex;
   flex-flow: row wrap;
@@ -249,10 +255,10 @@ fieldset span.switch-labels:before {
       text-align: right;
       position: relative;
       @media (max-width: 991px) {
-        display: none;
+       
       }
       input {
-        height: 30px;
+        height: 35px;
         width: 90%;
         padding-left: 10px;
         border: 1px solid lightgrey;
