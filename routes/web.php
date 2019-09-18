@@ -27,13 +27,15 @@ Route::get('/auth', function () {
     return view('auth_page');
 });
 
-
-
-
-
 Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
-Route::get('/checkid', function(){
-    echo "made golo";
-})->middleware('auth');
+
+//user dashboard, protected by auth middleware
+Route::get('dashboard', 'UserController@index')->middleware('verified');
+
+//upload user image
+Route::post('image-upload', 'UserController@uploadID')->middleware('verified')->name('uploadID');
+
+//get all user purchased products (buyer)
+Route::get('/myproducts', 'UserController@buyerPurchasedProducts')->middleware('verified');

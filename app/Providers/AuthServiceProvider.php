@@ -42,7 +42,7 @@ class AuthServiceProvider extends ServiceProvider
 
         //if verified policy
         Gate::define('isVerified', function($user){
-            return $user->verified == 1;
+            return $user->is_verified == 1;
         });
     }
 }

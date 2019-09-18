@@ -184,6 +184,22 @@
 
     <div class="container">
         <div class="outer-wrap">
+            <div align="right">
+            @if(auth()->user())
+                {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname, 0, 1) . "</a>" !!}
+
+                <a href="{{ route('logout') }}"
+                   onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+
+            @endif
+            </div>
             <div class="home-wrap">
                 <div class="home-wrap__item">
                     <div class="inner-wrap">
