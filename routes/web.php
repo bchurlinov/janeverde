@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('home');
 });
 
-Route::get('/search', function () {
-    return view('search_page');
-});
+Route::get('/search', 'ProductsController@index');
 
 Route::get('/view', function () {
     return view('details_page');

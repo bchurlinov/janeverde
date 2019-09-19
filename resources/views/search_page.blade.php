@@ -56,6 +56,22 @@ w
 
     <div class="container">
         <div class="outer-wrap">
+            <div align="right">
+                @if(auth()->user())
+                    {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname, 0, 1) . "</a>" !!}
+
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault();
+                                             document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+
+                @endif
+            </div>
             <div class="home-wrap home-search-wrap">
                 <div class="home-wrap__item search-toggle-information">
                     <div class="inner-wrap">
@@ -131,7 +147,11 @@ w
 
                     <div class="search-products-listing">
                         <div class="products-listing-wrap">
-                            <div class="product-template-wrap">
+                            @if(count($products) == 0)
+                                {{"No products"}}
+                            @else
+                                @foreach($products as $product)
+                                    <div class="product-template-wrap">
                                 <div class="product-template">
                                     <div class="product-template__image">
                                         <div class="slider">
@@ -161,486 +181,17 @@ w
                                     <div class="product-template__info">
                                         <div>
                                             <div>
-                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                    alt="Jane Verde Image" class="list-view-image" />
-                                                <div class="clearfix"></div>
-                                                <span class="qs">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4>
-                                                <span>Aug 21</span>
-                                                <a href="/view" target="_blank">High Quality Trimmed Flower
-                                                </a>
-                                                <span class="product-location">(All States)</span>
-                                                <span class="qs qs-list-view">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </h4>
-                                        </div>
-                                        <div class="details-page-link">
-                                            <a href="/view" target="_blank">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-template-wrap">
-                                <div class="product-template">
-                                    <div class="product-template__image">
-                                        <div class="slider">
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ50KDQAdfhWmJtX2eYpIZuIFdmYq4VEffK4QZ_muP2ACcJULagsQ"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ50KDQAdfhWmJtX2eYpIZuIFdmYq4VEffK4QZ_muP2ACcJULagsQ"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ50KDQAdfhWmJtX2eYpIZuIFdmYq4VEffK4QZ_muP2ACcJULagsQ"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                        </div>
-                                        <div class="price-box">
-                                            <span>$100</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-template__info">
-                                        <div>
-                                            <div>
-                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                    alt="Jane Verde Image" class="list-view-image" />
-                                                <div class="clearfix"></div>
-                                                <span class="qs">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4>
-                                                <span>Aug 21</span>
-                                                <a href="/view" target="_blank">Trimmed Biomass</a>
-                                                <span class="product-location">(CA)</span>
-                                                <span class="qs qs-list-view">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </h4>
-                                        </div>
-                                        <div class="details-page-link">
-                                            <a href="/view" target="_blank">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-template-wrap">
-                                <div class="product-template">
-                                    <div class="product-template__image">
-                                        <div class="slider">
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ50KDQAdfhWmJtX2eYpIZuIFdmYq4VEffK4QZ_muP2ACcJULagsQ"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ50KDQAdfhWmJtX2eYpIZuIFdmYq4VEffK4QZ_muP2ACcJULagsQ"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ50KDQAdfhWmJtX2eYpIZuIFdmYq4VEffK4QZ_muP2ACcJULagsQ"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                        </div>
-                                        <div class="price-box">
-                                            <span>$100</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-template__info">
-                                        <div>
-                                            <div>
-                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                    alt="Jane Verde Image" class="list-view-image" />
-                                                <div class="clearfix"></div>
-                                                <span class="qs">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4>
-                                                <span>Aug 21</span>
-                                                <a href="/view" target="_blank">Trimmed Biomass</a>
-                                                <span class="product-location">(CA)</span>
-                                                <span class="qs qs-list-view">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </h4>
-                                        </div>
-                                        <div class="details-page-link">
-                                            <a href="/view" target="_blank">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-template-wrap">
-                                <div class="product-template">
-                                    <div class="product-template__image">
-                                        <div class="slider">
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://specials-images.forbesimg.com/imageserve/1142588961/960x0.jpg?fit=scale"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://specials-images.forbesimg.com/imageserve/1142588961/960x0.jpg?fit=scale"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://specials-images.forbesimg.com/imageserve/1142588961/960x0.jpg?fit=scale"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                        </div>
-                                        <div class="price-box">
-                                            <span>$100</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-template__info">
-                                        <div>
-                                            <div>
-                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                    alt="Jane Verde Image" class="list-view-image" />
-                                                <div class="clearfix"></div>
-                                                <span class="qs">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4>
-                                                <span>Aug 21</span>
-                                                <a href="/view" target="_blank">High Quality Trimmed Flower -
-                                                    only 20lbs
-                                                </a>
-                                                <span class="product-location">(KA)</span>
-                                                <span class="qs qs-list-view">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </h4>
-                                        </div>
-                                        <div class="details-page-link">
-                                            <a href="/view" target="_blank">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-template-wrap">
-                                <div class="product-template">
-                                    <div class="product-template__image">
-                                        <div class="slider">
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://www.sierraclub.org/sites/www.sierraclub.org/files/styles/flexslider_full/public/sierra/articles/big/SIERRA-HEMP-iStock-1036010474-WB.jpg?itok=2CRzH20C"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://www.sierraclub.org/sites/www.sierraclub.org/files/styles/flexslider_full/public/sierra/articles/big/SIERRA-HEMP-iStock-1036010474-WB.jpg?itok=2CRzH20C"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://www.sierraclub.org/sites/www.sierraclub.org/files/styles/flexslider_full/public/sierra/articles/big/SIERRA-HEMP-iStock-1036010474-WB.jpg?itok=2CRzH20C"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                        </div>
-                                        <div class="price-box">
-                                            <span>$100</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-template__info">
-                                        <div>
-                                            <div>
-                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                    alt="Jane Verde Image" class="list-view-image" />
-                                                <div class="clearfix"></div>
-                                                <span class="qs">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <h4>
-                                                <span>Aug 21</span>
-                                                <a href="/view" target="_blank">Sour Space Candy, Special
-                                                    Sauce, Lifter Pre-Rolls
-                                                </a>
-                                                <span class="product-location">(All States)</span>
-                                                <span class="qs qs-list-view">
-                                                    <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
-                                                            Verified Business
-                                                        </h4>
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
-                                                        </ul>
-                                                    </div>
-                                                </span>
-                                            </h4>
-                                        </div>
-                                        <div class="details-page-link">
-                                            <a href="/view" target="_blank">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="product-template-wrap">
-                                <div class="product-template">
-                                    <div class="product-template__image">
-                                        <div class="slider">
-                                            <figure>
-                                                <a href="/view" target="_blank">
+                                                @can('isVerified')
                                                     <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view" target="_blank">
-                                                    <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                        </div>
-                                        <div class="price-box">
-                                            <span>$100</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-template__info">
-                                        <div>
-                                            <div>
-                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                    alt="Jane Verde Image" class="list-view-image" />
-                                                <div class="clearfix"></div>
-                                                <span class="qs">
+                                                         alt="Jane Verde Image" class="list-view-image" />
+                                                    <div class="clearfix"></div>
+                                                    <span class="qs">
                                                     <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
+                                                            alt="Jane Verde - SVG Icon" />
                                                     <div class="popover above popover-content">
                                                         <h4>
                                                             <img src={{asset('images/shield_green.svg')}}
-                                                                alt="Jane Verde - SVG Icon" />
+                                                                    alt="Jane Verde - SVG Icon" />
                                                             Verified Business
                                                         </h4>
                                                         <ul>
@@ -655,15 +206,15 @@ w
                                                         </ul>
                                                     </div>
                                                 </span>
+                                                @endcan
                                             </div>
                                         </div>
                                         <div>
                                             <h4>
                                                 <span>Aug 21</span>
-                                                <a href="/view" target="_blank">High Quality Trimmed Flower -
-                                                    only 20lbs
+                                                <a href="/view" target="_blank">{{$product->title}}
                                                 </a>
-                                                <span class="product-location">(CA)</span>
+                                                <span class="product-location">({{$product->location}})</span>
                                                 <span class="qs qs-list-view">
                                                     <img src={{asset('images/shield_green.svg')}}
                                                         alt="Jane Verde - SVG Icon" />
@@ -695,6 +246,8 @@ w
                                     </div>
                                 </div>
                             </div>
+                                @endforeach
+                            @endif
                         </div>
                     </div>
                 </div>

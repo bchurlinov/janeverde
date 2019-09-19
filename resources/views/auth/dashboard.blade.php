@@ -32,7 +32,7 @@
 @endif
 @if (count($errors) > 0)
     <div class="alert alert-danger">
-        <strong>Whoops!</strong> There were some problems with your input.
+        <strong>Whoops!</strong>  There was a problem while uploading your picture ID.
         <ul>
             @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
@@ -45,9 +45,9 @@
     @if($user->is_verified != 1)
         @if($user->is_verified == 0 || $user->is_verified == -1)
             @if($user->is_verified == 0)
-                {{"You are not verified. please upload your picture id"}}
+                {{"You are not verified. please upload your picture ID"}}
             @elseif($user->is_verified == -1)
-                {{"Administrator has removed your id due to bla bla bla. Please re-upload your picture id"}}
+                {{"Administrator has removed your ID. Please re-upload your picture ID"}}
             @endif
             <form action="{{ route('uploadID') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -61,11 +61,11 @@
                 </div>
             </form>
         @elseif($user->is_verified == 2)
-            {!! "Your picture id is uploaded. Please wait for an administrator to take a look.<br /><br />Uploaded picture:<br>" !!}
+            {!! "Your picture id is uploaded. Please wait for an administrator to verify your ID.<br /><br />Uploaded ID:<br>" !!}
             <img src="pictureID/{{$user->id_pic_name}}" width="300" height="200" />
         @endif
     @elseif($user->is_verified == 1)
-        {{"You are verified! Resume normal operations...nothing to see here..."}}
+        {{"You are verified!"}}
     @endif
 </div>
 @endsection
