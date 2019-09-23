@@ -181,7 +181,7 @@ w
                                     <div class="product-template__info">
                                         <div>
                                             <div>
-                                                @can('isVerified')
+                                                @if(Gate::check('isAdmin') || Gate::check('isVerified'))
                                                     <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
                                                          alt="Jane Verde Image" class="list-view-image" />
                                                     <div class="clearfix"></div>
@@ -206,7 +206,7 @@ w
                                                         </ul>
                                                     </div>
                                                 </span>
-                                                @endcan
+                                                @endif
                                             </div>
                                         </div>
                                         <div>

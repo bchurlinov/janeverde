@@ -37,3 +37,6 @@ Route::post('image-upload', 'UserController@uploadID')->middleware('verified')->
 
 //get all user purchased products (buyer)
 Route::get('/myproducts', 'UserController@buyerPurchasedProducts')->middleware('verified');
+
+//get all users for verification
+Route::get('/usersverification', 'UserController@getUsersForVerification')->middleware('verified');

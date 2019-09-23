@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App\Product;
 
 class UserController extends Controller
 {
@@ -14,6 +15,39 @@ class UserController extends Controller
      */
     public function index(){
         $user = User::find(auth()->user()->id);
+        if($user->role == "admin"){
+            //get all users, excluding the administrator from the counts
+            $allUsers = User::where('role', '!=', 'admin')->get();
+            //pending, verified, denied etc initialized to 0 initially 
+            $pending = 0;
+            $verified = 0;
+            $noIDUploaded = 0;
+            $denied = 0;
+            $total = $allUsers->count();
+            foreach($allUsers as $singleUser){
+                switch($singleUser->is_verified){
+                    case "-1":
+                        $denied += 1;
+                    break;
+                    case "0":
+                        $noIDUploaded += 1;
+                    break;
+                    case "1":
+                        $verified += 1;
+                    break;
+                    case "2":
+                        $pending += 1;
+                    break;
+                }
+            }
+            //create the return array for user's statistics
+            $usersData = ["verified" => $verified, "pending" => $pending, "noIDUploaded" => $noIDUploaded, "denied" => $denied, "total" => $total];
+
+            //get all Products count from database
+            $productsData = Product::count();
+
+            return view('admin.dashboard')->with(["usersData" => $usersData, "productsData" => $productsData]);
+        }
         return view('auth.dashboard')->with('user', $user);
     }
 
@@ -56,5 +90,14 @@ class UserController extends Controller
     public function buyerPurchasedProducts(){
         $user = User::find(auth()->user()->id);
         return view('auth.buyerPurchased')->with('userProducts', $user->products);
+    }
+
+    /**
+     * get all users that are queued up for verification
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getUsersForVerification(){
+        $verificationPendingUsers = User::where('is_verified', 2)->get();
+        return view('admin.usersVerification')->with('users', $verificationPendingUsers);
     }
 }
