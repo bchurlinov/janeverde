@@ -17,9 +17,7 @@ Route::get('/', function () {
 
 Route::get('/search', 'ProductsController@index');
 
-Route::get('/view', function () {
-    return view('details_page');
-});
+Route::get('/view/{id}', 'ProductsController@view');
 
 Route::get('/auth', function () {
     return view('auth_page');
@@ -40,3 +38,26 @@ Route::get('/myproducts', 'UserController@buyerPurchasedProducts')->middleware('
 
 //get all users for verification
 Route::get('/usersverification', 'UserController@getUsersForVerification')->middleware('verified');
+
+//get all users for deletion
+Route::get('/usersmanagement', 'UserController@getUsersForManagement')->middleware('verified');
+
+//approve user picture ID
+Route::post('/approve', 'UserController@approve')->middleware('verified');
+
+//decline user picture id
+Route::post('/decline', 'UserController@decline')->middleware('verified');
+
+//soft delete a user
+Route::post('/delete', 'UserController@delete')->middleware('verified');
+
+//restore a user
+Route::post('/restore', 'UserController@restore')->middleware('verified');
+
+//get all products for management
+Route::get('/manageproducts', 'ProductsController@manageProducts')->middleware('verified');
+
+//remove product
+Route::post('/pdelete', 'ProductsController@deleteProduct')->middleware('verified');
+//restore product
+Route::post('/prestore', 'ProductsController@restoreProduct')->middleware('verified');

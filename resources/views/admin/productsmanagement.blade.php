@@ -77,6 +77,7 @@
         <!-- Divider -->
         <hr class="sidebar-divider d-none d-md-block">
 
+        <!-- Sidebar Toggler (Sidebar) -->
         <div class="text-center d-none d-md-inline">
             <button class="rounded-circle border-0" id="sidebarToggle"></button>
         </div>
@@ -170,66 +171,42 @@
                 <div class="row">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Active users</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Active products</h6>
                         </div>
                         <div class="card-body">
-                            @if(count($users) == 0)
-                                <p>No users in database</p>
+                            @if(count($products) == 0)
+                                <p>No products</p>
                             @else
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Lastname</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Role</th>
-                                                <th scope="col">Registration date</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">&nbsp;</th>
                                                 <th scope="col">&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($users as $id => $user)
+                                            @foreach($products as $id => $product)
                                                 <tr scope="row">
-                                                    <td>{{$user->name}}</td>
-                                                    <td>{{$user->lastname}}</td>
-                                                    <td>{{$user->email}}</td>
-                                                    <td>{{ucfirst($user->role)}}</td>
-                                                    <td>{{$user->created_at}}</td>
+                                                    <td>{{$product->title}}</td>
+                                                    <td>{{substr($product->description, 0, 120)}}...</td>
+                                                    <td>{{$product->location}}</td>
+                                                    <td>${{$product->price}}</td>
+                                                    <td><a href="/view/{{$product->id}}">View details</a></td>
                                                     <td>
-                                                        @php
-                                                        /*
-                                                             * -1: user is denied of the upload, and has to re-upload picture id
-                                                             * 0 : user is created, hasn't uploaded picture id
-                                                             * 1 : user is created, uploaded id and verified(approved by admin)
-                                                             * 2 : user is created, uploaded id, awaiting verification*/
-                                                            switch($user->is_verified){
-                                                            case '-1':
-                                                                echo "Denied ID, needs to reupload";
-                                                                break;
-                                                            case '0':
-                                                                echo 'No picture ID uploaded';
-                                                                break;
-                                                            case '1':
-                                                                echo 'Verified';
-                                                                break;
-                                                            case '2':
-                                                                echo 'Pending verification';
-                                                                break;
-                                                            }
-                                                        @endphp
-                                                    </td>
-                                                    <td>
-                                                        <a href="/delete"
-                                                           onclick="event.preventDefault(); document.getElementById('{{$user->id}}').submit();">
+                                                        <a href="/pdelete"
+                                                           onclick="event.preventDefault(); document.getElementById('{{$product->id}}').submit();">
                                                             <button type="button" class="close" aria-label="Close">
                                                                 <span aria-hidden="true">&times;</span>
                                                             </button>
                                                         </a>
-                                                        <form id="{{$user->id}}" action="/delete" method="POST" style="display: none;">
-                                                            <input type="hidden" name="id" value="{{$user->id}}" >
+                                                        <form id="{{$product->id}}" action="/pdelete" method="POST" style="display: none;">
+                                                            <input type="hidden" name="id" value="{{$product->id}}" />
                                                             @csrf
                                                         </form></td>
                                                 </tr>
@@ -246,66 +223,40 @@
                 <div class="row">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">Deleted users</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Deleted products</h6>
                         </div>
                         <div class="card-body">
                             @if(count($deleted) == 0)
-                                <p>No deleted users</p>
+                                <p>No deleted products</p>
                             @else
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
                                         <table class="table">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Lastname</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Role</th>
-                                                <th scope="col">Registration date</th>
-                                                <th scope="col">Status</th>
+                                                <th scope="col">Title</th>
+                                                <th scope="col">Description</th>
+                                                <th scope="col">Location</th>
+                                                <th scope="col">Price</th>
+                                                <th scope="col">&nbsp;</th>
                                                 <th scope="col">&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
-                                            @foreach($deleted as $id => $user)
+                                            @foreach($deleted as $product)
                                                 <tr scope="row">
-                                                    <td>{{$user->name}}</td>
-                                                    <td>{{$user->lastname}}</td>
-                                                    <td>{{$user->email}}</td>
-                                                    <td>{{ucfirst($user->role)}}</td>
-                                                    <td>{{$user->created_at}}</td>
+                                                    <td>{{$product->title}}</td>
+                                                    <td>{{substr($product->description, 0, 120)}}...</td>
+                                                    <td>{{$product->location}}</td>
+                                                    <td>${{$product->price}}</td>
+                                                    <td><a href="/view/{{$product->id}}" target="_blank">View details</a></td>
                                                     <td>
-                                                        @php
-                                                            /*
-                                                                 * -1: user is denied of the upload, and has to re-upload picture id
-                                                                 * 0 : user is created, hasn't uploaded picture id
-                                                                 * 1 : user is created, uploaded id and verified(approved by admin)
-                                                                 * 2 : user is created, uploaded id, awaiting verification*/
-                                                                switch($user->is_verified){
-                                                                case '-1':
-                                                                    echo "Denied ID, needs to reupload";
-                                                                    break;
-                                                                case '0':
-                                                                    echo 'No picture ID uploaded';
-                                                                    break;
-                                                                case '1':
-                                                                    echo 'Verified';
-                                                                    break;
-                                                                case '2':
-                                                                    echo 'Pending verification';
-                                                                    break;
-                                                                }
-                                                        @endphp
-                                                    </td>
-                                                    <td>
-                                                        <a href="/restore"
-                                                           onclick="event.preventDefault(); document.getElementById('{{$user->id . '_' . $user->id}}').submit();">
-                                                            <button type="button" class="close" aria-label="Close">
-                                                                <i class="fa fa-undo" aria-hidden="true"></i>
-                                                            </button>
+                                                        <a href="/prestore"
+                                                           onclick="event.preventDefault(); document.getElementById('{{$product->id . '_'.$product->id}}').submit();">
+                                                            <i class="fa fa-undo" aria-hidden="true"></i>
                                                         </a>
-                                                        <form id="{{$user->id . '_' . $user->id}}" action="/restore" method="POST" style="display: none;">
-                                                            <input type="hidden" name="id" value="{{$user->id . '_' . $user->id}}" >
+                                                        <form id="{{$product->id . '_'.$product->id}}" action="/prestore" method="POST" style="display: none;">
+                                                            <input type="hidden" name="id" value="{{$product->id . '_'.$product->id}}" />
                                                             @csrf
                                                         </form></td>
                                                 </tr>
@@ -376,16 +327,6 @@
         $('#imagemodal').modal('show');
     });
 </script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148323450-1"></script>
-<script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-
-    gtag('config', 'UA-148323450-1');
-</script>
-
 </body>
 
 </html>

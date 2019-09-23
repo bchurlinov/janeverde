@@ -23,6 +23,7 @@ class UserController extends Controller
             $verified = 0;
             $noIDUploaded = 0;
             $denied = 0;
+            $deleted = 0;
             $total = $allUsers->count();
             foreach($allUsers as $singleUser){
                 switch($singleUser->is_verified){
@@ -39,9 +40,10 @@ class UserController extends Controller
                         $pending += 1;
                     break;
                 }
+                if($singleUser->is_deleted == 1){ $deleted += 1; }
             }
             //create the return array for user's statistics
-            $usersData = ["verified" => $verified, "pending" => $pending, "noIDUploaded" => $noIDUploaded, "denied" => $denied, "total" => $total];
+            $usersData = ["verified" => $verified, "pending" => $pending, "noIDUploaded" => $noIDUploaded, "denied" => $denied, "total" => $total, "deleted" => $deleted];
 
             //get all Products count from database
             $productsData = Product::count();
@@ -93,11 +95,76 @@ class UserController extends Controller
     }
 
     /**
-     * get all users that are queued up for verification
+     * get all users that are queued up for verification and are not deleted
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function getUsersForVerification(){
-        $verificationPendingUsers = User::where('is_verified', 2)->get();
+    public function getUsersForVerification($redirect = false){
+        $verificationPendingUsers = User::where('is_verified', 2)->where('is_deleted', 0)->get();
+        if($redirect){
+            return redirect('/usersverification')->with('users', $verificationPendingUsers);
+        }
         return view('admin.usersVerification')->with('users', $verificationPendingUsers);
+    }
+
+    public function getUsersForManagement($redirect = false){
+        $allUsers = User::where('role', '!=', 'admin')->get();
+        $deleted = $notDeleted = [];
+        foreach($allUsers as $users){
+            $users->is_deleted == 0 ? $notDeleted[] = $users : $deleted[] = $users;
+        }
+        if($redirect){
+            return redirect('/usersmanagement')->with(['users' => $notDeleted, 'deleted' => $deleted]);
+        }
+        return view('admin.usersManagement')->with(['users' => $notDeleted, 'deleted' => $deleted]);
+    }
+
+    /**
+     * approve uploaded picture id
+     * @param int $id the user id to approve the uploaded picture
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function approve(Request $request){
+        //get the user by id
+        $user = User::find($request->input('id'));
+        //update the verification status
+        $user->is_verified = 1;
+        //save the status
+        $user->save();
+        return $this->getUsersForVerification(true);
+    }
+
+    /**
+     * Decline user uploaded picture ID
+     * @param int $id the user id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function decline(Request $request){
+        //get the user by id
+        $user = User::find(explode("_", $request->input('id'))[0]);
+        //remove the status, and unlink the uploaded id
+        $user->is_verified = -1;
+        $user->id_pic_uploaded = 0;
+        $path = 'pictureID/'.$user->id_pic_name;
+        //delete the image by calling unlink
+        unlink(public_path($path));
+        $user->id_pic_name = "";
+        $user->save();
+        return $this->getUsersForVerification(true);
+    }
+
+    public function delete(Request $request){
+        $user = User::find($request->input('id'));
+        //set is_deleted to 1
+        $user->is_deleted = 1;
+        $user->save();
+        return $this->getUsersForManagement(true);
+    }
+
+    public function restore(Request $request){
+        $user = User::find(explode('_', $request->input('id'))[0]);
+        //set is_deleted to 0
+        $user->is_deleted = 0;
+        $user->save();
+        return $this->getUsersForManagement(true);
     }
 }

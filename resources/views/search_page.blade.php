@@ -156,19 +156,19 @@ w
                                     <div class="product-template__image">
                                         <div class="slider">
                                             <figure>
-                                                <a href="/view" target="_blank">
+                                                <a href="/view/{{$product->id}}" target="_blank">
                                                     <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
                                                         alt="Jane Verde Image" />
                                                 </a>
                                             </figure>
                                             <figure>
-                                                <a href="/view" target="_blank">
+                                                <a href="/view/{{$product->id}}" target="_blank">
                                                     <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
                                                         alt="Jane Verde Image" />
                                                 </a>
                                             </figure>
                                             <figure>
-                                                <a href="/view" target="_blank">
+                                                <a href="/view/{{$product->id}}" target="_blank">
                                                     <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
                                                         alt="Jane Verde Image" />
                                                 </a>
@@ -212,7 +212,7 @@ w
                                         <div>
                                             <h4>
                                                 <span>Aug 21</span>
-                                                <a href="/view" target="_blank">{{$product->title}}
+                                                <a href="/view/{{$product->id}}" target="_blank">{{$product->title}}
                                                 </a>
                                                 <span class="product-location">({{$product->location}})</span>
                                                 <span class="qs qs-list-view">
@@ -239,7 +239,7 @@ w
                                             </h4>
                                         </div>
                                         <div class="details-page-link">
-                                            <a href="/view" target="_blank">
+                                            <a href="/view/{{$product->id}}" target="_blank">
                                                 <i class="fas fa-chevron-right"></i>
                                             </a>
                                         </div>
@@ -266,6 +266,16 @@ w
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script type="text/javascript" src={{asset('js/search.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148323450-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-148323450-1');
+</script>
+
 @endsection
 
 @endsection

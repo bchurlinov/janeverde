@@ -54,6 +54,18 @@
 
     <div class="container">
         <div class="outer-wrap">
+            <div align="right">
+                @if(auth()->user())
+                    {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname, 0, 1) . "</a>" !!}
+                    <a href="{{ route('logout') }}"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                        {{ __('Logout') }}
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                @endif
+            </div>
             <div class="home-wrap home-search-wrap">
                 <div class="home-wrap__item search-toggle-information">
                     <div class="inner-wrap">
@@ -124,7 +136,7 @@
                             <div class="product-information-wrap">
                                 <h2>
                                     <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
-                                    Sour Space Candy, Special Sauce, Lifter Pre-rolls ( CA )
+                                    {{$product->title}} ( {{$product->location}} )
                                 </h2>
 
                                 <div class="product-information-wrap__slider">
@@ -152,12 +164,7 @@
                                 </div>
 
                                 <div class="product-information-wrap__information">
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
-                                        non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                                    <p>{{$product->description}}
                                     </p>
                                     <ul>
                                         <li>• Do not contact me with unsolicited services or offers</li>
@@ -167,6 +174,7 @@
                         </div>
 
                         <div class="details-product__facts">
+                            @if(Gate::check('isVerified'))
                             <div class="user-verification-info">
                                 <h5> <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
                                     Verified Business</h5>
@@ -184,15 +192,17 @@
                                     <a href="javascript:;">Verify my Account</a>
                                 </p>
                             </div>
-
-                            <div class="user-other-adds">
-                                <ul>
-                                    <li>MOQ: 100 units</li>
-                                    <li>Direct Business Sales Only</li>
-                                    <li>Delivery Available: ALL States</li>
-                                    <li>More Adds by this User</li>
-                                </ul>
-                            </div>
+                            @else
+                            <img src="{{asset('/images/blurred.png')}}" width="250px">
+                            @endif
+                                <div class="user-other-adds">
+                                    <ul>
+                                        <li>MOQ: 100 units</li>
+                                        <li>Direct Business Sales Only</li>
+                                        <li>Delivery Available: ALL States</li>
+                                        <li>More Adds by this User</li>
+                                    </ul>
+                                </div>
                         </div>
 
                     </div>
@@ -220,6 +230,16 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script type="text/javascript" src={{asset('js/details.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-148323450-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-148323450-1');
+</script>
+
 @endsection
 
 @endsection

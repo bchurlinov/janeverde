@@ -12,7 +12,7 @@
   <title>Admin dashboard</title>
 
   <!-- Custom fonts for this template-->
-  <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+  <link href="{{asset('/bt/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
   <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
   <!-- Custom styles for this template-->
@@ -69,7 +69,6 @@
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="/viewproducts">View products</a>
             <a class="collapse-item" href="/manageproducts">Manage products</a>
           </div>
         </div>
@@ -149,7 +148,7 @@
                   Home
                 </a>
                 <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="{{ route('logout') }}"
+                    <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">
                     {{ __('Logout') }} 
@@ -190,23 +189,38 @@
                                     <th scope="col">Registration date</th>
                                     <th scope="col">&nbsp;</th>
                                     <th scope="col">&nbsp;</th>
+                                    <th scope="col">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach($users as $id => $user)
                                 <tr scope="row">
-                                    @foreach($users as $id => $user)
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->lastname}}</td>
                                     <td>{{$user->email}}</td>
                                     <td>{{ucfirst($user->role)}}</td>
                                     <td>{{$user->created_at}}</td>
                                     <td><a href="#" id="pop">
-                                        <img id="imageresource" src="{{asset('/pictureID/'.$user->id_pic_name)}}">
-                                        View uploaded picture ID
-                                    </a></td>
-                                    <td>Delete</td>
-                                    @endforeach
+                                        <img id="imageresource" src="{{asset('/pictureID/'.$user->id_pic_name)}}" style="width:0px; height:0px;">
+                                        View uploaded picture ID</a></td>
+                                        <td>
+                                            <a href="/approve"
+                                               onclick="event.preventDefault(); document.getElementById('{{$user->id}}').submit();">
+                                                Approve</a>
+                                            <form id="{{$user->id}}" action="/approve" method="POST" style="display: none;">
+                                                <input type="hidden" name="id" value="{{$user->id}}" >
+                                                @csrf
+                                            </form></td>
+                                        <td>
+                                            <a href="/decline"
+                                               onclick="event.preventDefault(); document.getElementById('{{$user->id. '_' . $user->id}}').submit();">
+                                            Decline</a>
+                                            <form id="{{$user->id. '_' . $user->id}}" action="/decline" method="POST" style="display: none">
+                                                <input type="hidden" name="id" value="{{$user->id. '_' . $user->id}}" >
+                                                @csrf
+                                            </form></td>
                                 </tr>
+                                @endforeach
                             </tbody>
                         </table>
                         </div>
@@ -225,10 +239,9 @@
             <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="myModalLabel">Image preview</h4>
             </div>
             <div class="modal-body">
-                <img src="" id="imagepreview" style="width: 400px; height: 264px;" >
+                <img src="" id="imagepreview" style="width: 400px; height: 264px; align-self: center;" >
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -268,12 +281,6 @@
   <!-- Custom scripts for all pages-->
   <script src="{{asset('/bt/js/sb-admin-2.min.js')}}"></script>
 
-  <!-- Page level plugins -->
-  <script src="{{asset('/bt/vendor/chart.js/Chart.min.js')}}"></script>
-
-  <!-- Page level custom scripts -->
-  <script src="{{asset('/bt/js/demo/chart-area-demo.js')}}"></script>
-  <script src="{{asset('/bt/js/demo/chart-pie-demo.js')}}"></script>
   <script>
         $("#pop").on("click", function() {
             $('#imagepreview').attr('src', $('#imageresource').attr('src')); 
