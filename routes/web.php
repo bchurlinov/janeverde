@@ -61,3 +61,15 @@ Route::get('/manageproducts', 'ProductsController@manageProducts')->middleware('
 Route::post('/pdelete', 'ProductsController@deleteProduct')->middleware('verified');
 //restore product
 Route::post('/prestore', 'ProductsController@restoreProduct')->middleware('verified');
+
+//change user password, view only
+Route::get('/changePassword', function(){ return view('auth.changepassword'); })->middleware('verified');
+
+//route for form user update
+Route::post('/changePassword','UserController@changePassword')->middleware('verified')->name('changePassword');
+
+//view where personal details page is shown
+Route::get('/settings', function() { return view ('auth.settings'); })->middleware('verified');
+
+//post route to update user settings
+Route::post('/settings', 'UserController@settings')->middleware('verified');

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Auth;
+use Hash;
 use App\Product;
 
 class UserController extends Controller
@@ -152,6 +154,11 @@ class UserController extends Controller
         return $this->getUsersForVerification(true);
     }
 
+    /**
+     * soft delete the user
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function delete(Request $request){
         $user = User::find($request->input('id'));
         //set is_deleted to 1
@@ -160,11 +167,53 @@ class UserController extends Controller
         return $this->getUsersForManagement(true);
     }
 
+    /**
+     * restore the deleted user
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector|\Illuminate\View\View
+     */
     public function restore(Request $request){
         $user = User::find(explode('_', $request->input('id'))[0]);
         //set is_deleted to 0
         $user->is_deleted = 0;
         $user->save();
         return $this->getUsersForManagement(true);
+    }
+
+    /**
+     * change user password
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function changePassword(Request $request){
+        if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
+            // The passwords matches
+            return redirect()->back()->with("error","Your current password does not match with the password you provided. Please try again.");
+        }
+        if(strcmp($request->get('current-password'), $request->get('new-password')) == 0){
+            //Current password and new password are same
+            return redirect()->back()->with("error","New Password cannot be same as your current password. Please choose a different password.");
+        }
+        $validatedData = $request->validate([
+            'current-password' => 'required',
+            'new-password' => 'required|string|min:8|confirmed',
+        ]);
+        //Change Password
+        $user = Auth::user();
+        $user->password = bcrypt($request->get('new-password'));
+        $user->save();
+        return redirect()->back()->with("success","Password changed successfully!");
+    }
+
+    public function settings(Request $request){
+        $validate = $request->validate([
+            'name' => ["required", "regex:/^([a-zA-Z'-\w])((?![0-9]).)*$/m"],
+            'lastname' => ["required", "regex:/^([a-zA-Z'-\w])((?![0-9]).)*$/m"]
+        ]);
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->get('name');
+        $user->lastname = $request->get('lastname');
+        $user->save();
+        return redirect()->back()->with('success', 'Your data has been updated successfully');
     }
 }

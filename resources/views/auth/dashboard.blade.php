@@ -6,13 +6,13 @@
 
 @section('content')
 <div align="right">
-    {{"Welcome " . $user->name . " to your dashboard"}}
+    {{"Welcome " . $user->name . " to your dashboard | "}}
     <a href="{{route('home')}}">Home</a>
-    @can('isVerified')
-        @can('isBuyer')
+    <a href="/changePassword">Change password</a>
+    @if(Gate::check('isVerified') && Gate::check('isBuyer'))
             <a href="/myproducts">My purchased items</a>
-        @endcan
-    @endcan
+            <a class="dropdown-item" href="/settings">Update personal settings</a>
+    @endif
     <a href="{{ route('logout') }}"
        onclick="event.preventDefault();
        document.getElementById('logout-form').submit();">

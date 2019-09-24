@@ -147,6 +147,14 @@
                                 <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                 Home
                             </a>
+                            <a class="dropdown-item" href="/changePassword">
+                                <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Change password
+                            </a>
+                            <a class="dropdown-item" href="/settings">
+                                <i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Update personal settings
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

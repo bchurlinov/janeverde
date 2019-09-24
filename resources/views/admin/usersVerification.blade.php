@@ -147,6 +147,14 @@
                   <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                   Home
                 </a>
+                  <a class="dropdown-item" href="/changePassword">
+                      <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Change password
+                  </a>
+                  <a class="dropdown-item" href="/settings">
+                      <i class="fas fa-wrench fa-sm fa-fw mr-2 text-gray-400"></i>
+                      Update personal settings
+                  </a>
                 <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{ route('logout') }}"
                     onclick="event.preventDefault();
@@ -200,7 +208,7 @@
                                     <td>{{$user->email}}</td>
                                     <td>{{ucfirst($user->role)}}</td>
                                     <td>{{$user->created_at}}</td>
-                                    <td><a href="#" id="pop">
+                                    <td><a href="#" class="pop">
                                         <img id="imageresource" src="{{asset('/pictureID/'.$user->id_pic_name)}}" style="width:0px; height:0px;">
                                         View uploaded picture ID</a></td>
                                         <td>
@@ -282,9 +290,23 @@
   <script src="{{asset('/bt/js/sb-admin-2.min.js')}}"></script>
 
   <script>
-        $("#pop").on("click", function() {
-            $('#imagepreview').attr('src', $('#imageresource').attr('src')); 
-            $('#imagemodal').modal('show'); 
+      var modals = document.getElementsByClassName('modal');
+      // Get the button that opens the modal
+      var btns = document.getElementsByClassName("openmodal");
+      var spans=document.getElementsByClassName("close");
+      for(let i=0;i<btns.length;i++){
+          btns[i].onclick = function() {
+              modals[i].style.display = "block";
+          }
+      }
+      for(let i=0;i<spans.length;i++){
+          spans[i].onclick = function() {
+              modals[i].style.display = "none";
+          }
+      }
+        $(".pop").on("click", function() {
+            $('#imagepreview').attr('src', $('#imageresource').attr('src'));
+            $('#imagemodal').modal('show');
         });
     </script>
 </body>
