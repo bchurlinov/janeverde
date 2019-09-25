@@ -133,6 +133,9 @@ w
                                 <button>1 - 120 / 198</button>
                                 <button>NEXT <img src={{asset('images/right-arrow_green.svg')}}
                                         alt="Jane Verde - SVG Icon" /></button>
+                                @php
+                                    echo $keyword == "" ? $products->links() : $products->appends(['keyword' => $keyword])->links();
+                                @endphp
                             </div>
                             <div class="search-filters__views">
                                 <button onclick="renderGridView(this)" class="grid-list-button" data-toggle="grid"><i

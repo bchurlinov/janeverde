@@ -12,11 +12,22 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function index(){
-        //get the products sorted by latest
-        $allProducts = Product::where('is_deleted', 0)->orderBy('created_at', 'desc')->get();
+    public function index(Request $request){
+        $postFields = $request->all();
+        $allProducts = [];
+        $keyword = "";
+        if(count($postFields) == 0){
+            //only /search is clicked
+            $allProducts = Product::where('is_deleted', 0)->orderBy('created_at', 'desc')->paginate(6);
+        }
+        else{
+            $keyword = $request->get('keyword');
+            $allProducts = $keyword == null ? $allProducts = Product::where('is_deleted', 0)->orderBy('created_at', 'desc')->paginate(6) :
+                                                             Product::search($keyword)->orderBy('created_at', 'desc')->paginate(6);
+        }
+
         //return them to the view
-        return view('search_page')->with('products', $allProducts);
+        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);
     }
 
     /**
