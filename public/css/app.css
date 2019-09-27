@@ -858,7 +858,7 @@ a:hover {
 .search-filters__pagination button:nth-child(1) {
   border-radius: 1px 0 0 1px;
   margin-right: -4px;
-  border-right: none;
+  //border-right: none;
 }
 
 .search-filters__pagination button:nth-child(2) {

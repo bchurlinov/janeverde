@@ -90,7 +90,7 @@
                             <h3>My Account / Sign In</h3>
                         </div>
                         <div class="current-state-heading__item">
-                            <form method="GET" action="product_search.html">
+                            <form method="GET" action="search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />

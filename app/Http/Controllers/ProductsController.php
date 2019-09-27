@@ -74,7 +74,42 @@ class ProductsController extends Controller
         return $this->manageProducts(true);
     }
 
+    /**
+     * view product updates
+     * @param int $id the product id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function view($id){
-        return view('details_page')->with('product', Product::find($id));
+        $previous = Product::where('id', '<', $id)->max('id');
+        $next = Product::where('id', '>', $id)->min('id');
+        return view('details_page')->with(['product' => Product::find($id), 'previous' => $previous, "next" => $next]);
+    }
+
+    /**
+     * get product details for edit
+     * @param int $id the product id
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function getProductDetailsForEdit($id){
+        return view('auth.editProduct')->with('product', Product::find($id));
+    }
+
+    /**
+     * update existing product
+     * @param Request $request form data
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function updateProduct(Request $request){
+        $validateData = $request->validate([
+            'id' => 'numeric|required',
+            'title' => 'string|required',
+            'description' => 'required'
+        ]);
+        $id = $request->input('id');
+        $product = Product::find($id);
+        $product->title = $request->input('title');
+        $product->description = $request->input('description');
+        $product->save();
+        return redirect()->back()->with('success', 'Product successfully updated');
     }
 }

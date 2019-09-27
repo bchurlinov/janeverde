@@ -206,6 +206,7 @@
                                                     <td>{{$product->location}}</td>
                                                     <td>${{$product->price}}</td>
                                                     <td><a href="/view/{{$product->id}}">View details</a></td>
+                                                    <td><a href="/pupdate/{{$product->id}}">Edit</a></td>
                                                     <td>
                                                         <a href="/pdelete"
                                                            onclick="event.preventDefault(); document.getElementById('{{$product->id}}').submit();">

@@ -73,3 +73,9 @@ Route::get('/settings', function() { return view ('auth.settings'); })->middlewa
 
 //post route to update user settings
 Route::post('/settings', 'UserController@settings')->middleware('verified');
+
+//update product view
+Route::get('/pupdate/{id}', 'ProductsController@getProductDetailsForEdit')->middleware('verified');
+
+//perform product update
+Route ::post('/pupdate', 'ProductsController@updateProduct')->middleware('verified');

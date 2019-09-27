@@ -114,14 +114,14 @@
                     <div class="search-wrap details-wrap">
                         <div class="search-filters details-filters">
                             <div class="search-filters__views details-filters__views" style="text-align: left">
-                                <a href="javascript:;" class="button-link">Reply</a>
+                                @if(Gate::check('isVerified') || Gate::check('isAdmin'))
+                                <a href="javascript:;" class="button-link reply">Reply</a>
+                                @endif
                             </div>
                             <div class="search-filters__pagination details-filters__pagination">
-                                <button><img src="{{asset('images/left-arrow_green.svg')}}"
-                                        alt="Jane Verde SVG Icon" />PREV</button>
-                                <button>BACK TO SEARCH</button>
-                                <button>NEXT <img src="{{asset('images/right-arrow_green.svg')}}"
-                                        alt="Jane Verde SVG Icon" /></button>
+                                <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img src="{{asset('images/left-arrow_green.svg')}}" alt="Jane Verde SVG Icon" />PREV</button></a>
+                                <a href="/search"><button>BACK TO SEARCH</button></a>
+                                <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
                                 <span><i class="far fa-star"></i><br />Favorite</span>
@@ -130,6 +130,48 @@
                             </div>
                         </div>
                     </div>
+                    @if(Gate::check('isVerified') || Gate::check('isAdmin'))
+                    <div class="reply-show" style="display:none;">
+                        <div class="reply-info js-only" style="display: block;"><aside class="reply-flap js-captcha">
+                                <ul>
+                                    <li class="reply-email">
+                                        reply by email:
+                                        <p class="reply-email-address"><a href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}">someemail@janeverde.com</a></p>
+                                    </li>
+                                    <li>
+                                        webmail links: @php $mailLinkSubject = str_replace(' ', '+', $product->title); @endphp
+                                        <ul class="reply-emails">
+                                            <li>
+                                                <p>
+                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email gmail">gmail</a>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email yahoo">yahoo mail</a>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email msmail">hotmail, outlook, live mail</a>
+                                                </p>
+                                            </li>
+                                            <li>
+                                                <p>
+                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=http://janeverde.com/view/{{$product->id}}" target="_blank" class="reply-email aol">aol mail</a>
+                                                </p>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        copy and paste into your email:
+                                        <p>someemail@janeverde.com</p>
+                                    </li>
+                                </ul>
+                            </aside>
+                        </div>
+                    </div>
+                    @endif
 
                     <div class="details-product">
                         <div class="details-product__information">
@@ -174,8 +216,8 @@
                         </div>
 
                         <div class="details-product__facts">
-                            @if(Gate::check('isVerified'))
                             <div class="user-verification-info">
+                                @if(Gate::check('isVerified') || Gate::check('isAdmin'))
                                 <h5> <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
                                     Verified Business</h5>
                                 <p>The bussiness has been verified for:</p>
@@ -185,16 +227,17 @@
                                     <li><i class="fas fa-check"></i>Bus Liscense / Tax ID</li>
                                     <li><i class="fas fa-check"></i>Agriculture License</li>
                                 </ul>
-                                <span>Verify your account to view other verified business details and post verified
+                                @else
+                                    <img src="{{asset('/images/blurred.png')}}" width="250px">
+                                    <span>Verify your account to view other verified business details and post verified
                                     bussiness postings.
                                 </span>
-                                <p style="text-align: center">
-                                    <a href="javascript:;">Verify my Account</a>
-                                </p>
+                                    <p style="text-align: center">
+                                        <a href="javascript:;">Verify my Account</a>
+                                    </p>
+                                @endif
                             </div>
-                            @else
-                            <img src="{{asset('/images/blurred.png')}}" width="250px">
-                            @endif
+
                                 <div class="user-other-adds">
                                     <ul>
                                         <li>MOQ: 100 units</li>
@@ -238,6 +281,11 @@
     gtag('js', new Date());
 
     gtag('config', 'UA-148323450-1');
+
+    $('.reply').click(function(){
+        $('.reply-show').toggle();
+    });
+
 </script>
 
 @endsection

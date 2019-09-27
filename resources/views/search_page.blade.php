@@ -130,7 +130,7 @@ w
                             <div class="search-filters__pagination">
                                 <button><img src={{asset('images/left-arrow_green.svg')}}
                                         alt="Jane Verde - SVG Icon" />PREV</button>
-                                <button>1 - 120 / 198</button>
+                                <button>1 - 120 / {{$products->total()}}</button>
                                 <button>NEXT <img src={{asset('images/right-arrow_green.svg')}}
                                         alt="Jane Verde - SVG Icon" /></button>
                                 @php
@@ -218,6 +218,7 @@ w
                                                 <a href="/view/{{$product->id}}" target="_blank">{{$product->title}}
                                                 </a>
                                                 <span class="product-location">({{$product->location}})</span>
+                                                @if(Gate::check('isAdmin') || Gate::check('isVerified'))
                                                 <span class="qs qs-list-view">
                                                     <img src={{asset('images/shield_green.svg')}}
                                                         alt="Jane Verde - SVG Icon" />
@@ -239,6 +240,7 @@ w
                                                         </ul>
                                                     </div>
                                                 </span>
+                                                @endif
                                             </h4>
                                         </div>
                                         <div class="details-page-link">
