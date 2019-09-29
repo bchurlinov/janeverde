@@ -127,12 +127,7 @@ w
                                     <span class="switch-labels" data-on="View All" data-off="Verified"></span>
                                 </fieldset>
                             </div>
-                            <div class="search-filters__pagination">
-                                <button><img src={{asset('images/left-arrow_green.svg')}}
-                                        alt="Jane Verde - SVG Icon" />PREV</button>
-                                <button>1 - 120 / {{$products->total()}}</button>
-                                <button>NEXT <img src={{asset('images/right-arrow_green.svg')}}
-                                        alt="Jane Verde - SVG Icon" /></button>
+                            <div>
                                 @php
                                     echo $keyword == "" ? $products->links() : $products->appends(['keyword' => $keyword])->links();
                                 @endphp

@@ -23,7 +23,7 @@ class ProductsController extends Controller
         else{
             $keyword = $request->get('keyword');
             $allProducts = $keyword == null ? $allProducts = Product::where('is_deleted', 0)->orderBy('created_at', 'desc')->paginate(6) :
-                                                             Product::search($keyword)->orderBy('created_at', 'desc')->paginate(6);
+                                                             Product::search($keyword)->where('type', 'hemp')->orderBy('created_at', 'desc')->paginate(6);
         }
 
         //return them to the view
