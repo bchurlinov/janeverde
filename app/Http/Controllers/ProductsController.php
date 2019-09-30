@@ -44,7 +44,7 @@ class ProductsController extends Controller
         }
         if($redirect){
             //coming from delete, we need to redirect only
-            return redirect('/manageproducts')->with(['products'=> $notDeleted, "deleted" => $deleted]);
+            return redirect('/manageposts')->with(['products'=> $notDeleted, "deleted" => $deleted]);
         }
         //return them to the view
         return view('admin.productsmanagement')->with(['products'=> $notDeleted, "deleted" => $deleted]);

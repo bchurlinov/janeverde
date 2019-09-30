@@ -11,7 +11,7 @@
     <a href="/changePassword">Change password</a>
     @if(Gate::check('isVerified') && Gate::check('isBuyer'))
             <a href="/myproducts">My purchased items</a>
-            <a class="dropdown-item" href="/settings">Update personal settings</a>
+            <a class="dropdown-item" href="/settings">Profile settings</a>
     @endif
     <a href="{{ route('logout') }}"
        onclick="event.preventDefault();

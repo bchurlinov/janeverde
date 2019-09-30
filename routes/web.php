@@ -25,7 +25,7 @@ Route::get('/auth', function () {
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('verified')->name('home');
+Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 
 //user dashboard, protected by auth middleware
 Route::get('dashboard', 'UserController@index')->middleware('verified');
@@ -55,7 +55,7 @@ Route::post('/delete', 'UserController@delete')->middleware('verified');
 Route::post('/restore', 'UserController@restore')->middleware('verified');
 
 //get all products for management
-Route::get('/manageproducts', 'ProductsController@manageProducts')->middleware('verified');
+Route::get('/manageposts', 'ProductsController@manageProducts')->middleware('verified');
 
 //remove product
 Route::post('/pdelete', 'ProductsController@deleteProduct')->middleware('verified');
@@ -79,3 +79,21 @@ Route::get('/pupdate/{id}', 'ProductsController@getProductDetailsForEdit')->midd
 
 //perform product update
 Route ::post('/pupdate', 'ProductsController@updateProduct')->middleware('verified');
+
+use App\Product;
+use App\Countries;
+Route::get('/countries', function(){
+    $allProducts = Product::all();
+    $allCountries = Countries::all()->toArray();
+    $countries = [];
+    foreach($allCountries as $country){
+        $countries[$country['id']] = $country['full_country'];
+    }
+
+    foreach($allProducts as $product){
+        $pr = Product::find($product->id);
+        $pr->location = $countries[rand(1, 58)];
+        $pr->save();
+    }
+    echo "done";
+});

@@ -65,11 +65,11 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
                     <i class="fas fa-fw fa-wrench"></i>
-                    <span>Products</span>
+                    <span>Posts</span>
                 </a>
                 <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="/manageproducts">Manage products</a>
+                        <a class="collapse-item" href="/manageposts">Manage products</a>
                     </div>
                 </div>
             </li>
@@ -179,7 +179,7 @@
                                 </a>
                                 <a class="dropdown-item" href="/settings">
                                     <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Update personal settings
+                                    Profile settings
                                 </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" data-toggle="modal" data-target="#logoutModal" href="{{ route('logout') }}"
@@ -206,7 +206,7 @@
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <div class="card">
-                                <div class="card-header">Change your data</div>
+                                <div class="card-header">Update your settings</div>
 
                                 <div class="card-body">
                                     @if (session('error'))
@@ -250,7 +250,7 @@
                                         <div class="form-group">
                                             <div class="col-md-6 col-md-offset-4">
                                                 <button type="submit" class="btn btn-primary">
-                                                    Change data
+                                                    Save
                                                 </button>
                                             </div>
                                         </div>
