@@ -208,25 +208,30 @@
                                     <td>{{$user->email}}</td>
                                     <td>{{ucfirst($user->role)}}</td>
                                     <td>{{$user->created_at}}</td>
-                                    <td><a href="#" class="pop">
-                                        <img id="imageresource" src="{{asset('/pictureID/'.$user->id_pic_name)}}" style="width:0px; height:0px;">
-                                        View uploaded picture ID</a></td>
-                                        <td>
-                                            <a href="/approve"
-                                               onclick="event.preventDefault(); document.getElementById('{{$user->id}}').submit();">
-                                                Approve</a>
-                                            <form id="{{$user->id}}" action="/approve" method="POST" style="display: none;">
-                                                <input type="hidden" name="id" value="{{$user->id}}" >
-                                                @csrf
-                                            </form></td>
-                                        <td>
-                                            <a href="/decline"
-                                               onclick="event.preventDefault(); document.getElementById('{{$user->id. '_' . $user->id}}').submit();">
-                                            Decline</a>
-                                            <form id="{{$user->id. '_' . $user->id}}" action="/decline" method="POST" style="display: none">
-                                                <input type="hidden" name="id" value="{{$user->id. '_' . $user->id}}" >
-                                                @csrf
-                                            </form></td>
+                                    <td>
+                                        <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
+                                            View uploaded picture
+                                            <img height="0" width="0" id="{{$user->id}}" src="{{asset('/pictureID/'.$user->id_pic_name)}}" />
+
+                                        </a>
+                                    </td>
+                                    <td>
+                                        <a href="/approve"
+                                           onclick="event.preventDefault(); document.getElementById('{{$user->id}}').submit();">
+                                            Approve</a>
+                                        <form id="{{$user->id}}" action="/approve" method="POST" style="display: none;">
+                                            <input type="hidden" name="id" value="{{$user->id}}" >
+                                            @csrf
+                                        </form></td>
+                                    <td>
+                                        <a href="/decline"
+                                           onclick="event.preventDefault(); document.getElementById('{{$user->id. '_' . $user->id}}').submit();">
+                                        Decline</a>
+                                        <form id="{{$user->id. '_' . $user->id}}" action="/decline" method="POST" style="display: none">
+                                            <input type="hidden" name="id" value="{{$user->id. '_' . $user->id}}" >
+                                            @csrf
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>
@@ -242,21 +247,18 @@
       </div>
 </div>
       <!-- End of Main Content -->
-    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <img src="" id="imagepreview" style="width: 400px; height: 264px; align-self: center;" >
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <img class="showimage img-responsive" src="" width="400" height="300" />
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
       <!-- Footer -->
       <footer class="sticky-footer bg-white">
@@ -288,26 +290,21 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('/bt/js/sb-admin-2.min.js')}}"></script>
-
+<style type="text/css">
+    .modal-dialog{text-align:center;}
+    .modal-content{display:inline-block;}
+</style>
   <script>
-      var modals = document.getElementsByClassName('modal');
-      // Get the button that opens the modal
-      var btns = document.getElementsByClassName("openmodal");
-      var spans=document.getElementsByClassName("close");
-      for(let i=0;i<btns.length;i++){
-          btns[i].onclick = function() {
-              modals[i].style.display = "block";
-          }
-      }
-      for(let i=0;i<spans.length;i++){
-          spans[i].onclick = function() {
-              modals[i].style.display = "none";
-          }
-      }
-        $(".pop").on("click", function() {
-            $('#imagepreview').attr('src', $('#imageresource').attr('src'));
-            $('#imagemodal').modal('show');
-        });
+      $(document).ready(function () {
+          $('.img').on('click', function (e) {
+              var image = $(this).children('img').attr('src');
+              //alert(image);
+              console.log(image);
+              $('#myModal').on('show.bs.modal', function () {
+                  $(".showimage").attr('src', image);
+              });
+          });
+      });
     </script>
 </body>
 
