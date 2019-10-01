@@ -10,9 +10,11 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\Countries;
 
 Route::get('/', function () {
-    return view('home');
+    $country = app('App\Http\Controllers\CountriesController')::getCountry();
+    return view('home')->with('country', $country);
 });
 
 Route::get('/search', 'ProductsController@index');
@@ -20,7 +22,8 @@ Route::get('/search', 'ProductsController@index');
 Route::get('/view/{id}', 'ProductsController@view');
 
 Route::get('/auth', function () {
-    return view('auth_page');
+    $country = app('App\Http\Controllers\CountriesController')::getCountry();
+    return view('auth_page')->with('country', $country);
 });
 
 Auth::routes(['verify' => true]);
@@ -80,20 +83,3 @@ Route::get('/pupdate/{id}', 'ProductsController@getProductDetailsForEdit')->midd
 //perform product update
 Route ::post('/pupdate', 'ProductsController@updateProduct')->middleware('verified');
 
-use App\Product;
-use App\Countries;
-Route::get('/countries', function(){
-    $allProducts = Product::all();
-    $allCountries = Countries::all()->toArray();
-    $countries = [];
-    foreach($allCountries as $country){
-        $countries[$country['id']] = $country['full_country'];
-    }
-
-    foreach($allProducts as $product){
-        $pr = Product::find($product->id);
-        $pr->location = $countries[rand(1, 58)];
-        $pr->save();
-    }
-    echo "done";
-});

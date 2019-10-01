@@ -10,46 +10,7 @@
 @section('content')
 <div class="wrapper">
     <div class="container">
-        <div class="outer-wrap outer-wrap-mobile">
-            <!-- Mobile Version  -->
-            <div class="home-wrap-mobile">
-                <div class="home-wrap-mobile__navbar">
-                    <div>
-                        <h1><a href="/">jane <span>Verde</span></a></h1>
-                    </div>
-                    <div>
-                        <a href="account.html" class="button-link" target="_blank">Create Listing</a>
-                        <a href="account.html" class="button-link" target="_blank">My Account</a>
-                    </div>
-                </div>
-
-                <div class="home-wrap-mobile__togles">
-                    <div class="toggle-countries">
-                        <fieldset>
-                            <input class="input-switch" id="mobile-switch" type="checkbox" />
-                            <label for="mobile-switch"></label>
-                            <span class="switch-bg"></span>
-                            <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-                        </fieldset>
-                    </div>
-w
-                    <div class="selectric-mobile">
-                        <select id="select-states-mobile"></select>
-                    </div>
-
-                    <div class="search-mobile">
-                        <div class="current-state-heading__item">
-                            <form method="GET" action="/search">
-                                <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
-                                <button type="submit">
-                                    <img src={{asset('images/search_white.svg')}} alt="Jane Verde SVG Icon" />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('partials.mobileMenu')
     </div>
 
     <!-- End Mobile Version -->
@@ -73,34 +34,7 @@ w
                 @endif
             </div>
             <div class="home-wrap home-search-wrap">
-                <div class="home-wrap__item search-toggle-information">
-                    <div class="inner-wrap">
-                        <h1><a href="index.html">jane <span>Verde</span></a></h1>
-                        <div class="toggle-countries toggle-desktop">
-                            <fieldset>
-                                <input class="input-switch" id="switch" type="checkbox" />
-                                <label for="switch"></label>
-                                <span class="switch-bg"></span>
-                                <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-                            </fieldset>
-                            <select id="select-states"></select>
-                        </div>
-                        <div class="listing-account">
-                            <a href="account.html" class="button-link" target="_blank">Create Listing</a>
-                            <a href="account.html" class="button-link" target="_blank">My Account</a>
-                        </div>
-                        <div class="useful-links">
-                            <a href="account.html" class="button-link" data-account="verify" target="_blank">
-                                <img src={{asset('images/shield_green.svg')}} alt="Jane Verde - SVG Icon" />
-                                Verify Account
-                            </a>
-                            <a href="static_page.html" class="button-link">Help / Faq</a>
-                            <a href="static_page.html" class="button-link">Privacy Policy</a>
-                            <a href="static_page.html" class="button-link">Avoid Scams & Fraud</a>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+                @include('partials.leftMenu')
 
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
@@ -146,7 +80,7 @@ w
                     <div class="search-products-listing">
                         <div class="products-listing-wrap">
                             @if(count($products) == 0)
-                                {{"No products"}}
+                                {{"No posts"}}
                             @else
                                 @foreach($products as $product)
                                     <div class="product-template-wrap">
@@ -154,19 +88,19 @@ w
                                     <div class="product-template__image">
                                         <div class="slider">
                                             <figure>
-                                                <a href="/view/{{$product->id}}" target="_blank">
+                                                <a href="/view/{{$product->id}}">
                                                     <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
                                                         alt="Jane Verde Image" />
                                                 </a>
                                             </figure>
                                             <figure>
-                                                <a href="/view/{{$product->id}}" target="_blank">
+                                                <a href="/view/{{$product->id}}">
                                                     <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
                                                         alt="Jane Verde Image" />
                                                 </a>
                                             </figure>
                                             <figure>
-                                                <a href="/view/{{$product->id}}" target="_blank">
+                                                <a href="/view/{{$product->id}}">
                                                     <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
                                                         alt="Jane Verde Image" />
                                                 </a>
@@ -210,7 +144,7 @@ w
                                         <div>
                                             <h4>
                                                 <span>Aug 21</span>
-                                                <a href="/view/{{$product->id}}" target="_blank">{{$product->title}}
+                                                <a href="/view/{{$product->id}}">{{$product->title}}
                                                 </a>
                                                 <span class="product-location">({{$product->location}})</span>
                                                 @if(Gate::check('isAdmin') || Gate::check('isVerified'))
@@ -239,7 +173,7 @@ w
                                             </h4>
                                         </div>
                                         <div class="details-page-link">
-                                            <a href="/view/{{$product->id}}" target="_blank">
+                                            <a href="/view/{{$product->id}}">
                                                 <i class="fas fa-chevron-right"></i>
                                             </a>
                                         </div>

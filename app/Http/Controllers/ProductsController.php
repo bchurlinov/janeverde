@@ -4,15 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Countries;
 
 class ProductsController extends Controller
 {
+    public $country;
+
+    public function __construct(){
+        $this->country = app('App\Http\Controllers\CountriesController')::getCountry();
+    }
+
     /**
      * Get all products from database
      *
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function index(Request $request){
+
         $postFields = $request->all();
         $allProducts = [];
         $keyword = "";
@@ -26,8 +34,10 @@ class ProductsController extends Controller
                                                              Product::search($keyword)->where('type', 'hemp')->orderBy('created_at', 'desc')->paginate(6);
         }
 
+        //get the country
+
         //return them to the view
-        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);
+        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword, 'country' => $this->country]);
     }
 
     /**
@@ -80,9 +90,10 @@ class ProductsController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function view($id){
+        $country = app('App\Http\Controllers\CountriesController')::getCountry();
         $previous = Product::where('id', '<', $id)->max('id');
         $next = Product::where('id', '>', $id)->min('id');
-        return view('details_page')->with(['product' => Product::find($id), 'previous' => $previous, "next" => $next]);
+        return view('details_page')->with(['product' => Product::find($id), 'previous' => $previous, "next" => $next, 'country' => $country]);
     }
 
     /**

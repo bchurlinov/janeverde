@@ -8,46 +8,7 @@
 
 <div class="wrapper">
     <div class="container">
-        <div class="outer-wrap outer-wrap-mobile">
-            <!-- Mobile Version  -->
-            <div class="home-wrap-mobile">
-                <div class="home-wrap-mobile__navbar">
-                    <div>
-                        <h1><a href="/">jane <span>Verde</span></a></h1>
-                    </div>
-                    <div>
-                        <a href="account.html" class="button-link" target="_blank">Create Listing</a>
-                        <a href="account.html" class="button-link" target="_blank">My Account</a>
-                    </div>
-                </div>
-
-                <div class="home-wrap-mobile__togles">
-                    <div class="toggle-countries">
-                        <fieldset>
-                            <input class="input-switch" id="mobile-switch" type="checkbox" />
-                            <label for="mobile-switch"></label>
-                            <span class="switch-bg"></span>
-                            <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-                        </fieldset>
-                    </div>
-
-                    <div class="selectric-mobile">
-                        <select id="select-states-mobile"></select>
-                    </div>
-
-                    <div class="search-mobile">
-                        <div class="current-state-heading__item">
-                            <form method="GET" action="/details">
-                                <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
-                                <button type="submit">
-                                    <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('partials.mobileMenu')
     </div>
 
     <!-- End Mobile Version -->
@@ -67,34 +28,7 @@
                 @endif
             </div>
             <div class="home-wrap home-search-wrap">
-                <div class="home-wrap__item search-toggle-information">
-                    <div class="inner-wrap">
-                        <h1><a href="/">jane <span>Verde</span></a></h1>
-                        <div class="toggle-countries toggle-desktop">
-                            <fieldset>
-                                <input class="input-switch" id="switch" type="checkbox" />
-                                <label for="switch"></label>
-                                <span class="switch-bg"></span>
-                                <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-                            </fieldset>
-                            <select id="select-states"></select>
-                        </div>
-                        <div class="listing-account">
-                            <a href="account.html" class="button-link" target="_blank">Create Listing</a>
-                            <a href="account.html" class="button-link" target="_blank">My Account</a>
-                        </div>
-                        <div class="useful-links">
-                            <a href="account.html" class="button-link" data-account="verify" target="_blank">
-                                <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
-                                Verify Account
-                            </a>
-                            <a href="static_page.html" class="button-link">Help / Faq</a>
-                            <a href="static_page.html" class="button-link">Privacy Policy</a>
-                            <a href="static_page.html" class="button-link">Avoid Scams & Fraud</a>
-                        </div>
-                    </div>
-                    <div class="clearfix"></div>
-                </div>
+                @include('partials.leftMenu')
 
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
@@ -114,13 +48,11 @@
                     <div class="search-wrap details-wrap">
                         <div class="search-filters details-filters">
                             <div class="search-filters__views details-filters__views" style="text-align: left">
-                                @if(Gate::check('isVerified') || Gate::check('isAdmin'))
                                 <a href="javascript:;" class="button-link reply">Reply</a>
-                                @endif
                             </div>
                             <div class="search-filters__pagination details-filters__pagination">
                                 <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img src="{{asset('images/left-arrow_green.svg')}}" alt="Jane Verde SVG Icon" />PREV</button></a>
-                                <a href="/search"><button>BACK TO SEARCH</button></a>
+                                <a href="{{ redirect()->back()->getTargetUrl() }}"><button>BACK TO SEARCH</button></a>
                                 <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
@@ -130,7 +62,7 @@
                             </div>
                         </div>
                     </div>
-                    @if(Gate::check('isVerified') || Gate::check('isAdmin'))
+
                     <div class="reply-show" style="display:none;">
                         <div class="reply-info js-only" style="display: block;"><aside class="reply-flap js-captcha">
                                 <ul>
@@ -171,7 +103,6 @@
                             </aside>
                         </div>
                     </div>
-                    @endif
 
                     <div class="details-product">
                         <div class="details-product__information">

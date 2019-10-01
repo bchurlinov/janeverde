@@ -17,6 +17,13 @@ $(document).ready(function () {
         disableOnMobile: false,
         nativeOnMobile: false
     });
+    var country = $("#country").text();
+
+    $("#select-states").val(country);
+    $("#select-states").selectric('refresh');
+
+    $("#select-states-mobile").val(country);
+    $("#select-states-mobile").selectric('refresh');
 
     $("[data-account='verify']").on("mouseover",function(){
         $(this).find("img").attr("src", "/images/shield_white.svg")

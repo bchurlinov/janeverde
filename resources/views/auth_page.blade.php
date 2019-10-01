@@ -9,46 +9,7 @@
 
 <div class="wrapper">
     <div class="container">
-        <div class="outer-wrap outer-wrap-mobile">
-            <!-- Mobile Version  -->
-            <div class="home-wrap-mobile">
-                <div class="home-wrap-mobile__navbar">
-                    <div>
-                        <h1><a href="/">jane <span>Verde</span></a></h1>
-                    </div>
-                    <div>
-                        <a href="account.html" class="button-link" target="_blank">Create Listing</a>
-                        <a href="account.html" class="button-link" target="_blank">My Account</a>
-                    </div>
-                </div>
-
-                <div class="home-wrap-mobile__togles">
-                    <div class="toggle-countries">
-                        <fieldset>
-                            <input class="input-switch" id="mobile-switch" type="checkbox" />
-                            <label for="mobile-switch"></label>
-                            <span class="switch-bg"></span>
-                            <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-                        </fieldset>
-                    </div>
-
-                    <div class="selectric-mobile">
-                        <select id="select-states-mobile"></select>
-                    </div>
-
-                    <div class="search-mobile">
-                        <div class="current-state-heading__item">
-                            <form method="GET" action="product_search.html">
-                                <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
-                                <button type="submit">
-                                    <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('partials.mobileMenu')
     </div>
 
     <!-- End Mobile Version -->
@@ -56,33 +17,7 @@
     <div class="container">
         <div class="outer-wrap">
             <div class="home-wrap auth-home-wrap">
-                <div class="home-wrap__item auth-home-wrap__item">
-                    <div class="inner-wrap">
-                        <h1><a href="/">jane <span>Verde</span></a></h1>
-                        <div class="toggle-countries toggle-desktop">
-                            <fieldset>
-                                <input class="input-switch" id="switch" type="checkbox" />
-                                <label for="switch"></label>
-                                <span class="switch-bg"></span>
-                                <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-                            </fieldset>
-                            <select id="select-states"></select>
-                        </div>
-                        <div class="listing-account">
-                            <a href="account.html" class="button-link" target="_blank">Create Listing</a>
-                            <a href="account.html" class="button-link" target="_blank">My Account</a>
-                        </div>
-                        <div class="useful-links">
-                            <a href="account.html" class="button-link" data-account="verify" target="_blank">
-                                <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
-                                Verify Account
-                            </a>
-                            <a href="javascript:;" class="button-link">Help / Faq</a>
-                            <a href="javascript:;" class="button-link">Privacy Policy</a>
-                            <a href="javascript:;" class="button-link">Avoid Scams & Fraud</a>
-                        </div>
-                    </div>
-                </div>
+                @include('partials.leftMenu')
 
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
@@ -102,8 +37,8 @@
                     <div class="home-wrap__item">
                         <div class="form">
                             <ul class="tab-group">
-                                <li class="tab active"><a href="#signup">Sign Up</a></li>
-                                <li class="tab"><a href="#login" id="formlogin">Log In</a></li>
+                                <li class="tab active"><a href="#signup">SIGN UP</a></li>
+                                <li class="tab"><a href="#login" id="formlogin">LOGIN</a></li>
                             </ul>
                             <div class="tab-content">
                                 <div id="signup">
@@ -156,7 +91,7 @@
 
                                         <div class="form-group field-wrap">
                                             <label for="password"
-                                                class="col-md-4 col-form-label text-md-right">{{ __('Set up a password') }}<span>
+                                                class="col-md-4 col-form-label text-md-right">{{ __('Enter password') }}<span>
                                                     (*)</span></label>
 
                                             <div class="col-md-6">
@@ -182,16 +117,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group field-wrap">
-                                            <label style="top: -25px">{{ __('I want to') }}<span> (*)</span></label>
-                                            <select id="sell-buy-option" name="type">
-                                                <option name="buyer" value="buyer">Buy products</option>
-                                                <option name="seller" value="seller">Sell products</option>
-                                                <option name="buyer_seller" value="buyer_seller">Buy & Sell products
-                                                </option>
-                                            </select>
-                                        </div>
-
                                         <div class="form-group field-wrap text-center">
                                             <input type="checkbox" name="verify_account" value="verify_account">
                                             <span>I would like to verify my account and have access to…</span>
@@ -206,7 +131,7 @@
                                 </div>
 
                                 <div id="login">
-                                    <h6>Sign In</h6>
+                                    <h6>Login</h6>
                                     <form method="POST" action="{{ route('login') }}">
                                         @csrf
                                         <input type="hidden" name="field" id="field">
@@ -257,7 +182,7 @@
                                         <div class="form-group field-wrap">
                                             <div class="text-center">
                                                 <button type="submit" class="button-auth button-block">
-                                                    {{ __('Log in') }}
+                                                    {{ __('LOGIN') }}
                                                 </button>
                                             </div>
                                         </div>
@@ -282,6 +207,11 @@
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
 <script type="text/javascript" src={{asset('js/auth.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
+<script>
+    $(document).ready(function () {
+        $("#formlogin").click();
+    });
+</script>
 @endsection
 
 
