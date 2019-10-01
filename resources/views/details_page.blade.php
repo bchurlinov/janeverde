@@ -68,29 +68,29 @@
                                 <ul>
                                     <li class="reply-email">
                                         reply by email:
-                                        <p class="reply-email-address"><a href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}">someemail@janeverde.com</a></p>
+                                        <p class="reply-email-address"><a href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}">someemail@janeverde.com</a></p>
                                     </li>
                                     <li>
                                         webmail links: @php $mailLinkSubject = str_replace(' ', '+', $product->title); @endphp
                                         <ul class="reply-emails">
                                             <li>
                                                 <p>
-                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email gmail">gmail</a>
+                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email gmail">gmail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
-                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email yahoo">yahoo mail</a>
+                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email yahoo">yahoo mail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
-                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=http://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email msmail">hotmail, outlook, live mail</a>
+                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email msmail">hotmail, outlook, live mail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
-                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=http://janeverde.com/view/{{$product->id}}" target="_blank" class="reply-email aol">aol mail</a>
+                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.com/view/{{$product->id}}" target="_blank" class="reply-email aol">aol mail</a>
                                                 </p>
                                             </li>
                                         </ul>
