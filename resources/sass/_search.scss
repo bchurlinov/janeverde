@@ -146,6 +146,27 @@
       margin-top: 20px;
     }
 
+    .link-prev   {
+      @include border-radius(1px 0 0 1px);
+    }
+
+    .link-next {
+      @include border-radius(0 1px 1px 0);
+      
+    }
+
+    .link-middle {
+      cursor: inherit;
+      width: 115px!important;
+      padding: 0;
+      &:hover {
+        background: white;
+      }
+      span {
+        position: relative;
+      }
+    }
+
     button {
       display: inline-block;
       background: white;
@@ -165,27 +186,9 @@
         width: 11px;
         height: 11px;
         display: inline-block;
-        margin: 0 5px;
-      }
-
-      &:nth-child(1) {
-        @include border-radius(1px 0 0 1px);
-        margin-right: -4px;
-        border-right: none;
-      }
-
-      &:nth-child(2) {
-        cursor: inherit;
-        border-right: none;
-        &:hover {
-          background: white;
-        }
-      }
-
-      &:nth-child(3) {
-        @include border-radius(0 1px 1px 0);
-        margin-left: -3px;
-        border-left: 1px solid $main-green-color;
+        margin: 0 7px;
+        position: relative;
+        top: 1px;
       }
 
       &:hover {

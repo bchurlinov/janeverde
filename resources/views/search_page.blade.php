@@ -19,17 +19,17 @@
         <div class="outer-wrap">
             <div align="right">
                 @if(auth()->user())
-                    {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname, 0, 1) . "</a>" !!}
+                {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname,
+                    0, 1) . "</a>" !!}
 
-                    <a href="{{ route('logout') }}"
-                       onclick="event.preventDefault();
+                <a href="{{ route('logout') }}" onclick="event.preventDefault();
                                              document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
+                    {{ __('Logout') }}
+                </a>
 
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
 
                 @endif
             </div>
@@ -63,15 +63,16 @@
                             </div>
                             <div>
                                 @php
-                                    echo $keyword == "" ? $products->links() : $products->appends(['keyword' => $keyword])->links();
+                                echo $keyword == "" ? $products->links() : $products->appends(['keyword' =>
+                                $keyword])->links();
                                 @endphp
                             </div>
                             <div class="search-filters__views">
                                 <button onclick="renderGridView(this)" class="grid-list-button" data-toggle="grid"><i
                                         class="fas fa-th-large toggle-icon" title="Gallery View"></i>
                                 </button>
-                                <button onclick="renderListView(this)" class="grid-list-button" title="List View" data-toggle="list"><i
-                                        class="fas fa-bars toggle-icon"></i>
+                                <button onclick="renderListView(this)" class="grid-list-button" title="List View"
+                                    data-toggle="list"><i class="fas fa-bars toggle-icon"></i>
                                 </button>
                             </div>
                         </div>
@@ -80,10 +81,10 @@
                     <div class="search-products-listing">
                         <div class="products-listing-wrap">
                             @if(count($products) == 0)
-                                {{"No posts"}}
+                            {{"No posts"}}
                             @else
-                                @foreach($products as $product)
-                                    <div class="product-template-wrap">
+                            @foreach($products as $product)
+                            <div class="product-template-wrap">
                                 <div class="product-template">
                                     <div class="product-template__image">
                                         <div class="slider">
@@ -113,17 +114,17 @@
                                     <div class="product-template__info">
                                         <div>
                                             <div>
+                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
+                                                    alt="Jane Verde Image" class="list-view-image" />
                                                 @if(Gate::check('isAdmin') || Gate::check('isVerified'))
-                                                    <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                         alt="Jane Verde Image" class="list-view-image" />
-                                                    <div class="clearfix"></div>
-                                                    <span class="qs">
+                                                <div class="clearfix"></div>
+                                                <span class="qs">
                                                     <img src={{asset('images/shield_green.svg')}}
-                                                            alt="Jane Verde - SVG Icon" />
+                                                        alt="Jane Verde - SVG Icon" />
                                                     <div class="popover above popover-content">
                                                         <h4>
                                                             <img src={{asset('images/shield_green.svg')}}
-                                                                    alt="Jane Verde - SVG Icon" />
+                                                                alt="Jane Verde - SVG Icon" />
                                                             Verified Business
                                                         </h4>
                                                         <ul>
@@ -180,7 +181,7 @@
                                     </div>
                                 </div>
                             </div>
-                                @endforeach
+                            @endforeach
                             @endif
                         </div>
                     </div>

@@ -11,7 +11,7 @@
 body {
   font-size: 14px;
   line-height: 1.6em;
-  font-family: "Times New Roman", Times, serif;
+  font-family: "Open Sans", sans-serif;
   box-sizing: border-box;
   color: #393536;
 }
@@ -411,16 +411,12 @@ a:hover {
 }
 
 .selectric .label {
-  display: block;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  margin: 0;
   font-size: 10px;
-  margin: 0 0 0 3px;
-  width: 160px;
-  text-overflow: ellipsis;
-  overflow: hidden;
+  margin: 0 0 0 32px;
+  width: 125px;
   text-transform: uppercase;
   font-weight: bold !important;
   letter-spacing: 1px;
@@ -830,6 +826,28 @@ a:hover {
   }
 }
 
+.search-filters__pagination .link-prev {
+  border-radius: 1px 0 0 1px;
+}
+
+.search-filters__pagination .link-next {
+  border-radius: 0 1px 1px 0;
+}
+
+.search-filters__pagination .link-middle {
+  cursor: inherit;
+  width: 115px !important;
+  padding: 0;
+}
+
+.search-filters__pagination .link-middle:hover {
+  background: white;
+}
+
+.search-filters__pagination .link-middle span {
+  position: relative;
+}
+
 .search-filters__pagination button {
   display: inline-block;
   background: white;
@@ -852,28 +870,9 @@ a:hover {
   width: 11px;
   height: 11px;
   display: inline-block;
-  margin: 0 5px;
-}
-
-.search-filters__pagination button:nth-child(1) {
-  border-radius: 1px 0 0 1px;
-  margin-right: -4px;
-  //border-right: none;
-}
-
-.search-filters__pagination button:nth-child(2) {
-  cursor: inherit;
-  border-right: none;
-}
-
-.search-filters__pagination button:nth-child(2):hover {
-  background: white;
-}
-
-.search-filters__pagination button:nth-child(3) {
-  border-radius: 0 1px 1px 0;
-  margin-left: -3px;
-  border-left: 1px solid #1c6d5a;
+  margin: 0 7px;
+  position: relative;
+  top: 1px;
 }
 
 .search-filters__pagination button:hover {
@@ -1945,6 +1944,21 @@ a:hover {
 
 .home-search-wrap {
   position: relative;
+}
+
+.reply-show {
+  position: absolute;
+  max-width: 400px;
+  max-height: 400px;
+  z-index: 99999;
+  background: #ffffff;
+  margin-top: -15px;
+}
+
+.reply-show .reply-info {
+  border: 1px solid #e0e0e0;
+  border-radius: 3px;
+  padding: 15px;
 }
 
 @media (max-width: 991px) {

@@ -2,6 +2,20 @@
   position: relative;
 }
 
+.reply-show {
+  position: absolute;
+  max-width: 400px;
+  max-height: 400px;
+  z-index: 99999;
+  background: $white-color;
+  margin-top: -15px; 
+  .reply-info {
+    border: 1px solid #e0e0e0;
+    @include border-radius(3px);
+    padding: 15px;
+  }
+}
+
 .details-wrap {
   @media (max-width: 991px) {
     border-top: none !important;

@@ -109,7 +109,8 @@
 
                                         <div class="form-group field-wrap">
                                             <label for="password-confirm"
-                                                class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}<span>(*)</span></label>
+                                                class="col-md-4 col-form-label text-md-right">{{ __('Confirm Password') }}<span> (*)</span>
+                                            </label>
 
                                             <div class="col-md-6">
                                                 <input id="password-confirm" type="password" class="form-control"

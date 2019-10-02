@@ -113,7 +113,7 @@
                                 </h2>
 
                                 <div class="product-information-wrap__slider">
-                                    <div class="fotorama" data-nav="thumbs">
+                                    <div class="fotorama" data-nav="thumbs" data-transition="dissolvex">
                                         <img src="https://www.medicalnewstoday.com/content//images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
                                             alt="Jane Verde Image" data-width="100%" data-minheight="100%">
                                         <img src="https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F536649%2Fcannabidiol-oil-cbd-marijuana-hemp-cannabis-pot-derivative-legal-us-canada-getty.jpg&w=700&op=resize"
@@ -159,7 +159,7 @@
                                     <li><i class="fas fa-check"></i>Agriculture License</li>
                                 </ul>
                                 @else
-                                    <img src="{{asset('/images/blurred.png')}}" width="250px">
+                                    <img src="{{asset('/images/blurred.png')}}" style="width: 100%">
                                     <span>Verify your account to view other verified business details and post verified
                                     bussiness postings.
                                 </span>
