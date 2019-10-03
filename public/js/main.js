@@ -12,18 +12,13 @@ $(document).ready(function () {
         nativeOnMobile: false
     });
 
-    // Append Selectric Options - Mobile Native Look - Mobile View
-    //$("#select-states-mobile").append(states_selectric).selectric({
-    //    disableOnMobile: false,
-     //   nativeOnMobile: false
-    //});
     var country = $("#country").text();
     var typeHC = $("#typhc").text();
 
-    if(typeHC == "hemp"){
+    if (typeHC == "hemp") {
         $(".toggle-hemp-cannabis").text("HEMP");
     }
-    else{
+    else {
         $(".toggle-hemp-cannabis").text("CANNABIS");
     }
 
@@ -41,47 +36,41 @@ $(document).ready(function () {
         $(this).find("img").attr("src", "/images/shield_green.svg")
     });
 
-    // Toggle between HEMP and CANNABIS
-    $("#switch").on('change', function () {
-        console.log($(this).val());
-        if ($(this).is(':checked')) {
-            switchStatus = $(this).is(':checked');
-            if ($(this).val() === "on") {
-                $(".toggle-hemp-cannabis").text("HEMP")
-            }
-        }
-        else {
-            switchStatus = $(this).is(':checked');
-            if ($(this).val() === "on") {
-                $(".toggle-hemp-cannabis").text("CANNABIS")
-            }
-        }
-    });
+
 
     $("#select-states").on("change", function () {
-        var label = $(".selectric .label").text();
-        if (label.length > 24) {
-            $(".selectric .label").text(function () {
-                return $(this).text().slice(0, 16) + " " + "..."
-            });
-        }
-
-        if(label.length < 12) {
-            $(".selectric .label").text(function(){
-                return $(this).text();
-            })
-        }
-
+        
+        processSelectricLabel();
+        
         $.get(
             "/setcountry", {
-                c : $("#select-states").val()
+                c: $("#select-states").val()
             },
-            function(data){
+            function (data) {
                 location.reload();
             }
         );
     });
+
+    processSelectricLabel();
+
+
 });
+
+function processSelectricLabel() {
+    var label = $(".selectric .label").text();
+    if (label.length > 24) {
+        $(".selectric .label").text(function () {
+            return $(this).text().slice(0, 16) + " " + "..."
+        });
+    }
+
+    if (label.length < 12) {
+        $(".selectric .label").text(function () {
+            return $(this).text();
+        })
+    }
+}
 
 // Switch between dropdown icons
 function toggleCategory(t) {

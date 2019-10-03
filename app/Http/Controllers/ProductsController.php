@@ -91,7 +91,7 @@ class ProductsController extends Controller
      */
     public function manageProducts($redirect = false){
         //get the products sorted by latest
-        $allProducts = Product::orderBy('created_at', 'desc')->get();
+        $allProducts = Product::orderBy('created_at', 'desc')->simplePaginate(10);
         $notDeleted = $deleted = [];
         foreach($allProducts as $product){
             $product->is_deleted == 0 ? $notDeleted[] = $product : $deleted[] = $product;

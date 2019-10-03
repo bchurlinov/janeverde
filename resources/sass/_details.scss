@@ -4,15 +4,92 @@
 
 .reply-show {
   position: absolute;
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 500px;
+  max-height: 450px;
   z-index: 99999;
   background: $white-color;
-  margin-top: -15px; 
+  margin-top: -15px;
   .reply-info {
     border: 1px solid #e0e0e0;
     @include border-radius(3px);
     padding: 15px;
+  }
+
+  ul {
+    img {
+      width: 20px;
+      height: 20px;
+      object-fit: cover;
+      @include border-radius(50%);
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 5px;
+    }
+
+    li {
+      padding-bottom: 5px;
+      p {
+        a {
+          font-size: 14px;
+          color: $font-color;
+          font-style: italic;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
+
+.reply-email-address {
+  img {
+    width: 20px;
+    height: 20px;
+    object-fit: cover;
+    @include border-radius(50%);
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+}
+
+.reply-email {
+  p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    a {
+      font-size: 14px;
+      font-weight: normal;
+      color: $font-color;
+      font-style: italic;
+      cursor: pointer;
+      display: block;
+      margin-top: -10px;
+    }
+  }
+}
+
+.webmail-links {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.copy-paste-email {
+  margin-top: 5px;
+  p {
+    font-size: 14px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  a {
+    font-size: 14px;
+    font-weight: normal;
+    color: $font-color;
+    font-style: italic;
+    display: block;
+    margin-top: -10px;
   }
 }
 
@@ -42,7 +119,7 @@
       left: 25px;
     }
 
-    @media(max-width: 365px) {
+    @media (max-width: 365px) {
       margin-top: 0;
     }
 
@@ -61,7 +138,7 @@
         color: $main-green-color;
         background: $white-color;
       }
-      @media(max-width: 400px) {
+      @media (max-width: 400px) {
         padding: 5px 15px;
         font-size: 13px;
         margin-top: -5px;
@@ -80,7 +157,7 @@
       &:nth-child(3) {
         margin-left: -4px;
       }
-      @media(max-width: 400px) {
+      @media (max-width: 400px) {
         font-size: 12px;
         padding: 8px 4px;
         img {
@@ -125,7 +202,7 @@
           font-size: 14px;
         }
 
-        @media(max-width: 470px) {
+        @media (max-width: 470px) {
           padding: 0 10px;
         }
       }
@@ -146,11 +223,11 @@
 
     .product-information-wrap {
       padding: 20px;
-      @media(max-width: 767px) {
+      @media (max-width: 767px) {
         padding: 15px 10px;
       }
 
-      @media(max-width: 700px) {
+      @media (max-width: 700px) {
         padding: 15px 0;
       }
       h2 {
@@ -169,7 +246,7 @@
 
       &__slider {
         margin-top: 11px;
-        @media(max-width: 767px) {
+        @media (max-width: 767px) {
           margin-top: 15px;
         }
       }

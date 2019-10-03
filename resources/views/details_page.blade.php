@@ -17,14 +17,15 @@
         <div class="outer-wrap">
             <div align="right">
                 @if(auth()->user())
-                    {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname, 0, 1) . "</a>" !!}
-                    <a href="{{ route('logout') }}"
-                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        {{ __('Logout') }}
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
+                {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname,
+                    0, 1) . "</a>" !!}
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    {{ __('Logout') }}
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
                 @endif
             </div>
             <div class="home-wrap home-search-wrap">
@@ -33,10 +34,13 @@
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
-                            <h3>{{$country['fullName']}} / {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} / BIOMASS</h3>
+                            <h3>{{$country['fullName']}} /
+                                {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} /
+                                BIOMASS</h3>
                         </div>
                         <div class="current-state-heading__item">
-                            <form method="GET" action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/0/search">
+                            <form method="GET"
+                                action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/0/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />
@@ -51,9 +55,13 @@
                                 <a href="javascript:;" class="button-link reply">Reply</a>
                             </div>
                             <div class="search-filters__pagination details-filters__pagination">
-                                <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img src="{{asset('images/left-arrow_green.svg')}}" alt="Jane Verde SVG Icon" />PREV</button></a>
+                                <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img
+                                            src="{{asset('images/left-arrow_green.svg')}}"
+                                            alt="Jane Verde SVG Icon" />PREV</button></a>
                                 <a href="{{ session()->get('backtosearch') }}"><button>BACK TO SEARCH</button></a>
-                                <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
+                                <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img
+                                            src="{{asset('images/right-arrow_green.svg')}}"
+                                            alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
                                 <span><i class="far fa-star"></i><br />Favorite</span>
@@ -64,40 +72,56 @@
                     </div>
 
                     <div class="reply-show" style="display:none;">
-                        <div class="reply-info js-only" style="display: block;"><aside class="reply-flap js-captcha">
+                        <div class="reply-info js-only" style="display: block;">
+                            <aside class="reply-flap js-captcha">
                                 <ul>
                                     <li class="reply-email">
-                                        reply by email:
-                                        <p class="reply-email-address"><a href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}">someemail@janeverde.com</a></p>
+                                        <p>Reply by email:</p>
+                                        <p class="reply-email-address">
+                                            <a href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}">
+                                                    <img src="{{asset('images/email-icon.png')}}" alt="aol-logo" />someemail@janeverde.com
+                                            </a>
+                                        </p>
                                     </li>
                                     <li>
-                                        webmail links: @php $mailLinkSubject = str_replace(' ', '+', $product->title); @endphp
+                                        <p class="webmail-links">Webmail links:</p> @php $mailLinkSubject =
+                                        str_replace(' ', '+', $product->title); @endphp
                                         <ul class="reply-emails">
                                             <li>
                                                 <p>
-                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email gmail">gmail</a>
+                                                    <img src="{{asset('images/gmail-logo.jpg')}}" alt="gmail-logo" />
+                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}"
+                                                        target="_blank" class="reply-email gmail">gmail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
-                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email yahoo">yahoo mail</a>
+                                                    <img src="{{asset('images/yahoo-logo.jpg')}}" alt="yahoo-logo" />
+                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}"
+                                                        target="_blank" class="reply-email yahoo">yahoo mail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
-                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}" target="_blank" class="reply-email msmail">hotmail, outlook, live mail</a>
+                                                    <img src="{{asset('images/hotmail-logo.png')}}"
+                                                        alt="hotmail-logo" />
+                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}"
+                                                        target="_blank" class="reply-email msmail">hotmail, outlook,
+                                                        live mail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
-                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.com/view/{{$product->id}}" target="_blank" class="reply-email aol">aol mail</a>
+                                                    <img src="{{asset('images/aol-logo.png')}}" alt="aol-logo" />
+                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.com/view/{{$product->id}}"
+                                                        target="_blank" class="reply-email aol">aol mail</a>
                                                 </p>
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
-                                        copy and paste into your email:
-                                        <p>someemail@janeverde.com</p>
+                                    <li class="copy-paste-email">
+                                        <p>Copy & Paste into your email:</p>
+                                        <a href="javascript:;">someemail@janeverde.com</a>
                                     </li>
                                 </ul>
                             </aside>
@@ -113,7 +137,7 @@
                                 </h2>
 
                                 <div class="product-information-wrap__slider">
-                                    <div class="fotorama" data-nav="thumbs" data-transition="dissolvex">
+                                    <div class="fotorama" data-nav="thumbs" data-transition="crossfade">
                                         <img src="https://www.medicalnewstoday.com/content/images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
                                             alt="Jane Verde Image" data-width="100%" data-minheight="100%">
                                         <img src="https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F536649%2Fcannabidiol-oil-cbd-marijuana-hemp-cannabis-pot-derivative-legal-us-canada-getty.jpg&w=700&op=resize"
@@ -159,24 +183,24 @@
                                     <li><i class="fas fa-check"></i>Agriculture License</li>
                                 </ul>
                                 @else
-                                    <img src="{{asset('/images/blurred.png')}}" style="width: 100%">
-                                    <span>Verify your account to view other verified business details and post verified
+                                <img src="{{asset('/images/blurred.png')}}" style="width: 100%">
+                                <span>Verify your account to view other verified business details and post verified
                                     bussiness postings.
                                 </span>
-                                    <p style="text-align: center">
-                                        <a href="javascript:;">Verify my Account</a>
-                                    </p>
+                                <p style="text-align: center">
+                                    <a href="javascript:;">Verify my Account</a>
+                                </p>
                                 @endif
                             </div>
 
-                                <div class="user-other-adds">
-                                    <ul>
-                                        <li>MOQ: 100 units</li>
-                                        <li>Direct Business Sales Only</li>
-                                        <li>Delivery Available: ALL States</li>
-                                        <li>More Adds by this User</li>
-                                    </ul>
-                                </div>
+                            <div class="user-other-adds">
+                                <ul>
+                                    <li>MOQ: 100 units</li>
+                                    <li>Direct Business Sales Only</li>
+                                    <li>Delivery Available: ALL States</li>
+                                    <li>More Adds by this User</li>
+                                </ul>
+                            </div>
                         </div>
 
                     </div>

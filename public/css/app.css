@@ -209,6 +209,7 @@ a:hover {
   border-top: 1px solid #f1f1f1;
   padding: 8px 8px 18px;
   margin-top: -11px;
+  height: 65px;
 }
 
 .product-template__info .list-view-image {
@@ -415,7 +416,7 @@ a:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   font-size: 10px;
-  margin: 0 0 0 32px;
+  margin: 0 0 0 40px;
   width: 125px;
   text-transform: uppercase;
   font-weight: bold !important;
@@ -700,43 +701,6 @@ a:hover {
 @media (max-width: 365px) {
   .search-filters__sorting {
     flex: 0 0 100%;
-  }
-}
-
-.search-filters__sorting fieldset {
-  width: 80%;
-  margin-left: 0;
-  margin-right: 0;
-}
-
-@media (max-width: 365px) {
-  .search-filters__sorting fieldset {
-    width: 100%;
-  }
-}
-
-.search-filters__sorting fieldset .switch-labels {
-  font-size: 12px;
-  position: static;
-}
-
-.search-filters__sorting fieldset .switch-labels:before {
-  top: -2px;
-}
-
-.search-filters__sorting fieldset .switch-labels:after {
-  top: -2px;
-}
-
-@media (max-width: 767px) {
-  .search-filters__sorting fieldset .switch-labels {
-    font-size: 9px;
-  }
-}
-
-@media (max-width: 479px) {
-  .search-filters__sorting fieldset .switch-labels {
-    font-size: 11px;
   }
 }
 
@@ -1948,8 +1912,8 @@ a:hover {
 
 .reply-show {
   position: absolute;
-  max-width: 400px;
-  max-height: 400px;
+  max-width: 500px;
+  max-height: 450px;
   z-index: 99999;
   background: #ffffff;
   margin-top: -15px;
@@ -1959,6 +1923,80 @@ a:hover {
   border: 1px solid #e0e0e0;
   border-radius: 3px;
   padding: 15px;
+}
+
+.reply-show ul img {
+  width: 20px;
+  height: 20px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.reply-show ul li {
+  padding-bottom: 5px;
+}
+
+.reply-show ul li p a {
+  font-size: 14px;
+  color: #393536;
+  font-style: italic;
+  cursor: pointer;
+}
+
+.reply-email-address img {
+  width: 20px;
+  height: 20px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 5px;
+}
+
+.reply-email p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.reply-email p a {
+  font-size: 14px;
+  font-weight: normal;
+  color: #393536;
+  font-style: italic;
+  cursor: pointer;
+  display: block;
+  margin-top: -10px;
+}
+
+.webmail-links {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.copy-paste-email {
+  margin-top: 5px;
+}
+
+.copy-paste-email p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.copy-paste-email a {
+  font-size: 14px;
+  font-weight: normal;
+  color: #393536;
+  font-style: italic;
+  display: block;
+  margin-top: -10px;
 }
 
 @media (max-width: 991px) {
@@ -2675,100 +2713,38 @@ a:hover {
   color: #393536;
 }
 
-fieldset {
-  position: relative;
-  width: 100%;
-  height: 35px;
-  background: #e1e1e1;
-  border: 1px solid #e1e1e1;
-  padding: 0;
-  margin: 0 auto;
-  background: white;
-  border-radius: 1px;
+.hemp-cannabis-toggle {
+  display: flex;
+  flex-flow: row wrap;
 }
 
-fieldset:hover {
-  border-color: #d5d5d5;
-}
-
-fieldset input.input-switch {
-  position: absolute;
-  opacity: 0;
-  z-index: -10;
-}
-
-fieldset span.switch-bg {
-  position: absolute;
-  z-index: 0;
-  width: 50%;
-  height: 35px;
-  left: 50%;
+.hemp-cannabis-toggle button {
+  flex: 0 0 50%;
+  height: 38px;
   background: #1c6d5a;
-  top: -1px;
-  transition: all 0.3s ease-in-out;
-}
-
-fieldset span.switch-labels {
-  position: absolute;
-  z-index: 1;
-  width: inherit;
-  height: inherit;
-  margin-top: -3px;
+  border: none;
+  color: white;
+  text-align: center;
+  font-size: 10px;
   font-weight: bold;
   letter-spacing: 1px;
-  font-size: 13px;
-}
-
-fieldset span.switch-labels:before,
-fieldset span.switch-labels:after {
-  height: 40px;
-  width: 50%;
-  line-height: 40px;
-  transition: all 0.3s;
-  -webkit-transition: all 0.3s;
-  text-align: center;
-}
-
-fieldset span.switch-labels:before {
-  content: attr(data-on);
-  left: 0;
-  position: absolute;
-  color: #b7b7b7;
-}
-
-fieldset span.switch-labels:after {
-  content: attr(data-off);
-  position: absolute;
-  right: 0;
-  color: #fff;
-}
-
-fieldset label {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2;
-  width: 100%;
-  height: 100%;
-  opacity: 0;
+  border: 1px solid #1c6d5a;
   cursor: pointer;
 }
 
-.input-switch:checked ~ .switch-bg {
-  left: 0%;
-  background: #1c6d5a;
+.hemp-cannabis-toggle button:first-of-type {
+  border-right: 1px solid white;
+  border-radius: 2px 0 0 2px;
 }
 
-.input-switch:checked ~ .switch-labels:before {
-  color: #ffffff;
+.hemp-cannabis-toggle button:focus,
+.hemp-cannabis-toggle button:active {
+  outline: none;
 }
 
-.input-switch:checked ~ .switch-labels:after {
-  color: #393536;
-}
-
-fieldset span.switch-labels:before {
-  color: #393536;
+.toggle-active {
+  background: white !important;
+  color: #1c6d5a !important;
 }
 
 .listing-account {
@@ -3239,15 +3215,6 @@ footer div:last-of-type ul li a:after {
   flex: 0 0 calc(33.33% - 20px);
   padding: 10px;
   border-bottom: none;
-}
-
-.home-wrap-mobile__togles .toggle-countries fieldset {
-  height: 35px;
-}
-
-.home-wrap-mobile__togles .toggle-countries fieldset span.switch-labels {
-  margin-top: -5px;
-  font-size: 12px;
 }
 
 @media (max-width: 545px) {

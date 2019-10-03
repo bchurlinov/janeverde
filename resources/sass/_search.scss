@@ -47,31 +47,31 @@
       flex: 0 0 100%;
     }
 
-    fieldset {
-      width: 80%;
-      margin-left: 0;
-      margin-right: 0;
-      @media (max-width: 365px) {
-        width: 100%;
-      }
-      .switch-labels {
-        font-size: 12px;
-        position: static;
-        &:before {
-          top: -2px;
-        }
-        &:after {
-          top: -2px;
-        }
-        @media (max-width: 767px) {
-          font-size: 9px;
-        }
+    // fieldset {
+    //   width: 80%;
+    //   margin-left: 0;
+    //   margin-right: 0;
+    //   @media (max-width: 365px) {
+    //     width: 100%;
+    //   }
+    //   .switch-labels {
+    //     font-size: 12px;
+    //     position: static;
+    //     &:before {
+    //       top: -2px;
+    //     }
+    //     &:after {
+    //       top: -2px;
+    //     }
+    //     @media (max-width: 767px) {
+    //       font-size: 9px;
+    //     }
 
-        @media (max-width: 479px) {
-          font-size: 11px;
-        }
-      }
-    }
+    //     @media (max-width: 479px) {
+    //       font-size: 11px;
+    //     }
+    //   }
+    // }
 
     .selectric-wrapper {
       .selectric-items {

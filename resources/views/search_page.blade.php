@@ -39,10 +39,13 @@
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
-                            <h3>{{$country['fullName']}} / {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} / GENERAL</h3>
+                            <h3>{{$country['fullName']}} /
+                                {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} /
+                                GENERAL</h3>
                         </div>
                         <div class="current-state-heading__item current-state-heading__desktop">
-                            <form method="GET" action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/{{request()->segment(2)}}/search">
+                            <form method="GET"
+                                action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/{{request()->segment(2)}}/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src={{asset('images/search_white.svg')}} alt="Jane Verde - SVG Icon" />
@@ -54,12 +57,10 @@
                     <div class="search-wrap">
                         <div class="search-filters">
                             <div class="search-filters__sorting">
-                                <fieldset>
-                                    <input class="input-switch" id="view-all-verified" type="checkbox" />
-                                    <label for="view-all-verified"></label>
-                                    <span class="switch-bg"></span>
-                                    <span class="switch-labels" data-on="View All" data-off="Verified"></span>
-                                </fieldset>
+                                <div class="hemp-cannabis-toggle">
+                                    <button class="toggle-active">View All</button>
+                                    <button>Verified</button>
+                                </div>
                             </div>
                             <div>
                                 @php

@@ -106,103 +106,133 @@
   }
 }
 
-fieldset {
-  position: relative;
-  width: 100%;
-  height: 35px;
-  background: #e1e1e1;
-  border: 1px solid #e1e1e1;
-  padding: 0;
-  margin: 0 auto;
-  background: white;
-  @include border-radius(1px);
-
-  &:hover {
-    border-color: #d5d5d5;
-  }
-
-  input.input-switch {
-    position: absolute;
-    opacity: 0;
-    z-index: -10;
-  }
-
-  span.switch-bg {
-    position: absolute;
-    z-index: 0;
-    width: 50%;
-    height: 35px;
-    left: 50%;
+.hemp-cannabis-toggle {
+  display: flex;
+  flex-flow: row wrap;
+  button {
+    flex: 0 0 50%;
+    height: 38px;
     background: $main-green-color;
-    top: -1px;
-    -webkit-transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    transition: all 0.3s ease-in-out;
-  }
-
-  span.switch-labels {
-    position: absolute;
-    z-index: 1;
-    width: inherit;
-    height: inherit;
-    margin-top: -3px;
+    border: none;
+    color: white;
+    text-align: center;
+    font-size: 10px;
     font-weight: bold;
     letter-spacing: 1px;
-    font-size: 13px;
-
-    &:before,
-    &:after {
-      height: 40px;
-      width: 50%;
-      line-height: 40px;
-      transition: all 0.3s;
-      -webkit-transition: all 0.3s;
-      text-align: center;
+    border: 1px solid $main-green-color;
+    &:first-of-type {
+      border-right: 1px solid white;
+      @include border-radius(2px 0 0 2px);
     }
-
-    &:before {
-      content: attr(data-on);
-      left: 0;
-      position: absolute;
-      color: #b7b7b7;
-    }
-
-    &:after {
-      content: attr(data-off);
-      position: absolute;
-      right: 0;
-      color: #fff;
-    }
-  }
-
-  label {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 2;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
     cursor: pointer;
+    &:focus, &:active {
+      outline: none;
+    }
   }
 }
 
-.input-switch:checked ~ .switch-bg {
-  left: 0%;
-  background: $main-green-color;
+.toggle-active {
+  background: white !important;
+  color: $main-green-color !important;
 }
 
-.input-switch:checked ~ .switch-labels:before {
-  color: $white-color;
-}
+// fieldset {
+//   position: relative;
+//   width: 100%;
+//   height: 35px;
+//   background: #e1e1e1;
+//   border: 1px solid #e1e1e1;
+//   padding: 0;
+//   margin: 0 auto;
+//   background: white;
+//   @include border-radius(1px);
 
-.input-switch:checked ~ .switch-labels:after {
-  color: $font-color;
-}
+//   &:hover {
+//     border-color: #d5d5d5;
+//   }
 
-fieldset span.switch-labels:before {
-  color: $font-color;
-}
+  // input.input-switch {
+  //   position: absolute;
+  //   opacity: 0;
+  //   z-index: -10;
+  // }
+
+  // span.switch-bg {
+  //   position: absolute;
+  //   z-index: 0;
+  //   width: 50%;
+  //   height: 35px;
+  //   left: 50%;
+  //   background: $main-green-color;
+  //   top: -1px;
+  //   -webkit-transition: all 0.3s ease-in-out;
+  //   -moz-transition: all 0.3s ease-in-out;
+  //   transition: all 0.3s ease-in-out;
+  // }
+
+//   span.switch-labels {
+//     position: absolute;
+//     z-index: 1;
+//     width: inherit;
+//     height: inherit;
+//     margin-top: -3px;
+//     font-weight: bold;
+//     letter-spacing: 1px;
+//     font-size: 13px;
+
+//     &:before,
+//     &:after {
+//       height: 40px;
+//       width: 50%;
+//       line-height: 40px;
+//       transition: all 0.3s;
+//       -webkit-transition: all 0.3s;
+//       text-align: center;
+//     }
+
+//     &:before {
+//       content: attr(data-on);
+//       left: 0;
+//       position: absolute;
+//       color: #b7b7b7;
+//     }
+
+//     &:after {
+//       content: attr(data-off);
+//       position: absolute;
+//       right: 0;
+//       color: #fff;
+//     }
+//   }
+
+//   label {
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     z-index: 2;
+//     width: 100%;
+//     height: 100%;
+//     opacity: 0;
+//     cursor: pointer;
+//   }
+// }
+
+// .input-switch:checked ~ .switch-bg {
+//   left: 0%;
+//   background: $main-green-color;
+// }
+
+// .input-switch:checked ~ .switch-labels:before {
+//   color: $white-color;
+// }
+
+// .input-switch:checked ~ .switch-labels:after {
+//   color: $font-color;
+// }
+
+// fieldset span.switch-labels:before {
+//   color: $font-color;
+// }
 
 .listing-account {
   padding: 30px 0 30px;
@@ -624,13 +654,13 @@ footer {
     flex: 0 0 calc(33.33% - 20px);
     padding: 10px;
     border-bottom: none;
-    fieldset {
-      height: 35px;
-      span.switch-labels {
-        margin-top: -5px;
-        font-size: 12px;
-      }
-    }
+    // fieldset {
+    //   height: 35px;
+    //   span.switch-labels {
+    //     margin-top: -5px;
+    //     font-size: 12px;
+    //   }
+    // }
 
     @media (max-width: 545px) {
       flex: 0 0 100%;

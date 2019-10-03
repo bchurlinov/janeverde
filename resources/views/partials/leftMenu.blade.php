@@ -2,15 +2,15 @@
     <div class="inner-wrap">
         <h1><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}"><img src="{{asset('/images/Janeverde_logo.svg')}}" /></a></h1>
         <div class="toggle-countries toggle-desktop">
-            <fieldset>
-                <input class="input-switch" id="switch" type="checkbox" />
-                <label for="switch"></label>
-                <span class="switch-bg"></span>
-                <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-            </fieldset>
+            <div class="hemp-cannabis-toggle">
+                <button class="toggle-active">HEMP</button>
+                <button>CANNABIS</button>
+            </div>
             <div id="country" style="display:none;">{{$country['dropdown']}}</div>
             <div id="typehc" style="display:none;">{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}</div>
+            @if (request()->segment(1) !== "view")
             <select id="select-states"></select>
+            @endif
         </div>
         <div class="listing-account">
             <a href="/auth" class="button-link">Create Listing</a>
