@@ -4,7 +4,7 @@
             <h3>{{$country['fullName']}} / <span>{{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}}</span></h3>
         </div>
         <div class="current-state-heading__item current-state-heading__desktop">
-            <form method="GET" action="/search">
+            <form method="GET" action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/0/search">
                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                 <button type="submit">
                     <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />

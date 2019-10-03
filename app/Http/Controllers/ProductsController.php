@@ -42,6 +42,9 @@ class ProductsController extends Controller
                 $categoryObject = $cat;
             }
         }
+        if($category == 0){
+            $catExists = true;
+        }
 
         //we have all route segments, move to check individual
         if(!in_array($hOrC, $horcTypes) || !$catExists || $search != "search") return redirect('/');
@@ -51,15 +54,17 @@ class ProductsController extends Controller
         //check the country
         $findCountry = Countries::where('name', '=', $country)->get();
         if(count($findCountry) == 0) $country = "all";
-        $catNum = $categoryObject['number'];
+
         $keyword = "";
 
         $whereClause = [
             ['is_deleted', '=', 0],
-            ['type', '=', $hOrC],
-            ['category', '=', $catNum]
+            ['type', '=', $hOrC]
         ];
-
+        if($category != 0){
+            $catNum = $categoryObject['number'];
+            $whereClause[] = ['category', '=', $catNum];
+        }
         if($country != "all"){
             $whereClause[] = ['state', '=', $country];
         }
