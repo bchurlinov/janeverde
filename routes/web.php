@@ -133,6 +133,11 @@ Route::get('/fillproducts', function(){
     }
     echo "done";
 });
+//set hemp or cannabis
+Route::get('/sethc', 'ProductsController@sethc');
+
+//set view all or verified products only
+Route::get('/setav', 'ProductsController@setav');
 
 Route::get('/', function(){
     return redirect('/cannabis');
@@ -142,6 +147,8 @@ Route::get('/', function(){
 Route::get('/{type?}', function($type = ""){
     app('App\Http\Controllers\UserController')::checkHempOrCannabis();
     $country = app('App\Http\Controllers\CountriesController')::getCountry();
+    //set the products view to all as default if it wasnt set at first
+    if(empty($_COOKIE['productsView'])) { setcookie("productsView", 'all', time() + 60 * 60 * 24 * 30, "/"); }
     if($type != "" && ($type == "cannabis" || $type == "hemp")){
         //set hemp or cannabis
         setcookie("type", $type, time() + 60 * 60 * 24 * 30, "/");

@@ -17,6 +17,8 @@
 
     <!-- Custom styles for this template-->
     <link href="{{asset('/bt/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" defer></script>
 
 </head>
 
@@ -53,20 +55,21 @@
                             @else
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
-                                        <table class="table">
+                                        <table class="table table-striped" style="width:100%" id="active">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Location</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">&nbsp;</th>
-                                                <th scope="col">&nbsp;</th>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Location</th>
+                                                <th>Price</th>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             @foreach($products as $id => $product)
-                                                <tr scope="row">
+                                                <tr>
                                                     <td>{{$product->title}}</td>
                                                     <td>{{substr($product->description, 0, 120)}}...</td>
                                                     <td>{{$product->location}}</td>
@@ -95,7 +98,7 @@
                     </div>
                 </div>
 
-                <div class="row">
+                <div class="row" style="width:100% !important;">
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">Deleted posts</h6>
@@ -106,15 +109,15 @@
                             @else
                                 <div class="card shadow mb-4">
                                     <div class="card-body">
-                                        <table class="table">
+                                        <table class="table table-striped" style="width:100% !important;" id="deleted">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Title</th>
-                                                <th scope="col">Description</th>
-                                                <th scope="col">Location</th>
-                                                <th scope="col">Price</th>
-                                                <th scope="col">&nbsp;</th>
-                                                <th scope="col">&nbsp;</th>
+                                                <th>Title</th>
+                                                <th>Description</th>
+                                                <th>Location</th>
+                                                <th>Price</th>
+                                                <th>&nbsp;</th>
+                                                <th>&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
@@ -133,7 +136,8 @@
                                                         <form id="{{$product->id . '_'.$product->id}}" action="/prestore" method="POST" style="display: none;">
                                                             <input type="hidden" name="id" value="{{$product->id . '_'.$product->id}}" />
                                                             @csrf
-                                                        </form></td>
+                                                        </form>
+                                                    </td>
                                                 </tr>
                                             @endforeach
                                             </tbody>
@@ -186,7 +190,6 @@
     <i class="fas fa-angle-up"></i>
 </a>
 
-<!-- Bootstrap core JavaScript-->
 <script src="{{asset('/bt/vendor/jquery/jquery.min.js')}}"></script>
 <script src="{{asset('/bt/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
 
@@ -200,6 +203,10 @@
     $("#pop").on("click", function() {
         $('#imagepreview').attr('src', $('#imageresource').attr('src'));
         $('#imagemodal').modal('show');
+    });
+    $(document).ready(function() {
+        $('#active').DataTable();
+        $('#deleted').DataTable();
     });
 </script>
 </body>

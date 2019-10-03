@@ -1,3 +1,6 @@
+@php
+    $cookieSet = empty($_COOKIE['type']) ? $cookie : $_COOKIE['type'];
+@endphp
 <div class="container">
     <div class="outer-wrap outer-wrap-mobile">
         <!-- Mobile Version  -->

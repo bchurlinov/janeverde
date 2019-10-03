@@ -1,13 +1,16 @@
 <div class="home-wrap__item">
     <div class="inner-wrap">
-        <h1><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}"><img src="{{asset('/images/Janeverde_logo.svg')}}" /></a></h1>
+        @php
+        $cookieSet = empty($_COOKIE['type']) ? $cookie : $_COOKIE['type'];
+        @endphp
+        <h1><a href="/{{$cookieSet}}"><img src="{{asset('/images/Janeverde_logo.svg')}}" /></a></h1>
         <div class="toggle-countries toggle-desktop">
             <div class="hemp-cannabis-toggle">
-                <button class="toggle-active">HEMP</button>
-                <button>CANNABIS</button>
+                <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp">HEMP</button>
+                <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis">CANNABIS</button>
             </div>
             <div id="country" style="display:none;">{{$country['dropdown']}}</div>
-            <div id="typehc" style="display:none;">{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}</div>
+            <div id="typehc" style="display:none;">{{$cookieSet}}</div>
             @if (request()->segment(1) !== "view")
             <select id="select-states"></select>
             @endif

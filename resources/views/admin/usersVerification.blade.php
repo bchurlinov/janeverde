@@ -17,6 +17,8 @@
 
   <!-- Custom styles for this template-->
   <link href="{{asset('/bt/css/sb-admin-2.min.css')}}" rel="stylesheet">
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" defer></script>
 
 </head>
 
@@ -53,7 +55,7 @@
                     @else
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                        <table class="table">
+                            <table class="table table-striped" style="width:100%" id="active">
                             <thead>
                                 <tr>
                                     <th scope="col">Name</th>
@@ -88,7 +90,8 @@
                                         <form id="{{$user->id}}" action="/approve" method="POST" style="display: none;">
                                             <input type="hidden" name="id" value="{{$user->id}}" >
                                             @csrf
-                                        </form></td>
+                                        </form>
+                                    </td>
                                     <td>
                                         <a href="/decline"
                                            onclick="event.preventDefault(); document.getElementById('{{$user->id. '_' . $user->id}}').submit();">
@@ -170,6 +173,9 @@
                   $(".showimage").attr('src', image);
               });
           });
+      });
+      $(document).ready(function() {
+          $('#active').DataTable();
       });
     </script>
 </body>

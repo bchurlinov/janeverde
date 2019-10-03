@@ -1,5 +1,7 @@
 @extends('partials.layout')
+@php
 
+@endphp
 @section("css_links")
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
 <link rel="stylesheet" type="text/css"
@@ -58,8 +60,8 @@
                         <div class="search-filters">
                             <div class="search-filters__sorting">
                                 <div class="hemp-cannabis-toggle">
-                                    <button class="toggle-active">View All</button>
-                                    <button>Verified</button>
+                                    <button class="ftype {{$productsCookie}}">View All</button>
+                                    <button class="ftype ">Verified</button>
                                 </div>
                             </div>
                             <div>
@@ -113,11 +115,11 @@
                                         </div>
                                     </div>
                                     <div class="product-template__info">
-                                        <div>
+                                        <div {!! $product->verified === 0 ? " style='display:none;'" : "" !!}>
                                             <div>
                                                 <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
                                                     alt="Jane Verde Image" class="list-view-image" />
-                                                @if(Gate::check('isAdmin') || Gate::check('isVerified'))
+
                                                 <div class="clearfix"></div>
                                                 <span class="qs">
                                                     <img src={{asset('images/shield_green.svg')}}
@@ -140,7 +142,6 @@
                                                         </ul>
                                                     </div>
                                                 </span>
-                                                @endif
                                             </div>
                                         </div>
                                         <div>

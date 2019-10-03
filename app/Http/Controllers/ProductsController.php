@@ -91,7 +91,7 @@ class ProductsController extends Controller
      */
     public function manageProducts($redirect = false){
         //get the products sorted by latest
-        $allProducts = Product::orderBy('created_at', 'desc')->simplePaginate(10);
+        $allProducts = Product::orderBy('created_at', 'desc')->get();
         $notDeleted = $deleted = [];
         foreach($allProducts as $product){
             $product->is_deleted == 0 ? $notDeleted[] = $product : $deleted[] = $product;
@@ -102,6 +102,28 @@ class ProductsController extends Controller
         }
         //return them to the view
         return view('admin.productsmanagement')->with(['products'=> $notDeleted, "deleted" => $deleted]);
+    }
+
+    /**
+     * set cannabis or hemp from the leftMenu buttons
+     * @param Request $request
+     */
+    public function sethc(Request $request){
+        $horc = $request->get('c');
+        if($horc != "hemp" && $horc != "cannabis"){
+            setcookie("type", 'cannabis', time() + 60 * 60 * 24 * 30, "/");
+            echo "cannabis";
+        }
+        else{
+            setcookie("type", $horc, time() + 60 * 60 * 24 * 30, "/");
+            echo $horc;
+        }
+    }
+
+    public function setav(Request $request){
+        $setav = $request->get('c');
+        $setav != "all" && $setav != 'verified' ? setcookie("productsView", 'all', time() + 60 * 60 * 24 * 30, "/") :
+            setcookie("productsView", $setav, time() + 60 * 60 * 24 * 30, "/");
     }
 
     /**

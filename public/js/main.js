@@ -36,7 +36,31 @@ $(document).ready(function () {
         $(this).find("img").attr("src", "/images/shield_green.svg")
     });
 
+    $(".ftype").click(function(){
+        var t = $(this).attr('id');
+        $.get(
+            "/setav", {
+                c: t
+            },
+            function (d) {
+                location.reload;
+            }
+        );
+    });
 
+    $(".ctype").click(function(){
+        var t = $(this).attr('id');
+        $.get(
+            "/sethc", {
+                c: t
+            },
+            function (d) {
+                var url="/" + d;
+                window.location.replace(url);
+                location.reload;
+            }
+        );
+    });
 
     $("#select-states").on("change", function () {
         
