@@ -33,7 +33,7 @@
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
-                            <h3>California, USA / CANNABIS / FOR SALE / BIOMASS</h3>
+                            <h3>{{$country['fullName']}} / {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} / BIOMASS</h3>
                         </div>
                         <div class="current-state-heading__item">
                             <form method="GET" action="/search">
@@ -52,7 +52,7 @@
                             </div>
                             <div class="search-filters__pagination details-filters__pagination">
                                 <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img src="{{asset('images/left-arrow_green.svg')}}" alt="Jane Verde SVG Icon" />PREV</button></a>
-                                <a href="{{ redirect()->back()->getTargetUrl() }}"><button>BACK TO SEARCH</button></a>
+                                <a href="{{ session()->get('backtosearch') }}"><button>BACK TO SEARCH</button></a>
                                 <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
@@ -114,13 +114,13 @@
 
                                 <div class="product-information-wrap__slider">
                                     <div class="fotorama" data-nav="thumbs" data-transition="dissolvex">
-                                        <img src="https://www.medicalnewstoday.com/content//images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
+                                        <img src="https://www.medicalnewstoday.com/content/images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
                                             alt="Jane Verde Image" data-width="100%" data-minheight="100%">
                                         <img src="https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F536649%2Fcannabidiol-oil-cbd-marijuana-hemp-cannabis-pot-derivative-legal-us-canada-getty.jpg&w=700&op=resize"
                                             alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://www.medicalnewstoday.com/content//images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
+                                        <img src="https://www.medicalnewstoday.com/content/images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
                                             alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://www.medicalnewstoday.com/content//images/articles/323/323673/cannabis-plant.jpg"
+                                        <img src="https://www.medicalnewstoday.com/content/images/articles/323/323673/cannabis-plant.jpg"
                                             alt="Jane Verde Image" data-width="100%" data-height="100%">
                                         <img src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fjavierhasse%2Ffiles%2F2019%2F03%2FTHC-Hostel-1-1200x900.jpg"
                                             alt="Jane Verde Image" data-width="100%" data-height="100%">

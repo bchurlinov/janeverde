@@ -39,10 +39,10 @@
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
-                            <h3>California, USA / CANNABIS / GENERAL</h3>
+                            <h3>{{$country['fullName']}} / {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} / GENERAL</h3>
                         </div>
                         <div class="current-state-heading__item current-state-heading__desktop">
-                            <form method="GET" action="/search">
+                            <form method="GET" action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/{{request()->segment(2)}}/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src={{asset('images/search_white.svg')}} alt="Jane Verde - SVG Icon" />

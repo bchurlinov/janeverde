@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Countries;
+use App\Categories;
 
 class ProductsController extends Controller
 {
@@ -12,6 +13,8 @@ class ProductsController extends Controller
 
     public function __construct(){
         $this->country = app('App\Http\Controllers\CountriesController')::getCountry();
+        //call the user's controller to set the type, hemp or cannabis
+        app('App\Http\Controllers\UserController')::checkHempOrCannabis();
     }
 
     /**
@@ -22,22 +25,58 @@ class ProductsController extends Controller
     public function index(Request $request){
 
         $postFields = $request->all();
+        $horcTypes = ['cannabis', 'hemp'];
         $allProducts = [];
+        $hOrC = request()->segment(1);
+        $category = request()->segment(2);
+        $search = request()->segment(3);
+        if($hOrC == null || $category == null || $search == null){
+            return redirect('/');
+        }
+        $categories = Categories::all()->toArray();
+        $catExists = false;
+        $categoryObject = "";
+        foreach($categories as $cat){
+            if($category == $cat['number']) {
+                $catExists = true;
+                $categoryObject = $cat;
+            }
+        }
+
+        //we have all route segments, move to check individual
+        if(!in_array($hOrC, $horcTypes) || !$catExists || $search != "search") return redirect('/');
+        //all is fine with params, proceed with country
+
+        $country = empty($_COOKIE['country']) ? "all" : $_COOKIE['country'];
+        //check the country
+        $findCountry = Countries::where('name', '=', $country)->get();
+        if(count($findCountry) == 0) $country = "all";
+        $catNum = $categoryObject['number'];
         $keyword = "";
+
+        $whereClause = [
+            ['is_deleted', '=', 0],
+            ['type', '=', $hOrC],
+            ['category', '=', $catNum]
+        ];
+
+        if($country != "all"){
+            $whereClause[] = ['state', '=', $country];
+        }
+
         if(count($postFields) == 0){
             //only /search is clicked
-            $allProducts = Product::where('is_deleted', 0)->orderBy('created_at', 'desc')->paginate(6);
+            $allProducts = Product::where($whereClause)->orderBy('created_at', 'desc')->paginate(6);
         }
         else{
             $keyword = $request->get('keyword');
-            $allProducts = $keyword == null ? $allProducts = Product::where('is_deleted', 0)->orderBy('created_at', 'desc')->paginate(6) :
-                                                             Product::search($keyword)->where('type', 'hemp')->orderBy('created_at', 'desc')->paginate(6);
+            $allProducts = $keyword == null ? $allProducts = Product::where($whereClause)->orderBy('created_at', 'desc')->paginate(6) :
+                                                             Product::search($keyword)->where($whereClause)->orderBy('created_at', 'desc')->paginate(6);
         }
 
-        //get the country
-
+        $cookie = empty($_COOKIE['type']) ? "cannabis" : $_COOKIE['type'];
         //return them to the view
-        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword, 'country' => $this->country]);
+        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword, 'country' => $this->country, 'cookie' => $cookie]);
     }
 
     /**
@@ -93,6 +132,16 @@ class ProductsController extends Controller
         $country = app('App\Http\Controllers\CountriesController')::getCountry();
         $previous = Product::where('id', '<', $id)->max('id');
         $next = Product::where('id', '>', $id)->min('id');
+        //get previous url, match it with url segments
+        $preurl = url()->previous();
+        $prev = "/";
+        if(strpos($preurl, "/search")){
+            $preurl = explode("/", url()->previous());
+            //came from search
+            $prev = "/".$preurl[count($preurl) - 3]."/".$preurl[count($preurl) - 2]."/".$preurl[count($preurl) - 1];
+
+        }
+
         return view('details_page')->with(['product' => Product::find($id), 'previous' => $previous, "next" => $next, 'country' => $country]);
     }
 

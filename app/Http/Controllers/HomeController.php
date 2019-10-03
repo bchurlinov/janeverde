@@ -14,6 +14,7 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
+        app('App\Http\Controllers\UserController')::checkHempOrCannabis();
     }
 
     /**
@@ -24,6 +25,7 @@ class HomeController extends Controller
     public function index()
     {
         $country = app('App\Http\Controllers\CountriesController')::getCountry();
-        return view('home')->with('country', $country);
+        $cookie = empty($_COOKIE['type']) ? "cannabis" : $_COOKIE['type'];
+        return view('home')->with(['country' => $country, 'cookie' => $cookie]);
     }
 }

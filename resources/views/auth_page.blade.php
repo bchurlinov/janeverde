@@ -118,11 +118,6 @@
                                             </div>
                                         </div>
 
-                                        <div class="form-group field-wrap text-center">
-                                            <input type="checkbox" name="verify_account" value="verify_account">
-                                            <span>I would like to verify my account and have access to…</span>
-                                        </div>
-
                                         <div class="text-center">
                                             <button type="submit" class="button-auth button-block">
                                                 Create Account

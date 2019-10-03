@@ -1,7 +1,7 @@
 <div class="home-wrap__item">
     <div class="current-state-heading">
         <div class="current-state-heading__item">
-            <h3>California, USA / <span class="toggle-hemp-cannabis">CANNABIS</span></h3>
+            <h3>{{$country['fullName']}} / <span>{{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}}</span></h3>
         </div>
         <div class="current-state-heading__item current-state-heading__desktop">
             <form method="GET" action="/search">
@@ -59,13 +59,13 @@
             <div class="category-item" data-category="sale">
                 <h5>For Sale</h5>
                 <ul>
-                    <li><a href="/search" >Biomass</a></li>
-                    <li><a href="/search" >Conentrates</a></li>
-                    <li><a href="/search" >Retail Products</a></li>
-                    <li><a href="/search" >Grow Equipment</a></li>
-                    <li><a href="/search" >Lab Equipment</a></li>
-                    <li><a href="/search" >Promotional</a></li>
-                    <li><a href="/search" >Misc</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4296/search" >Biomass</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/6581/search" >Concentrates</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4617/search" >Retail Products</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4537/search" >Grow Equipment</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4184/search" >Lab Equipment</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2971/search" >Promotional</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2073/search" >Misc</a></li>
                 </ul>
             </div>
         </div>
@@ -74,9 +74,9 @@
             <div class="category-item" data-category="misc">
                 <h5>Misc</h5>
                 <ul>
-                    <li><a href="/search" >Events / Promotional</a></li>
-                    <li><a href="/search" >Groups / Activites</a></li>
-                    <li><a href="/search" >General</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2572/search" >Events / Promotional</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2724/search" >Groups / Activities</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/3824/search" >General</a></li>
                 </ul>
             </div>
         </div>
@@ -85,9 +85,9 @@
             <div class="category-item" data-category="real-estate">
                 <h5>Real Estate</h5>
                 <ul>
-                    <li><a href="/search" >Commercial for Sale</a></li>
-                    <li><a href="/search" >Commercial for Rent</a></li>
-                    <li><a href="/search" >Farm / Land</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2152/search" >Commercial for Sale</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/5266/search" >Commercial for Rent</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2340/search" >Farm / Land</a></li>
                 </ul>
             </div>
         </div>
@@ -96,24 +96,24 @@
             <div class="category-item" data-category="jobs">
                 <h5>Jobs</h5>
                 <ul>
-                    <li><a href="/search" >Grow Indoor</a></li>
-                    <li><a href="/search" >Grow Outdoor</a></li>
-                    <li><a href="/search" >Trimming</a></li>
-                    <li><a href="/search" >Hemp Extract</a></li>
-                    <li><a href="/search" >THC Extract</a></li>
-                    <li><a href="/search" >Drying</a></li>
-                    <li><a href="/search" >Sales</a></li>
-                    <li><a href="/search" >Marketing</a></li>
-                    <li><a href="/search" >Business</a></li>
-                    <li><a href="/search" >Admin</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/3668/search" >Grow Indoor</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/6150/search" >Grow Outdoor</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4111/search" >Trimming</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/3043/search" >Hemp Extract</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/6999/search" >THC Extract</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2350/search" >Drying</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/6762/search" >Sales</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/5191/search" >Marketing</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/6095/search" >Business</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4644/search" >Admin</a></li>
                 </ul>
                 <ul>
-                    <li><a href="/search" >Design / Web</a></li>
-                    <li><a href="/search" >Retail</a></li>
-                    <li><a href="/search" >Distribution</a></li>
-                    <li><a href="/search" >Laboratory</a></li>
-                    <li><a href="/search" >Regulatory</a></li>
-                    <li><a href="/search" >Construction</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4715/search" >Design / Web</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/5981/search" >Retail</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/4013/search" >Distribution</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/2585/search" >Laboratory</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/6291/search" >Regulatory</a></li>
+                    <li><a href="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/3262/search" >Construction</a></li>
                 </ul>
             </div>
         </div>

@@ -13,11 +13,19 @@ $(document).ready(function () {
     });
 
     // Append Selectric Options - Mobile Native Look - Mobile View
-    $("#select-states-mobile").append(states_selectric).selectric({
-        disableOnMobile: false,
-        nativeOnMobile: false
-    });
+    //$("#select-states-mobile").append(states_selectric).selectric({
+    //    disableOnMobile: false,
+     //   nativeOnMobile: false
+    //});
     var country = $("#country").text();
+    var typeHC = $("#typhc").text();
+
+    if(typeHC == "hemp"){
+        $(".toggle-hemp-cannabis").text("HEMP");
+    }
+    else{
+        $(".toggle-hemp-cannabis").text("CANNABIS");
+    }
 
     $("#select-states").val(country);
     $("#select-states").selectric('refresh');
@@ -35,6 +43,7 @@ $(document).ready(function () {
 
     // Toggle between HEMP and CANNABIS
     $("#switch").on('change', function () {
+        console.log($(this).val());
         if ($(this).is(':checked')) {
             switchStatus = $(this).is(':checked');
             if ($(this).val() === "on") {
@@ -51,7 +60,6 @@ $(document).ready(function () {
 
     $("#select-states").on("change", function () {
         var label = $(".selectric .label").text();
-        console.log(label);
         if (label.length > 24) {
             $(".selectric .label").text(function () {
                 return $(this).text().slice(0, 16) + " " + "..."
@@ -63,6 +71,15 @@ $(document).ready(function () {
                 return $(this).text();
             })
         }
+
+        $.get(
+            "/setcountry", {
+                c : $("#select-states").val()
+            },
+            function(data){
+                location.reload();
+            }
+        );
     });
 });
 
