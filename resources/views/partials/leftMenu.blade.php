@@ -1,7 +1,8 @@
 <div class="home-wrap__item">
     <div class="inner-wrap">
         @php
-        $cookieSet = empty($_COOKIE['type']) ? $cookie : $_COOKIE['type'];
+        $country = json_decode(session()->get('country'), true);
+        $cookieSet = session()->get('type') == null ? "cannabis" : session()->get('type');
         @endphp
         <h1><a href="/{{$cookieSet}}"><img src="{{asset('/images/Janeverde_logo.svg')}}" /></a></h1>
         <div class="toggle-countries toggle-desktop">
@@ -20,7 +21,7 @@
             <a href="/auth" class="button-link">My Account</a>
         </div>
         <div class="useful-links">
-            <a href="/auth" class="button-link" data-account="verify" ">
+            <a href="/auth" class="button-link" data-account="verify" >
                 <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
                 Verify Account
             </a>

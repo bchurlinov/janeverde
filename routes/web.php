@@ -18,74 +18,72 @@ use App\Countries;
 //});
 
 //hc = hemp or cannabis
-Route::get('/{hc}/{cat}/search', 'ProductsController@index');
+Route::get('/{hc}/{cat}/search', 'ProductsController@index')->middleware('cookies');
 
-Route::get('/view/{id}', 'ProductsController@view');
+Route::get('/view/{id}', 'ProductsController@view')->middleware('cookies');
 
 Route::get('/auth', function () {
-    $country = app('App\Http\Controllers\CountriesController')::getCountry();
-    $cookie = empty($_COOKIE['type']) ? "cannabis" : $_COOKIE['type'];
-    return view('auth_page')->with(['country' => $country, 'cookie' => $cookie]);
-});
+    return view('auth_page');
+})->middleware('cookies');
 
 Auth::routes(['verify' => true]);
 
-Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
+Route::get('/home', 'HomeController@index')->middleware('cookies', 'auth')->name('home');
 
 //user dashboard, protected by auth middleware
-Route::get('dashboard', 'UserController@index')->middleware('verified');
+Route::get('dashboard', 'UserController@index')->middleware('cookies', 'verified');
 
 //upload user image
-Route::post('image-upload', 'UserController@uploadID')->middleware('verified')->name('uploadID');
+Route::post('image-upload', 'UserController@uploadID')->middleware('cookies', 'verified')->name('uploadID');
 
 //get all user purchased products (buyer)
-Route::get('/myproducts', 'UserController@buyerPurchasedProducts')->middleware('verified');
+Route::get('/myproducts', 'UserController@buyerPurchasedProducts')->middleware('cookies', 'verified');
 
 //get all users for verification
-Route::get('/usersverification', 'UserController@getUsersForVerification')->middleware('verified');
+Route::get('/usersverification', 'UserController@getUsersForVerification')->middleware('cookies', 'verified');
 
 //get all users for deletion
-Route::get('/usersmanagement', 'UserController@getUsersForManagement')->middleware('verified');
+Route::get('/usersmanagement', 'UserController@getUsersForManagement')->middleware('cookies', 'verified');
 
 //approve user picture ID
-Route::post('/approve', 'UserController@approve')->middleware('verified');
+Route::post('/approve', 'UserController@approve')->middleware('cookies', 'verified');
 
 //decline user picture id
-Route::post('/decline', 'UserController@decline')->middleware('verified');
+Route::post('/decline', 'UserController@decline')->middleware('cookies', 'verified');
 
 //soft delete a user
-Route::post('/delete', 'UserController@delete')->middleware('verified');
+Route::post('/delete', 'UserController@delete')->middleware('cookies', 'verified');
 
 //restore a user
-Route::post('/restore', 'UserController@restore')->middleware('verified');
+Route::post('/restore', 'UserController@restore')->middleware('cookies', 'verified');
 
 //get all products for management
-Route::get('/manageposts', 'ProductsController@manageProducts')->middleware('verified');
+Route::get('/manageposts', 'ProductsController@manageProducts')->middleware('cookies', 'verified');
 
 //remove product
-Route::post('/pdelete', 'ProductsController@deleteProduct')->middleware('verified');
+Route::post('/pdelete', 'ProductsController@deleteProduct')->middleware('cookies', 'verified');
 //restore product
-Route::post('/prestore', 'ProductsController@restoreProduct')->middleware('verified');
+Route::post('/prestore', 'ProductsController@restoreProduct')->middleware('cookies', 'verified');
 
 //change user password, view only
-Route::get('/changePassword', function(){ return view('auth.changepassword'); })->middleware('verified');
+Route::get('/changePassword', function(){ return view('auth.changepassword'); })->middleware('cookies', 'verified');
 
 //route for form user update
-Route::post('/changePassword','UserController@changePassword')->middleware('verified')->name('changePassword');
+Route::post('/changePassword','UserController@changePassword')->middleware('cookies', 'verified')->name('changePassword');
 
 //view where personal details page is shown
-Route::get('/settings', function() { return view ('auth.settings'); })->middleware('verified');
+Route::get('/settings', function() { return view ('auth.settings'); })->middleware('cookies', 'verified');
 
 //post route to update user settings
-Route::post('/settings', 'UserController@settings')->middleware('verified');
+Route::post('/settings', 'UserController@settings')->middleware('cookies', 'verified');
 
 //update product view
-Route::get('/pupdate/{id}', 'ProductsController@getProductDetailsForEdit')->middleware('verified');
+Route::get('/pupdate/{id}', 'ProductsController@getProductDetailsForEdit')->middleware('cookies', 'verified');
 
 //perform product update
-Route ::post('/pupdate', 'ProductsController@updateProduct')->middleware('verified');
+Route ::post('/pupdate', 'ProductsController@updateProduct')->middleware('cookies', 'verified');
 
-Route::get('/setcountry', 'CountriesController@setCountry');
+Route::get('/setcountry', 'CountriesController@setCountry')->middleware('cookies');
 
 use App\Categories;
 use App\Product;
@@ -134,30 +132,27 @@ Route::get('/fillproducts', function(){
     echo "done";
 });
 //set hemp or cannabis
-Route::get('/sethc', 'ProductsController@sethc');
+Route::get('/sethc', 'ProductsController@sethc')->middleware('cookies');
 
 //set view all or verified products only
-Route::get('/setav', 'ProductsController@setav');
+Route::get('/setav', 'ProductsController@setav')->middleware('cookies');
 
 Route::get('/', function(){
     return redirect('/cannabis');
-});
+})->middleware('cookies');
 
 //by default, redirect to /cannabis, otherwise, hemp. redirect to /cannabis if other category is entered that does not comply with hemp/cannabis
 Route::get('/{type?}', function($type = ""){
-    app('App\Http\Controllers\UserController')::checkHempOrCannabis();
-    $country = app('App\Http\Controllers\CountriesController')::getCountry();
-    //set the products view to all as default if it wasnt set at first
-    if(empty($_COOKIE['productsView'])) { setcookie("productsView", 'all', time() + 60 * 60 * 24 * 30, "/"); }
     if($type != "" && ($type == "cannabis" || $type == "hemp")){
         //set hemp or cannabis
-        setcookie("type", $type, time() + 60 * 60 * 24 * 30, "/");
-        return view('home')->with(['country' => $country, 'cookie' => $type]);
+        //setcookie("type", $type, time() + 60 * 60 * 24 * 30, "/");
+        session()->put('type', $type);
+        return view('home');
     }
     else{
         return redirect('/cannabis');
     }
-});
+})->middleware('cookies');
 
 
 

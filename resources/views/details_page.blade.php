@@ -3,7 +3,7 @@
 @section('css_links')
 
 @endsection
-
+@php $country = json_decode(session()->get('country'), true); @endphp
 @section('content')
 
 <div class="wrapper">
@@ -35,12 +35,12 @@
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
                             <h3>{{$country['fullName']}} /
-                                {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} /
-                                BIOMASS</h3>
+                                {{strtoupper(session()->get('type'))}} /
+                                {{$category[0]['name']}}</h3>
                         </div>
                         <div class="current-state-heading__item">
                             <form method="GET"
-                                action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/0/search">
+                                action="/{{session()->get('type') == 'null' ? 'cannabis' : session()->get('type')}}/0/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />
@@ -58,10 +58,8 @@
                                 <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img
                                             src="{{asset('images/left-arrow_green.svg')}}"
                                             alt="Jane Verde SVG Icon" />PREV</button></a>
-                                <a href="{{ session()->get('backtosearch') }}"><button>BACK TO SEARCH</button></a>
-                                <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img
-                                            src="{{asset('images/right-arrow_green.svg')}}"
-                                            alt="Jane Verde SVG Icon" /></button></a>
+                                <a href="{{ session()->get('goToPrevious') != 'null' ? session()->get('goToPrevious') : session()->get('type').'/0/search' }}"><button>BACK TO SEARCH</button></a>
+                                <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
                                 <span><i class="far fa-star"></i><br />Favorite</span>

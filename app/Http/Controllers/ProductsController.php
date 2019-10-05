@@ -11,12 +11,6 @@ class ProductsController extends Controller
 {
     public $country;
 
-    public function __construct(){
-        $this->country = app('App\Http\Controllers\CountriesController')::getCountry();
-        //call the user's controller to set the type, hemp or cannabis
-        app('App\Http\Controllers\UserController')::checkHempOrCannabis();
-    }
-
     /**
      * Get all products from database
      *
@@ -68,6 +62,10 @@ class ProductsController extends Controller
         if($country != "all"){
             $whereClause[] = ['state', '=', $country];
         }
+        //if verified only is clicked, add another case
+        if(session()->get('searchType') != 'null' && session()->get('searchType') == 'verifiedOnly') {
+            $whereClause[] = ['verified', '=', 1];
+        }
 
         if(count($postFields) == 0){
             //only /search is clicked
@@ -111,19 +109,24 @@ class ProductsController extends Controller
     public function sethc(Request $request){
         $horc = $request->get('c');
         if($horc != "hemp" && $horc != "cannabis"){
-            setcookie("type", 'cannabis', time() + 60 * 60 * 24 * 30, "/");
+            session()->put('type', 'cannabis');
+            //setcookie("type", 'cannabis', time() + 60 * 60 * 24 * 30, "/");
             echo "cannabis";
         }
         else{
-            setcookie("type", $horc, time() + 60 * 60 * 24 * 30, "/");
+            session()->put('type', $horc);
+            //setcookie("type", $horc, time() + 60 * 60 * 24 * 30, "/");
             echo $horc;
         }
     }
 
     public function setav(Request $request){
         $setav = $request->get('c');
-        $setav != "all" && $setav != 'verified' ? setcookie("productsView", 'all', time() + 60 * 60 * 24 * 30, "/") :
-            setcookie("productsView", $setav, time() + 60 * 60 * 24 * 30, "/");
+        //['viewAll', 'verifiedOnly']; searchType
+        $setav != "viewAll" && $setav != 'verifiedOnly' ? session()->put('searchType', 'viewAll') : session()->put('searchType', $setav);
+        echo $setav;
+        //$setav != "all" && $setav != 'verified' ? setcookie("searchType", 'all', time() + 60 * 60 * 24 * 30, "/") :
+        //    setcookie("searchType", $setav, time() + 60 * 60 * 24 * 30, "/");
     }
 
     /**
@@ -156,9 +159,21 @@ class ProductsController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function view($id){
-        $country = app('App\Http\Controllers\CountriesController')::getCountry();
-        $previous = Product::where('id', '<', $id)->max('id');
-        $next = Product::where('id', '>', $id)->min('id');
+        //get the session to see whether is set view all or verified only
+        $searchType = session()->get('searchType');
+        $conditions = [
+            "previous" => [],
+            "next" => []
+        ];
+        $conditions['previous'][] = ['id', '<', $id];
+        $conditions['next'][] = ['id', '>', $id];
+        if($searchType == 'verifiedOnly'){
+            $conditions['previous'][] = ['verified', '=', 1];
+            $conditions['next'][] = ['verified', '=', 1];
+        }
+
+        $previous = Product::where($conditions['previous'])->max('id');
+        $next = Product::where($conditions['next'])->min('id');
         //get previous url, match it with url segments
         $preurl = url()->previous();
         $prev = "/";
@@ -166,10 +181,13 @@ class ProductsController extends Controller
             $preurl = explode("/", url()->previous());
             //came from search
             $prev = "/".$preurl[count($preurl) - 3]."/".$preurl[count($preurl) - 2]."/".$preurl[count($preurl) - 1];
-
+            //put this in session, we will need it
+            session()->put('goToPrevious', $prev);
         }
+        $product = Product::find($id);
+        $productCat = Categories::where('number', $product->category)->get();
 
-        return view('details_page')->with(['product' => Product::find($id), 'previous' => $previous, "next" => $next, 'country' => $country]);
+        return view('details_page')->with(['product' => $product, 'previous' => $previous, "next" => $next, "category" => $productCat]);
     }
 
     /**
@@ -198,5 +216,15 @@ class ProductsController extends Controller
         $product->description = $request->input('description');
         $product->save();
         return redirect()->back()->with('success', 'Product successfully updated');
+    }
+
+    /**
+     * Get the name of the category
+     * @param int $id the id of the category
+     * @return mixed
+     */
+    public static function getCategoryName($id){
+        $cat = Categories::where('number', $id)->get();
+        return count($cat) == 0 ? "General" : $cat[0]['name'];
     }
 }

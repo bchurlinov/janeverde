@@ -43,7 +43,8 @@ $(document).ready(function () {
                 c: t
             },
             function (d) {
-                location.reload;
+                console.log(d);
+                location.reload();
             }
         );
     });
@@ -65,7 +66,7 @@ $(document).ready(function () {
     $("#select-states").on("change", function () {
         
         processSelectricLabel();
-        
+        console.log($("#select-states").val());
         $.get(
             "/setcountry", {
                 c: $("#select-states").val()
@@ -119,7 +120,7 @@ var states = [
     { value: "oregon", name: "Oregon", class: "normal" },
     { value: "vermont", name: "Vermont", class: "normal" },
     { value: "washington", name: "Washington", class: "normal" },
-    { value: "all_recreational", name: "All medical/recreational cannabis states", class: "special" },
+    { value: "all_recreational_medical", name: "All medical/recreational cannabis states", class: "special" },
     { value: "alabama", name: "Alabama", class: "normal" },
     { value: "arkansas", name: "Arkansas", class: "normal" },
     { value: "american_samoa", name: "American Samoa", class: "normal" },

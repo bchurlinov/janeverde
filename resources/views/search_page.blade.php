@@ -1,6 +1,6 @@
 @extends('partials.layout')
 @php
-
+    $country = json_decode(session()->get('country'), true);
 @endphp
 @section("css_links")
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
@@ -42,12 +42,12 @@
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
                             <h3>{{$country['fullName']}} /
-                                {{empty($_COOKIE['type']) ? strtoupper($cookie) : strtoupper($_COOKIE['type'])}} /
-                                GENERAL</h3>
+                                {{session()->get('type') == 'null' ? 'CANNABIS' : strtoupper(session()->get('type'))}} /
+                                {{strtoupper(App\Http\Controllers\ProductsController::getCategoryName(request()->segment(2)))}}</h3>
                         </div>
                         <div class="current-state-heading__item current-state-heading__desktop">
                             <form method="GET"
-                                action="/{{empty($_COOKIE['type']) ? $cookie : $_COOKIE['type']}}/{{request()->segment(2)}}/search">
+                                action="/{{session()->get('type') == 'null' ? 'cannabis' : session()->get('type')}}/{{request()->segment(2)}}/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src={{asset('images/search_white.svg')}} alt="Jane Verde - SVG Icon" />
@@ -60,8 +60,8 @@
                         <div class="search-filters">
                             <div class="search-filters__sorting">
                                 <div class="hemp-cannabis-toggle">
-                                    <button class="ftype {{$productsCookie}}">View All</button>
-                                    <button class="ftype ">Verified</button>
+                                    <button class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'viewAll' ? "toggle-active" : ""}}" id="viewAll">View All</button>
+                                    <button class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'verifiedOnly' ? "toggle-active" : ""}}" id="verifiedOnly">Verified</button>
                                 </div>
                             </div>
                             <div>
