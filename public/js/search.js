@@ -21,7 +21,6 @@ $(document).ready(function () {
     $("[data-toggle='grid'] i").css({ color: "white" });
 });
 
-
 var select_sorting = [
     { option_value: "newest", option_name: "Newest" },
     { option_value: "oldest", option_name: "Oldest" },
@@ -30,6 +29,8 @@ var select_sorting = [
 ]
 
 function renderGridView(t) {
+    $(".slider").slick("resize");
+    
     // Toggle Button Layout
     $(".grid-list-button").css({ background: "white" });
     $(".toggle-icon").css({ color: "#1c6d5a" });

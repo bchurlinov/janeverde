@@ -13,11 +13,13 @@
 
   <!-- Custom fonts for this template-->
   <link href="{{asset('/bt/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+    rel="stylesheet">
 
   <!-- Custom styles for this template-->
   <link href="{{asset('/bt/css/sb-admin-2.min.css')}}" rel="stylesheet">
-
+  <link href="{{asset('css/app.css') }}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -78,7 +80,8 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Not verified (pending review)</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Not verified (pending review)
+                      </div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
                           <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$usersData['pending']}}</div>
@@ -97,7 +100,8 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">No picture ID uploaded</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">No picture ID uploaded
+                      </div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{$usersData['noIDUploaded']}}</div>
                     </div>
                   </div>
@@ -110,7 +114,8 @@
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Need to re-upload picture ID</div>
+                      <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Need to re-upload picture
+                        ID</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{$usersData['denied']}}</div>
                     </div>
                   </div>
@@ -132,7 +137,7 @@
             </div>
           </div>
 
-          
+
           <!-- Content Row -->
 
           <div class="row">
@@ -155,9 +160,9 @@
               </div>
             </div>
 
+          </div>
+        </div>
       </div>
-</div>
-</div>
       <!-- End of Main Content -->
       <div id="embed-api-auth-container"></div>
       <div id="view-selector-container"></div>
@@ -203,7 +208,6 @@
   </script>
 
   <script>
-
     gapi.analytics.ready(function() {
 
       /**
@@ -340,4 +344,3 @@
 </body>
 
 </html>
-

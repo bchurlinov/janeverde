@@ -64,12 +64,12 @@
                                     <button class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'verifiedOnly' ? "toggle-active" : ""}}" id="verifiedOnly">Verified</button>
                                 </div>
                             </div>
-                            <div>
+                           
                                 @php
                                 echo $keyword == "" ? $products->links() : $products->appends(['keyword' =>
                                 $keyword])->links();
                                 @endphp
-                            </div>
+                            
                             <div class="search-filters__views">
                                 <button onclick="renderGridView(this)" class="grid-list-button" data-toggle="grid"><i
                                         class="fas fa-th-large toggle-icon" title="Gallery View"></i>
@@ -114,8 +114,9 @@
                                             <span>$100</span>
                                         </div>
                                     </div>
+                                  
                                     <div class="product-template__info">
-                                        <div {!! $product->verified === 0 ? " style='display:none;'" : "" !!}>
+                                        <div   {!! $product->verified === 0 ? "style='display: none'" : "" !!}>
                                             <div>
                                                 <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
                                                     alt="Jane Verde Image" class="list-view-image" />
@@ -123,7 +124,7 @@
                                                 <div class="clearfix"></div>
                                                 <span class="qs">
                                                     <img src={{asset('images/shield_green.svg')}}
-                                                        alt="Jane Verde - SVG Icon" />
+                                                        alt="Jane Verde - SVG Icon"  />
                                                     <div class="popover above popover-content">
                                                         <h4>
                                                             <img src={{asset('images/shield_green.svg')}}
@@ -147,11 +148,14 @@
                                         <div>
                                             <h4>
                                                 <span>Aug 21</span>
-                                                <a href="/view/{{$product->id}}">{{$product->title}}
+                                                <a href="/view/{{$product->id}}">
+                                                    @php
+                                                        echo strlen($product->title) > 45 ? substr($product->title, 0, 50) . "..." : $product->title;    
+                                                    @endphp
                                                 </a>
-                                                <span class="product-location">({{$product->location}})</span>
-                                                @if(Gate::check('isAdmin') || Gate::check('isVerified'))
-                                                <span class="qs qs-list-view">
+                                                <span class="product-location" style="display: inline">({{$product->location}})</span>
+                                              
+                                                <span class="qs qs-list-view"   {!! $product->verified === 0 ? "style='display: none !important'" : "" !!}>
                                                     <img src={{asset('images/shield_green.svg')}}
                                                         alt="Jane Verde - SVG Icon" />
                                                     <div class="popover above popover-content">
@@ -172,7 +176,7 @@
                                                         </ul>
                                                     </div>
                                                 </span>
-                                                @endif
+                                               
                                             </h4>
                                         </div>
                                         <div class="details-page-link">
