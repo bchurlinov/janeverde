@@ -29,7 +29,9 @@ var select_sorting = [
 ]
 
 function renderGridView(t) {
-    $(".slider").slick("resize");
+    setTimeout(function(){
+        $(".slider").slick('setPosition'); 
+    }, 100);
     
     // Toggle Button Layout
     $(".grid-list-button").css({ background: "white" });
@@ -42,6 +44,10 @@ function renderGridView(t) {
 }
 
 function renderListView(t) {
+    setTimeout(function(){
+        $(".slider").slick('setPosition'); 
+    }, 100);
+
     // Toggle Button Layout
     $(".grid-list-button").css({ background: "white" });
     $(".toggle-icon").css({ color: "#1c6d5a" });

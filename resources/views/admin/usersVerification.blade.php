@@ -19,7 +19,7 @@
   <link href="{{asset('/bt/css/sb-admin-2.min.css')}}" rel="stylesheet">
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js" defer></script>
     <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js" defer></script>
-
+    <link href="{{asset('css/app.css') }}" rel="stylesheet" type="text/css">
 </head>
 
 <body id="page-top">

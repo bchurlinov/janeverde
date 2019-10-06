@@ -186,7 +186,7 @@
                                     bussiness postings.
                                 </span>
                                 <p style="text-align: center">
-                                    <a href="javascript:;">Verify my Account</a>
+                                    <a href="/auth">Verify my Account</a>
                                 </p>
                                 @endif
                             </div>

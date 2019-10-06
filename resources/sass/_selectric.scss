@@ -37,8 +37,10 @@
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-filter: blur(0);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
   @media (min-width: 992px) and (max-width: 1199px) {
-    
   }
 }
 

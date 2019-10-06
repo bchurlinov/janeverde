@@ -116,13 +116,13 @@
                                     </div>
                                   
                                     <div class="product-template__info">
-                                        <div   {!! $product->verified === 0 ? "style='display: none'" : "" !!}>
+                                        <div>
                                             <div>
                                                 <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
                                                     alt="Jane Verde Image" class="list-view-image" />
 
                                                 <div class="clearfix"></div>
-                                                <span class="qs">
+                                                <span class="qs" {!! $product->verified === 0 ? "style='display: none !important'" : "" !!}>
                                                     <img src={{asset('images/shield_green.svg')}}
                                                         alt="Jane Verde - SVG Icon"  />
                                                     <div class="popover above popover-content">
@@ -155,7 +155,7 @@
                                                 </a>
                                                 <span class="product-location" style="display: inline">({{$product->location}})</span>
                                               
-                                                <span class="qs qs-list-view"   {!! $product->verified === 0 ? "style='display: none !important'" : "" !!}>
+                                                <span class="qs qs-list-view"  {!! $product->verified === 0 ? "style='display: none !important'" : "" !!}>
                                                     <img src={{asset('images/shield_green.svg')}}
                                                         alt="Jane Verde - SVG Icon" />
                                                     <div class="popover above popover-content">

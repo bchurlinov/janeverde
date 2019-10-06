@@ -21,11 +21,11 @@
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  padding: 18px 0 20px;
+  padding: 32px 0 30px;
   margin-top: 5px;
 
   &__sorting {
-    flex: 0 0 30%;
+    flex: 0 0 20%;
     @media (max-width: 1199px) {
       flex: 0 0 25%;
     }
@@ -46,32 +46,6 @@
     @media (max-width: 365px) {
       flex: 0 0 100%;
     }
-
-    // fieldset {
-    //   width: 80%;
-    //   margin-left: 0;
-    //   margin-right: 0;
-    //   @media (max-width: 365px) {
-    //     width: 100%;
-    //   }
-    //   .switch-labels {
-    //     font-size: 12px;
-    //     position: static;
-    //     &:before {
-    //       top: -2px;
-    //     }
-    //     &:after {
-    //       top: -2px;
-    //     }
-    //     @media (max-width: 767px) {
-    //       font-size: 9px;
-    //     }
-
-    //     @media (max-width: 479px) {
-    //       font-size: 11px;
-    //     }
-    //   }
-    // }
 
     .selectric-wrapper {
       .selectric-items {
@@ -124,7 +98,7 @@
   }
 
   &__pagination {
-    flex: 0 0 40%;
+    flex: 0 0 60%;
     text-align: center;
 
     @media (max-width: 1199px) {
@@ -203,7 +177,7 @@
   }
 
   &__views {
-    flex: 0 0 30%;
+    flex: 0 0 20%;
     text-align: right;
     @media (max-width: 1199px) {
       flex: 0 0 25%;
@@ -315,7 +289,7 @@
   flex: 0 0 100% !important;
   padding: 0 !important;
   padding-bottom: 15px !important;
-
+  
   .product-template {
     box-shadow: none;
   }
@@ -337,6 +311,9 @@
   .qs-list-view {
     display: inline-block !important;
     margin-left: 10px;
+    position: absolute;
+    top: -10px;
+    left: 0;
     img {
       width: 25px;
       height: 25px;
@@ -348,6 +325,11 @@
 
   .popover-content {
     top: 48px !important;
+    left: -10% !important;
+    h4 {
+      position: static !important;
+      padding-left: 0 !important;
+    }
     img {
       position: relative !important;
       display: inline-block !important;
@@ -366,7 +348,8 @@
     }
     h4 {
       font-size: 15px !important;
-      top: 5px !important;
+      top: 13px !important;
+      padding-left: 25px;
       @media (max-width: 500px) {
         font-size: 12px !important;
       }

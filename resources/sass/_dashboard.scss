@@ -1,0 +1,23 @@
+.bg-gradient-primary {
+    background: $main-green-color;
+}
+
+.gapi-analytics-auth-styles-signinbutton {
+    background: $light-green-color !important;
+    cursor: pointer;
+}
+
+.gapi-analytics-auth-styles-signinbutton-image {
+    border-right: 1px solid white !important;
+}
+
+#sidebarToggle {
+    &:after {
+        color: white !important;
+    }
+}
+
+.nav-link {
+    width: 100% !important;
+    font-weight: bold !important;
+}

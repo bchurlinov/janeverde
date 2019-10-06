@@ -277,8 +277,8 @@ a:hover {
   height: 22px;
   display: inline-block;
   position: relative;
-  top: 10px;
-  left: 3px;
+  top: 8px;
+  left: 1px;
 }
 
 /* Popover */
@@ -429,6 +429,8 @@ a:hover {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+  -webkit-filter: blur(0);
+  transform: translate(-50%, -50%);
 }
 
 .selectric .button {
@@ -665,12 +667,12 @@ a:hover {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  padding: 18px 0 20px;
+  padding: 32px 0 30px;
   margin-top: 5px;
 }
 
 .search-filters__sorting {
-  flex: 0 0 30%;
+  flex: 0 0 20%;
 }
 
 @media (max-width: 1199px) {
@@ -759,7 +761,7 @@ a:hover {
 }
 
 .search-filters__pagination {
-  flex: 0 0 40%;
+  flex: 0 0 60%;
   text-align: center;
 }
 
@@ -849,7 +851,7 @@ a:hover {
 }
 
 .search-filters__views {
-  flex: 0 0 30%;
+  flex: 0 0 20%;
   text-align: right;
 }
 
@@ -998,6 +1000,9 @@ a:hover {
 .product-template-wrap-listview .qs-list-view {
   display: inline-block !important;
   margin-left: 10px;
+  position: absolute;
+  top: -10px;
+  left: 0;
 }
 
 .product-template-wrap-listview .qs-list-view img {
@@ -1010,6 +1015,12 @@ a:hover {
 
 .product-template-wrap-listview .popover-content {
   top: 48px !important;
+  left: -10% !important;
+}
+
+.product-template-wrap-listview .popover-content h4 {
+  position: static !important;
+  padding-left: 0 !important;
 }
 
 .product-template-wrap-listview .popover-content img {
@@ -1034,7 +1045,8 @@ a:hover {
 
 .product-template-wrap-listview .product-template__info h4 {
   font-size: 15px !important;
-  top: 5px !important;
+  top: 13px !important;
+  padding-left: 25px;
 }
 
 @media (max-width: 500px) {
@@ -2595,6 +2607,28 @@ a:hover {
   }
 }
 
+.bg-gradient-primary {
+  background: #1c6d5a;
+}
+
+.gapi-analytics-auth-styles-signinbutton {
+  background: #21816b !important;
+  cursor: pointer;
+}
+
+.gapi-analytics-auth-styles-signinbutton-image {
+  border-right: 1px solid white !important;
+}
+
+#sidebarToggle:after {
+  color: white !important;
+}
+
+.nav-link {
+  width: 100% !important;
+  font-weight: bold !important;
+}
+
 .wrapper {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -2716,11 +2750,13 @@ a:hover {
 .hemp-cannabis-toggle {
   display: flex;
   flex-flow: row wrap;
+  margin-top: -1px;
+  position: relative;
 }
 
 .hemp-cannabis-toggle button {
   flex: 0 0 50%;
-  height: 38px;
+  height: 36px;
   background: #1c6d5a;
   border: none;
   color: white;
@@ -2733,7 +2769,6 @@ a:hover {
 }
 
 .hemp-cannabis-toggle button:first-of-type {
-  border-right: 1px solid white;
   border-radius: 2px 0 0 2px;
 }
 

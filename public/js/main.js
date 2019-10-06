@@ -78,8 +78,6 @@ $(document).ready(function () {
     });
 
     processSelectricLabel();
-
-
 });
 
 function processSelectricLabel() {
