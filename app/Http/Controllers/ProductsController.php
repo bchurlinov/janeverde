@@ -43,8 +43,8 @@ class ProductsController extends Controller
         //we have all route segments, move to check individual
         if(!in_array($hOrC, $horcTypes) || !$catExists || $search != "search") return redirect('/');
         //all is fine with params, proceed with country
+        $country = json_decode(session()->get('country'), true)['dropdown'];
 
-        $country = empty($_COOKIE['country']) ? "all" : $_COOKIE['country'];
         //check the country
         $findCountry = Countries::where('name', '=', $country)->get();
         if(count($findCountry) == 0) $country = "all";
@@ -76,10 +76,8 @@ class ProductsController extends Controller
             $allProducts = $keyword == null ? $allProducts = Product::where($whereClause)->orderBy('created_at', 'desc')->paginate(6) :
                                                              Product::search($keyword)->where($whereClause)->orderBy('created_at', 'desc')->paginate(6);
         }
-
-        $cookie = empty($_COOKIE['type']) ? "cannabis" : $_COOKIE['type'];
         //return them to the view
-        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword, 'country' => $this->country, 'cookie' => $cookie]);
+        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);
     }
 
     /**

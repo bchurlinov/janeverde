@@ -12,28 +12,6 @@ use App\Product;
 
 class UserController extends Controller
 {
-    public function __construct(){
-        self::checkHempOrCannabis();
-    }
-    /**
-     * check for type in session, if it is not set, then set it
-     */
-    public static function checkHempOrCannabis(){
-        $allowed = ['cannabis', 'hemp'];
-        $typeInCookie = empty($_COOKIE['type']);
-        if($typeInCookie){
-            //cookie is empty, add new one
-            setcookie("type", "cannabis", time() + 60 * 60 * 24 * 30, "/");
-        }
-        else{
-            //check if it is one of the allowed in $allowed array. if it is not, then move it to the default cannabis
-            $cookie = $_COOKIE['type'];
-            if(!in_array($cookie, $allowed)){
-                setcookie("type", "cannabis", time() + 60 * 60 * 24 * 30, "/");
-            }
-        }
-    }
-
     /**
      * get logged user details
      *
