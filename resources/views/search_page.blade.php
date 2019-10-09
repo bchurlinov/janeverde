@@ -122,8 +122,8 @@
                                                     alt="Jane Verde Image" class="list-view-image" />
 
                                                 <div class="clearfix"></div>
-                                                <span class="qs" {!! $product->verified === 0 ? "style='display: none !important'" : "" !!}>
-                                                    <img src={{asset('images/shield_green.svg')}}
+                                                <span class="qs" {!! $product->verified == 0 ? "style='display: none !important'" : "" !!}>
+                                                <img src={{asset('images/shield_green.svg')}}
                                                         alt="Jane Verde - SVG Icon"  />
                                                     <div class="popover above popover-content">
                                                         <h4>

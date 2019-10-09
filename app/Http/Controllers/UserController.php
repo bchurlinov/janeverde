@@ -257,6 +257,7 @@ class UserController extends Controller
             'password'=>\Hash::make($request->password),
             'email'=>$request->email,
             'name'=>$request->name,
+            'lastname'=>$request->lastname,
             'auth_token'=> ''
         ];
         $user = new \App\User($payload);
