@@ -14,7 +14,6 @@ class HomeController extends Controller
     public function __construct()
     {
         $this->middleware(['auth', 'verified']);
-        app('App\Http\Controllers\UserController')::checkHempOrCannabis();
     }
 
     /**
