@@ -8,7 +8,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     // all routes to protected resources are registered here  
     Route::get('users/list', function(){
-        $users = App\User::all();
+        $users = App\User::find(auth()->user()->id);
 
         $response = ['success'=>true, 'data'=>$users];
         return response()->json($response, 201);
@@ -21,6 +21,10 @@ Route::group(['middleware' => 'api-header'], function () {
     // Therefore the jwtMiddleware will be exclusive of them
     Route::post('user/login', 'UserController@login');
     Route::post('user/register', 'UserController@register');
-    Route::post('user/logout', 'Auth\LoginController@logout');
+    Route::post('user/logout', function(Request $request){
+        $this->validate($request, ['token' => 'required']);
+        JWTAuth::invalidate($request->input('token'));
+        return json_encode("success");
+    });
 
 });
