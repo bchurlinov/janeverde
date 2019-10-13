@@ -41,10 +41,6 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
         'email_verified_at' => 'datetime',
     ];
 
-    public function products(){
-        return $this->hasMany('App\Product');
-    }
-
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -63,5 +59,28 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
     public function getJWTCustomClaims()
     {
         return [];
+    }
+
+    public function products(){
+        return $this->hasMany('App\Product');
+    }
+
+    //agricultural license relation
+    public function agriculturalLicense(){
+        return $this->hasOne('App\AgriculturalLicense');
+    }
+
+    //cultivation license relation
+    public function cultivationLicense(){
+        return $this->hasOne('App\CultivationLicense');
+    }
+
+    //industrial license relation
+    public function industrialLicense(){
+        return $this->hasOne('App\IndustrialLicense');
+    }
+
+    public function pictureID(){
+        return $this->hasOne('App\PictureID');
     }
 }

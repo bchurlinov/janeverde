@@ -11,6 +11,7 @@
 |
 */
 use App\Countries;
+use App\User;
 
 //Route::get('/', function () {
 //    return redirect('/cannabis');
@@ -140,6 +141,15 @@ Route::get('/setav', 'ProductsController@setav')->middleware('cookies');
 Route::get('/', function(){
     return redirect('/cannabis');
 })->middleware('cookies');
+
+Route::get('/usr', function(){
+    //load user with all his relations: licences, picture id, and his products
+    //$user = User::with('agriculturalLicense', 'cultivationLicense', 'industrialLicense', 'pictureID', 'products')->find(9);
+    //dd($user);
+    //load product with relations: user and country
+    $p = Product::with('user', 'country', 'category')->find(51);
+    dd($p);
+});
 
 //by default, redirect to /cannabis, otherwise, hemp. redirect to /cannabis if other category is entered that does not comply with hemp/cannabis
 Route::get('/{type?}', function($type = ""){
