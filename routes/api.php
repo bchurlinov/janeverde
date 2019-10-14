@@ -18,9 +18,11 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     //user logout
     Route::post('user/logout', function(Request $request){
-        $this->validate($request, ['token' => 'required']);
-        JWTAuth::invalidate($request->input('token'));
-        echo json_encode("success");
+        $request->validate(['token' => 'required']);
+        //invalidate the token, forever (blacklisting it so it wont be reusable anymore)
+        auth()->logout(true);
+        //return status -> success
+        echo json_encode(["status" => "success"]);
     });
 });
 Route::group(['middleware' => 'api-header'], function () {
