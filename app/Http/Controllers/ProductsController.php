@@ -232,7 +232,7 @@ class ProductsController extends Controller
 
 
     public function newProduct(){
-        dd(json_encode(request()->get('image')));
+        //header("Access-Control-Allow-Origin:*");
         request()->validate([
             'title' => 'required', //Some title
             'description' => 'required', //description, alpha numeric
@@ -240,14 +240,11 @@ class ProductsController extends Controller
             'country' => 'required', //like new_york, all_states, not: Arizona, New York
             'type' => 'required', //hemp or cannabis
             'category' => 'required|numeric', //integer only, check categories table for numbers
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required',
         ]);
-        //give the image random str name
-        $imageName = Str::random(12).'.'.request()->image->getClientOriginalExtension();
 
         //get user id, we need it to connect it to the product
         $loggedUserId = auth()->user()->id;
-        
 
         //first, get country details
         $country = Countries::where('name', '=', request()->get('country'))->get()->first();
@@ -263,11 +260,36 @@ class ProductsController extends Controller
         }
         //all is fine with category, check type
         $type = request()->get('type');
-        if($type != "hemp" || $type != "cannabis"){
+
+        if($type != "hemp" && $type != "cannabis"){
             echo json_encode(['status' => 'failed', 'reason' => 'invalid type']);
             return;
         }
-        //all is fine with type, proceed to create title
+        //all is fine with type, proceed with image
+
+        $img = request()->get('image');
+        $name = $this->processImage($img);
+
+        $img2 = request()->get('image2');
+        $img3 = request()->get('image3');
+        $img4 = request()->get('image4');
+        $img5 = request()->get('image5');
+        $img6 = request()->get('image6');
+        $img7 = request()->get('image7');
+        $img8 = request()->get('image8');
+        $img9 = request()->get('image9');
+        $img10 = request()->get('image10');
+
+        if($img2 != null){ $img2 = $this->processImage($img2); }
+        if($img3 != null){ $img3 = $this->processImage($img3); }
+        if($img4 != null){ $img4 = $this->processImage($img4); }
+        if($img5 != null){ $img5 = $this->processImage($img5); }
+        if($img6 != null){ $img6 = $this->processImage($img6); }
+        if($img7 != null){ $img7 = $this->processImage($img7); }
+        if($img8 != null){ $img8 = $this->processImage($img8); }
+        if($img9 != null){ $img9 = $this->processImage($img9); }
+        if($img10 != null){ $img10= $this->processImage($img10); }
+
         //create Product instance, we insert new product
         $product = new Product;
         $product->user_id = $loggedUserId;
@@ -280,12 +302,30 @@ class ProductsController extends Controller
         $product->type = $type;
         $product->category_id = $category->number;
         $product->state = $country->name;
-        $product->img1 = $imageName;
+        $product->img1 = $name;
+        $product->img2 = $img2;
+        $product->img3 = $img3;
+        $product->img4 = $img4;
+        $product->img5 = $img5;
+        $product->img6 = $img6;
+        $product->img7 = $img7;
+        $product->img8 = $img8;
+        $product->img9 = $img9;
+        $product->img10 = $img10;
+
         //save product
         $product->save();
 
-        request()->image->move(public_path('products'), $imageName);
         echo json_encode(['status' => 'success']);
         //return back()->with('success','You have successfully upload image.')->with('image',$imageName);
+    }
+
+    public function processImage($img){
+        $img = $img[0];
+        $img = explode(';', $img);
+        $name = str_replace("name=", "", $img[1]);
+        $content =str_replace("base64,", "", $img[2]);
+        \File::put(public_path(). '/products/' . $name, base64_decode($content));
+        return $name;
     }
 }
