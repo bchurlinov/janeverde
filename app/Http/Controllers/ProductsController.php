@@ -232,9 +232,10 @@ class ProductsController extends Controller
 
 
     public function newProduct(){
+        dd(json_encode(request()->get('image')));
         request()->validate([
-            'title' => 'required|alpha_num', //Some title
-            'description' => 'required|alpha_num', //description, alpha numeric
+            'title' => 'required', //Some title
+            'description' => 'required', //description, alpha numeric
             'price' => 'required|numeric', //strict numeric
             'country' => 'required', //like new_york, all_states, not: Arizona, New York
             'type' => 'required', //hemp or cannabis
@@ -246,6 +247,7 @@ class ProductsController extends Controller
 
         //get user id, we need it to connect it to the product
         $loggedUserId = auth()->user()->id;
+        
 
         //first, get country details
         $country = Countries::where('name', '=', request()->get('country'))->get()->first();
@@ -283,6 +285,7 @@ class ProductsController extends Controller
         $product->save();
 
         request()->image->move(public_path('products'), $imageName);
+        echo json_encode(['status' => 'success']);
         //return back()->with('success','You have successfully upload image.')->with('image',$imageName);
     }
 }
