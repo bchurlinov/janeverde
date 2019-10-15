@@ -16,6 +16,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         return response()->json($response, 201);
     });
 
+    //add new product route
+    Route::post('user/newproduct', 'ProductsController@newProduct');
+
     //user logout
     Route::post('user/logout', function(Request $request){
         $request->validate(['token' => 'required']);

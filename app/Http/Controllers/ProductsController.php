@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Countries;
 use App\Categories;
+use Illuminate\Support\Str; //for random image name
 
 class ProductsController extends Controller
 {
@@ -57,7 +58,7 @@ class ProductsController extends Controller
         ];
         if($category != 0){
             $catNum = $categoryObject['number'];
-            $whereClause[] = ['category', '=', $catNum];
+            $whereClause[] = ['category_id', '=', $catNum];
         }
         if($country != "all"){
             $whereClause[] = ['state', '=', $country];
@@ -108,12 +109,10 @@ class ProductsController extends Controller
         $horc = $request->get('c');
         if($horc != "hemp" && $horc != "cannabis"){
             session()->put('type', 'cannabis');
-            //setcookie("type", 'cannabis', time() + 60 * 60 * 24 * 30, "/");
             echo "cannabis";
         }
         else{
             session()->put('type', $horc);
-            //setcookie("type", $horc, time() + 60 * 60 * 24 * 30, "/");
             echo $horc;
         }
     }
@@ -123,8 +122,6 @@ class ProductsController extends Controller
         //['viewAll', 'verifiedOnly']; searchType
         $setav != "viewAll" && $setav != 'verifiedOnly' ? session()->put('searchType', 'viewAll') : session()->put('searchType', $setav);
         echo $setav;
-        //$setav != "all" && $setav != 'verified' ? setcookie("searchType", 'all', time() + 60 * 60 * 24 * 30, "/") :
-        //    setcookie("searchType", $setav, time() + 60 * 60 * 24 * 30, "/");
     }
 
     /**
@@ -159,19 +156,27 @@ class ProductsController extends Controller
     public function view($id){
         //get the session to see whether is set view all or verified only
         $searchType = session()->get('searchType');
-        $conditions = [
-            "previous" => [],
-            "next" => []
-        ];
-        $conditions['previous'][] = ['id', '<', $id];
-        $conditions['next'][] = ['id', '>', $id];
-        if($searchType == 'verifiedOnly'){
-            $conditions['previous'][] = ['verified', '=', 1];
-            $conditions['next'][] = ['verified', '=', 1];
-        }
 
-        $previous = Product::where($conditions['previous'])->max('id');
-        $next = Product::where($conditions['next'])->min('id');
+        //get the country
+        $country = session()->get('country');
+        if($country != null){
+
+        }
+        $previous = Product::where('id', '<', $id)->max('id');
+        $next = Product::where('id', '>', $id)->min('id');
+
+        if($searchType == 'verifiedOnly'){
+            /*
+            in case of verified only, we need to filter out based on the user() relation.
+            first, we find the user by id, gotten previously by $previous / $next,
+            then using lazy loading, from the relation we extract whether the user is verified or not
+            and return the id, if it doesnt exist, we assign null to it
+            */
+            $prev = Product::find($previous);
+            $previous = $prev != null ? $prev->user()->where('is_verified', '=', 1)->max('id') : null;
+            $nex = Product::find($next);
+            $next = $nex != null ?  $nex->user()->where('is_verified', '=', 1)->max('id') : null;
+        }
         //get previous url, match it with url segments
         $preurl = url()->previous();
         $prev = "/";
@@ -182,10 +187,9 @@ class ProductsController extends Controller
             //put this in session, we will need it
             session()->put('goToPrevious', $prev);
         }
-        $product = Product::find($id);
-        $productCat = Categories::where('number', $product->category)->get();
+        $product = Product::with('user', 'country', 'category')->find($id);
 
-        return view('details_page')->with(['product' => $product, 'previous' => $previous, "next" => $next, "category" => $productCat]);
+        return view('details_page')->with(['product' => $product, 'previous' => $previous, "next" => $next]);
     }
 
     /**
@@ -224,5 +228,61 @@ class ProductsController extends Controller
     public static function getCategoryName($id){
         $cat = Categories::where('number', $id)->get();
         return count($cat) == 0 ? "General" : $cat[0]['name'];
+    }
+
+
+    public function newProduct(){
+        request()->validate([
+            'title' => 'required|alpha_num', //Some title
+            'description' => 'required|alpha_num', //description, alpha numeric
+            'price' => 'required|numeric', //strict numeric
+            'country' => 'required', //like new_york, all_states, not: Arizona, New York
+            'type' => 'required', //hemp or cannabis
+            'category' => 'required|numeric', //integer only, check categories table for numbers
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+        //give the image random str name
+        $imageName = Str::random(12).'.'.request()->image->getClientOriginalExtension();
+
+        //get user id, we need it to connect it to the product
+        $loggedUserId = auth()->user()->id;
+
+        //first, get country details
+        $country = Countries::where('name', '=', request()->get('country'))->get()->first();
+        if($country == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
+        //all is fine with the country, check category
+        $category = Categories::where('number', '=', request()->get('category'))->get()->first();
+        if($category == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid category']);
+            return;
+        }
+        //all is fine with category, check type
+        $type = request()->get('type');
+        if($type != "hemp" || $type != "cannabis"){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid type']);
+            return;
+        }
+        //all is fine with type, proceed to create title
+        //create Product instance, we insert new product
+        $product = new Product;
+        $product->user_id = $loggedUserId;
+        $product->title = request()->get('title');
+        $product->description = request()->get('description');
+        $product->price = request()->get('price');
+        $product->location = $country->full_country;
+        $product->country_id = $country->id;
+        $product->is_deleted = 0;
+        $product->type = $type;
+        $product->category_id = $category->number;
+        $product->state = $country->name;
+        $product->img1 = $imageName;
+        //save product
+        $product->save();
+
+        request()->image->move(public_path('products'), $imageName);
+        //return back()->with('success','You have successfully upload image.')->with('image',$imageName);
     }
 }

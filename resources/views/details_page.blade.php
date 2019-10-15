@@ -34,9 +34,11 @@
                 <div class="home-wrap__item">
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
-                            <h3>{{$country['fullName']}} /
+                            <h3>
+
+                                {{$product->country->full_country}} /
                                 {{strtoupper(session()->get('type'))}} /
-                                {{$category[0]['name']}}</h3>
+                                {{$product->category->name}}</h3>
                         </div>
                         <div class="current-state-heading__item">
                             <form method="GET"
