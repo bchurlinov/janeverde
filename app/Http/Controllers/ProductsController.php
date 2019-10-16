@@ -268,27 +268,18 @@ class ProductsController extends Controller
         //all is fine with type, proceed with image
 
         $img = request()->get('image');
-        $name = $this->processImage($img);
+        $name = $this->processImage($img, 0);
+        $img2 = $img3 =$img4 = $img5 = $img6 = $img7 = $img8 = $img9 = $img10 = null;
 
-        $img2 = request()->get('image2');
-        $img3 = request()->get('image3');
-        $img4 = request()->get('image4');
-        $img5 = request()->get('image5');
-        $img6 = request()->get('image6');
-        $img7 = request()->get('image7');
-        $img8 = request()->get('image8');
-        $img9 = request()->get('image9');
-        $img10 = request()->get('image10');
-
-        if($img2 != null){ $img2 = $this->processImage($img2); }
-        if($img3 != null){ $img3 = $this->processImage($img3); }
-        if($img4 != null){ $img4 = $this->processImage($img4); }
-        if($img5 != null){ $img5 = $this->processImage($img5); }
-        if($img6 != null){ $img6 = $this->processImage($img6); }
-        if($img7 != null){ $img7 = $this->processImage($img7); }
-        if($img8 != null){ $img8 = $this->processImage($img8); }
-        if($img9 != null){ $img9 = $this->processImage($img9); }
-        if($img10 != null){ $img10= $this->processImage($img10); }
+        if(!empty($img[1])){ $img2 = $this->processImage($img, 1); }
+        if(!empty($img[2])){ $img3 = $this->processImage($img, 2); }
+        if(!empty($img[3])){ $img4 = $this->processImage($img, 3); }
+        if(!empty($img[4])){ $img5 = $this->processImage($img, 4); }
+        if(!empty($img[5])){ $img6 = $this->processImage($img, 5); }
+        if(!empty($img[6])){ $img7 = $this->processImage($img, 6); }
+        if(!empty($img[7])){ $img8 = $this->processImage($img, 7); }
+        if(!empty($img[8])){ $img9 = $this->processImage($img, 8); }
+        if(!empty($img[9])){ $img10= $this->processImage($img, 9); }
 
         //create Product instance, we insert new product
         $product = new Product;
@@ -320,10 +311,14 @@ class ProductsController extends Controller
         //return back()->with('success','You have successfully upload image.')->with('image',$imageName);
     }
 
-    public function processImage($img){
-        $img = $img[0];
+    public function processImage($img, $index){
+        $img = $img[$index];
         $img = explode(';', $img);
         $name = str_replace("name=", "", $img[1]);
+        $name = explode(".", $name);
+        $extension = $name[count($name) - 1];
+        unset($name[count($name) - 1]);
+        $name = md5(implode(".", $name)).time().".".$extension;
         $content =str_replace("base64,", "", $img[2]);
         \File::put(public_path(). '/products/' . $name, base64_decode($content));
         return $name;

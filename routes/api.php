@@ -5,7 +5,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['middleware' => ['jwt.auth','api-header']], function () {
-    header("Access-Controll-Allow-Origin:*");
+    //header("Access-Control-Allow-Origin:*");
     // all routes to protected resources are registered here  
     Route::get('users/list', function(){
         //load user relations, and return all of them
