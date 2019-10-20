@@ -122,23 +122,23 @@
                                                     alt="Jane Verde Image" class="list-view-image" />
 
                                                 <div class="clearfix"></div>
-                                                <span class="qs" {!! $product->verified == 0 ? "style='display: none !important'" : "" !!}>
-                                                <img src={{asset('images/shield_green.svg')}}
+                                                <span class="qs">
+                                                <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                         alt="Jane Verde - SVG Icon"  />
                                                     <div class="popover above popover-content">
                                                         <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
+                                                            <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                                 alt="Jane Verde - SVG Icon" />
                                                             Verified Business
                                                         </h4>
                                                         <ul>
                                                             <li><i class="fas fa-check"></i>Bussiness Name: Jane
                                                                 Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
+                                                            <li><i class="fas fa-check"></i>Location: Califor
                                                             <li><i class="fas fa-check"></i>Bus License/TAX ID:
                                                                 93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
+                                                            <li><i class="fas fa-check"></i>Agricultural License: AGnia
+                                                            </li>
                                                                 - R12315321</li>
                                                         </ul>
                                                     </div>
@@ -155,12 +155,12 @@
                                                 </a>
                                                 <span class="product-location" style="display: inline">({{$product->location}})</span>
                                               
-                                                <span class="qs qs-list-view"  {!! $product->verified === 0 ? "style='display: none !important'" : "" !!}>
-                                                    <img src={{asset('images/shield_green.svg')}}
+                                                <span class="qs qs-list-view" >
+                                                    <img src= {!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                         alt="Jane Verde - SVG Icon" />
                                                     <div class="popover above popover-content">
                                                         <h4>
-                                                            <img src={{asset('images/shield_green.svg')}}
+                                                            <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                                 alt="Jane Verde - SVG Icon" />
                                                             Verified Business
                                                         </h4>

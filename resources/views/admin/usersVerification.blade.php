@@ -84,21 +84,17 @@
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="/approve"
-                                           onclick="event.preventDefault(); document.getElementById('{{$user->id}}').submit();">
-                                            Approve</a>
-                                        <form id="{{$user->id}}" action="/approve" method="POST" style="display: none;">
+                                        <form id="{{$user->id}}" action="/approve" method="POST">
                                             <input type="hidden" name="id" value="{{$user->id}}" >
                                             @csrf
+                                            <input type="submit" name="submit" class="btn btn-success" value="Approve">
                                         </form>
                                     </td>
                                     <td>
-                                        <a href="/decline"
-                                           onclick="event.preventDefault(); document.getElementById('{{$user->id. '_' . $user->id}}').submit();">
-                                        Decline</a>
-                                        <form id="{{$user->id. '_' . $user->id}}" action="/decline" method="POST" style="display: none">
+                                        <form id="{{$user->id. '_' . $user->id}}" action="/decline" method="POST">
                                             <input type="hidden" name="id" value="{{$user->id. '_' . $user->id}}" >
                                             @csrf
+                                            <input type="submit" name="submit" class="btn btn-danger" value="Decline">
                                         </form>
                                     </td>
                                 </tr>

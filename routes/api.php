@@ -1,15 +1,16 @@
 
 <?php
 use Illuminate\Http\Request;
+use Tymon\JWTAuth\Facades\JWTAuth;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //header("Access-Control-Allow-Origin:*");
-    // all routes to protected resources are registered here  
+    // all routes to protected resources are registered here
     Route::get('users/list', function(){
         //load user relations, and return all of them
-        $users = App\User::with('agriculturalLicense', 'cultivationLicense', 'industrialLicense', 'pictureID', 'products')->find(auth()->user()->id);
+        $users = App\User::with('agriculturalLicense', 'cultivationLicense', 'industrialLicense', 'pictureID')->find(auth()->user()->id);
 
         $response = ['success'=>true, 'data'=>$users];
         return response()->json($response, 201);
@@ -17,6 +18,21 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     //add new product route
     Route::post('user/newproduct', 'ProductsController@newProduct');
+
+    //get user's products
+    Route::post('/user/products', "UserController@getProductsAPI");
+
+    //get product details by user id and product id
+    Route::post('/user/product', 'UserController@getProductDetailsByUserIDAPI');
+
+    //add Agricultural licence
+    Route::post('/user/newAgLicence', 'UserController@newAgLicence');
+
+    //add Industrial License
+    Route::post('/user/newInLicence', 'UserController@newInLicence');
+
+    //add Cultivation License
+    Route::post('/user/newCuLicence', 'UserController@newCuLicence');
 
     //user logout
     Route::post('user/logout', function(Request $request){
@@ -29,7 +45,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 });
 Route::group(['middleware' => 'api-header'], function () {
 
-    // The registration and login requests doesn't come with tokens 
+    // The registration and login requests doesn't come with tokens
     // as users at that point have not been authenticated yet
     // Therefore the jwtMiddleware will be exclusive of them
     Route::post('user/login', 'UserController@login');

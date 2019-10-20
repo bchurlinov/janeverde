@@ -9,6 +9,10 @@ use Hash;
 use JWTAuth;
 use JWTAuthException;
 use App\Product;
+use App\Countries;
+use App\AgriculturalLicense;
+use App\CultivationLicense;
+use App\IndustrialLicense;
 
 class UserController extends Controller
 {
@@ -87,15 +91,6 @@ class UserController extends Controller
 
         request()->image->move(public_path('pictureID'), $imageName);
         return back()->with('success','You have successfully upload image.')->with('image',$imageName);
-    }
-
-    /**
-     * get all users's purchased products
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     */
-    public function buyerPurchasedProducts(){
-        $user = User::find(auth()->user()->id);
-        return view('auth.buyerPurchased')->with('userProducts', $user->products);
     }
 
     /**
@@ -238,6 +233,12 @@ class UserController extends Controller
         }
         return $token;
     }
+
+    /**
+     * Log user through api using jwt
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(Request $request){
         $user = \App\User::where('email', $request->email)->get()->first();
         if ($user && \Hash::check($request->password, $user->password)){
@@ -251,6 +252,12 @@ class UserController extends Controller
         }
         return response()->json($response, 201);
     }
+
+    /**
+     * new user sign up
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function register(Request $request)
     {
         $payload = [
@@ -274,4 +281,183 @@ class UserController extends Controller
         }
         return response()->json($response, 201);
     }
+
+    /**
+     * get all products by user id
+     * @param Request $request
+     * @return string $response
+     */
+    public function getProductsAPI(Request $request){
+        $validate = $request->validate([
+            'user_id' => 'required|numeric'
+        ]);
+
+        $user = User::find($request->user_id);
+        $products = $user->products;
+
+        $response = ['status' => 'success', 'products' => []];
+
+        if(count($products) > 0){
+            foreach($products as $product){
+                $response['products'][$product->id] = $product;
+            }
+        }
+        echo json_encode($response);
+    }
+
+    /**
+     * Get product details by user id and product id
+     * @param Request $request
+     * @return json $response json encoded string
+     */
+    public function getProductDetailsByUserIDAPI(Request $request ){
+        $validate = $request->validate([
+            'user_id' => 'required|numeric',
+            'product_id' => 'required|numeric'
+        ]);
+
+        $product = Product::where([['user_id', '=', $request->user_id], ['id', '=', $request->product_id]])->get();
+
+        $response = ['status' => 'success', 'product' => []];
+
+        if(count($product) > 0){
+            //convert the object to array if there is any product found
+            $response['product'] = $product[0]->toArray();
+        }
+        echo json_encode($response);
+    }
+
+    /**
+     * add new agriculture licence
+     */
+    public function newAgLicence(){
+        //header("Access-Control-Allow-Origin:*");
+        request()->validate([
+            'agriculture_business_name' => 'required',
+            'agriculture_country' => 'required',
+            'agricultural_license' => 'required|numeric',
+            'agriculture_bus_license' => 'required',
+            'image' => 'required',
+        ]);
+
+        //get user id
+        $loggedUserId = auth()->user()->id;
+
+        //check for country details
+        $country = Countries::where('name', '=', request()->get('agriculture_country'))->get()->first();
+        if($country == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
+
+        $img = request()->get('image');
+        $name = $this->processImage($img, 'aglicence');
+
+        $licence = new AgriculturalLicense();
+
+        $licence->user_id = $loggedUserId;
+        $licence->businessName = request()->get('agriculture_business_name');
+        $licence->country_id = $country->id;
+        $licence->agriculturalLicence = request()->get('agricultural_license');
+        $licence->bltid = request()->get('agriculture_bus_license');
+        $licence->image = "aglicence/".$name;
+        $licence->verified = 2;
+
+        //save licence
+        $licence->save();
+
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function newInLicence(){
+        //header("Access-Control-Allow-Origin:*");
+        request()->validate([
+            'industrial_business_name' => 'required',
+            'industrial_country' => 'required',
+            'industrial_license' => 'required|numeric',
+            'industrial_bus_license' => 'required',
+            'image' => 'required',
+        ]);
+
+        //get user id
+        $loggedUserId = auth()->user()->id;
+
+        //check for country details
+        $country = Countries::where('name', '=', request()->get('industrial_country'))->get()->first();
+        if($country == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
+
+        $img = request()->get('image');
+        $name = $this->processImage($img, 'inlicence');
+
+        $licence = new IndustrialLicense();
+
+        $licence->user_id = $loggedUserId;
+        $licence->businessName = request()->get('industrial_business_name');
+        $licence->country_id = $country->id;
+        $licence->industrialLicence = request()->get('industrial_license');
+        $licence->bltid = request()->get('industrial_bus_license');
+        $licence->image = "inlicence/".$name;
+        $licence->verified = 2;
+
+        //save licence
+        $licence->save();
+
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function newCuLicence(){
+        //header("Access-Control-Allow-Origin:*");
+        request()->validate([
+            'cultivation_business_name' => 'required',
+            'cultivation_country' => 'required',
+            'cultivation_license' => 'required|numeric',
+            'cultivation_bus_license' => 'required',
+            'image' => 'required',
+        ]);
+
+        //get user id
+        $loggedUserId = auth()->user()->id;
+
+        //check for country details
+        $country = Countries::where('name', '=', request()->get('cultivation_country'))->get()->first();
+        if($country == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
+
+        $img = request()->get('image');
+        $name = $this->processImage($img, 'culicence');
+
+        $licence = new CultivationLicense();
+
+        $licence->user_id = $loggedUserId;
+        $licence->businessName = request()->get('cultivation_business_name');
+        $licence->country_id = $country->id;
+        $licence->cultivationLicence = request()->get('cultivation_license');
+        $licence->bltid = request()->get('cultivation_bus_license');
+        $licence->image = "culicence/".$name;
+        $licence->verified = 2;
+
+        //save licence
+        $licence->save();
+
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function processImage($img, $type){
+        $img = $img[0];
+        $img = explode(';', $img);
+        $name = str_replace("name=", "", $img[1]);
+        $name = explode(".", $name);
+        $extension = $name[count($name) - 1];
+        unset($name[count($name) - 1]);
+        $name = md5(implode(".", $name)).time().".".$extension;
+        $content =str_replace("base64,", "", $img[2]);
+        \File::put(public_path(). '/'.$type.'/' . $name, base64_decode($content));
+        return $name;
+    }
+
 }

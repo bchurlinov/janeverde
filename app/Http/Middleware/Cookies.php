@@ -28,22 +28,19 @@ class Cookies
             $allowed = ['hemp', 'cannabis'];
             if(!in_array($_COOKIE['type'], $allowed)){
                 //default one is cannabis, set it now
-                session()->put('type', 'cannabis');
-                //setcookie("type", 'cannabis', time() + 60 * 60 * 24 * 30, "/");
+                session()->put('type', 'hemp');
             }
             //else, it is allowed, dont mess with it
         }
         else{
             //cookie not present, set it now
-            session()->put('type', 'cannabis');
-            //setcookie("type", 'cannabis', time() + 60 * 60 * 24 * 30, "/");
+            session()->put('type', 'hemp');
         }
 
         //===================== PRODUCTS SEARCH COOKIE =====================
         if(session()->get('search') == 'null'){
             //no cookie is set, set a default to viewAll
             session()->put('searchType', 'viewAll');
-            //setcookie('searchType', 'viewAll', time() + 60 * 60 * 24 * 30, "/");
         }
         else{
             $allowedTypes = ['viewAll', 'verifiedOnly'];
@@ -62,7 +59,6 @@ class Cookies
                 $country = self::processGeolocatedIp($details);
             }
             session()->put('country', json_encode($country));
-            //setcookie("country", $country['dropdown'], time() + 60 * 60 * 24 * 30, "/");
         }
         else{
             //check if the value is present in the database
@@ -74,12 +70,10 @@ class Cookies
                     $country = self::processGeolocatedIp($details);
                 }
                 session()->put('country', json_encode($country));
-                //setcookie("country", json_encode($country), time() + 60 * 60 * 24 * 30, "/");
             }
             else{
                 $country = ["dropdown" => $searchInDb[0]['name'], "fullName" => ucfirst($searchInDb[0]['full_country'])];
                 session()->put('country', json_encode($country));
-                //setcookie("country", json_encode($country), time() + 60 * 60 * 24 * 30, "/");
             }
         }
     }

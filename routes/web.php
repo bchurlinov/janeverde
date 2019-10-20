@@ -107,36 +107,39 @@ Route::get('/cats', function(){
     dd($entered);
 });
 */
+//===== AG LICENCE APPROVAL AND DECLINE ROUTES
+Route::get('/aglicences', 'LicencesController@getAgLicences')->middleware('cookies', 'verified');
+//approve user agricultural licence
+Route::post('/agapprove', 'LicencesController@approve')->middleware('cookies', 'verified');
+//decline user picture id
+Route::post('/agdecline', 'LicencesController@decline')->middleware('cookies', 'verified');
+//============END AG LICENCE ROUTES
 
-//update products
-Route::get('/fillproducts', function(){
-    $categories = Categories::all()->toArray();
-    $randCategory = rand(0, 28);
-    //['number'] mi treba
+//===== CU LICENCE APPROVAL AND DECLINE ROUTES
+Route::get('/culicences', 'LicencesController@getCuLicences')->middleware('cookies', 'verified');
+//approve user agricultural licence
+Route::post('/cuapprove', 'LicencesController@cuapprove')->middleware('cookies', 'verified');
+//decline user picture id
+Route::post('/cudecline', 'LicencesController@cudecline')->middleware('cookies', 'verified');
+//============END CU LICENCE ROUTES
 
-    $type = ['hemp', 'cannabis'];
+//===== CU LICENCE APPROVAL AND DECLINE ROUTES
+Route::get('/inlicences', 'LicencesController@getInLicences')->middleware('cookies', 'verified');
+//approve user agricultural licence
+Route::post('/inapprove', 'LicencesController@inapprove')->middleware('cookies', 'verified');
+//decline user picture id
+Route::post('/indecline', 'LicencesController@indecline')->middleware('cookies', 'verified');
+//============END CU LICENCE ROUTES
 
-    $countries = Countries::all()->toArray();
-    $randCountry = rand(0, 58);
-    //['name'] mi treba
-    $products = Product::all()->toArray();
-    //dd($countries);
-    foreach($products as $product){
-        $count = $countries[rand(0, 57)];
-        $pr = Product::find($product['id']);
-        $pr->type = $type[rand(0, 1)];
-        $pr->category = $categories[rand(0, 28)]['number'];
-        $pr->state = $count['name'];
-        $pr->location = $count['full_country'];
-        $pr->save();
-    }
-    echo "done";
-});
+
 //set hemp or cannabis
 Route::get('/sethc', 'ProductsController@sethc')->middleware('cookies');
 
 //set view all or verified products only
 Route::get('/setav', 'ProductsController@setav')->middleware('cookies');
+
+//test route
+Route::get('/test', 'UserController@getProductDetailsByUserIDAPI');
 
 Route::get('/', function(){
     return redirect('/cannabis');
@@ -155,12 +158,11 @@ Route::get('/usr', function(){
 Route::get('/{type?}', function($type = ""){
     if($type != "" && ($type == "cannabis" || $type == "hemp")){
         //set hemp or cannabis
-        //setcookie("type", $type, time() + 60 * 60 * 24 * 30, "/");
         session()->put('type', $type);
         return view('home');
     }
     else{
-        return redirect('/cannabis');
+        return redirect('/hemp');
     }
 })->middleware('cookies');
 

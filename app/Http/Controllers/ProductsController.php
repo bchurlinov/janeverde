@@ -7,6 +7,7 @@ use App\Product;
 use App\Countries;
 use App\Categories;
 use Illuminate\Support\Str; //for random image name
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class ProductsController extends Controller
 {
@@ -308,7 +309,6 @@ class ProductsController extends Controller
         $product->save();
 
         echo json_encode(['status' => 'success']);
-        //return back()->with('success','You have successfully upload image.')->with('image',$imageName);
     }
 
     public function processImage($img, $index){
