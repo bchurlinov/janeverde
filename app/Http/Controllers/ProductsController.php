@@ -8,6 +8,10 @@ use App\Countries;
 use App\Categories;
 use Illuminate\Support\Str; //for random image name
 use Tymon\JWTAuth\Facades\JWTAuth;
+use App\User;
+use App\Flagged;
+use App\Hide;
+use App\Favorite;
 
 class ProductsController extends Controller
 {
@@ -100,6 +104,228 @@ class ProductsController extends Controller
         }
         //return them to the view
         return view('admin.productsmanagement')->with(['products'=> $notDeleted, "deleted" => $deleted]);
+    }
+
+    public function setflag(Request $request){
+        $validate = $request->validate([
+            'c' => 'required|numeric'
+        ]);
+        //check if user is logged
+        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        $product = Product::find($request->get('c'));
+
+        if($product != null){
+            //product is real, proceed with flagging
+            if($user > 0){
+                $usr = User::find($user);
+                //if the user exists, then add to database
+                if($user != null){
+                    $userId = $usr->id;
+                    //check the flagged table
+                    $flag = Flagged::where('user_id', '=', $userId)->get();
+                    if(count($flag) == 0){
+                        $new = new Flagged;
+                        $new->user_id = $userId;
+                        $new->product_id = $request->get('c');
+                        $new->save();
+                        return 1;
+                    }
+                    else{
+                        $new = Flagged::find($flag[0]['id']);
+                        $p = explode(",", $new->product_id);
+                        if(in_array($request->get('c'), $p)){
+                            unset($p[array_search($request->get('c'), $p)]);
+                        }
+                        else{
+                            $p[] = $request->get('c');
+                        }
+                        $p = implode(',', $p);
+                        $new->product_id = $p;
+                        $new->save();
+                        return 1;
+                    }
+                }
+                else{
+                     //no user is set, we set it in session only
+                     $sess = session()->get('flagged');
+                     $p = explode(",", $sess);
+                     if(in_array($request->get('c'), $p)){
+                         unset($p[array_search($request->get('c'), $p)]);
+                     }
+                     else{
+                         $p[] = $request->get('c');
+                     }
+                     $p = implode(',', $p);
+                     session()->put('flagged', $p);
+                    return 1;
+                }
+            }
+            else{
+                //no user is set, we set it in session only
+                $sess = session()->get('flagged');
+                $p = explode(",", $sess);
+                if(in_array($request->get('c'), $p)){
+                    unset($p[array_search($request->get('c'), $p)]);
+                }
+                else{
+                    $p[] = $request->get('c');
+                }
+                $p = implode(',', $p);
+                session()->put('flagged', $p);
+                return 1;
+            }
+        }
+        return 1;
+    }
+
+    public function setHide(Request $request){
+        $validate = $request->validate([
+            'c' => 'required|numeric'
+        ]);
+        //check if user is logged
+        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        $product = Product::find($request->get('c'));
+
+        if($product != null){
+            //product is real, proceed with flagging
+            if($user > 0){
+                $usr = User::find($user);
+                //if the user exists, then add to database
+                if($user != null){
+                    $userId = $usr->id;
+                    //check the flagged table
+                    $flag = Hide::where('user_id', '=', $userId)->get();
+                    if(count($flag) == 0){
+                        $new = new Hide;
+                        $new->user_id = $userId;
+                        $new->product_id = $request->get('c');
+                        $new->save();
+                        return 1;
+                    }
+                    else{
+                        $new = Hide::find($flag[0]['id']);
+                        $p = explode(",", $new->product_id);
+                        if(in_array($request->get('c'), $p)){
+                            unset($p[array_search($request->get('c'), $p)]);
+                        }
+                        else{
+                            $p[] = $request->get('c');
+                        }
+                        $p = implode(',', $p);
+                        $new->product_id = $p;
+                        $new->save();
+                        return 1;
+                    }
+                }
+                else{
+                     //no user is set, we set it in session only
+                     if(session()->get('hide') == null){
+                        session()->put('hide', $product->id);
+                     }
+                     else{
+                        $sess = session()->get('hide');
+                        $p = explode(",", $sess);
+                        if(in_array($request->get('c'), $p)){
+                            unset($p[array_search($request->get('c'), $p)]);
+                        }
+                        else{
+                            $p[] = $request->get('c');
+                        }
+                        $p = implode(',', $p);
+                        session()->put('hide', $p);
+                     }
+
+                    return 1;
+                }
+            }
+            else{
+                //no user is set, we set it in session only
+                $sess = session()->get('hide');
+                $p = explode(",", $sess);
+                if(in_array($request->get('c'), $p)){
+                    unset($p[array_search($request->get('c'), $p)]);
+                }
+                else{
+                    $p[] = $request->get('c');
+                }
+                $p = implode(',', $p);
+                session()->put('hide', $p);
+                return 1;
+            }
+        }
+        return 1;
+    }
+
+    public function setfavorite(Request $request){
+        $validate = $request->validate([
+            'c' => 'required|numeric'
+        ]);
+        //check if user is logged
+        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        $product = Product::find($request->get('c'));
+
+        if($product != null){
+            //product is real, proceed with flagging
+            if($user > 0){
+                $usr = User::find($user);
+                //if the user exists, then add to database
+                if($user != null){
+                    $userId = $usr->id;
+                    //check the flagged table
+                    $flag = Favorite::where('user_id', '=', $userId)->get();
+                    if(count($flag) == 0){
+                        $new = new Favorite;
+                        $new->user_id = $userId;
+                        $new->product_id = $request->get('c');
+                        $new->save();
+                        return 1;
+                    }
+                    else{
+                        $new = Favorite::find($flag[0]['id']);
+                        $p = explode(",", $new->product_id);
+                        if(in_array($request->get('c'), $p)){
+                            unset($p[array_search($request->get('c'), $p)]);
+                        }
+                        else{
+                            $p[] = $request->get('c');
+                        }
+                        $p = implode(',', $p);
+                        $new->product_id = $p;
+                        $new->save();
+                        return 1;
+                    }
+                }
+                else{
+                     //no user is set, we set it in session only
+                     $sess = session()->get('favorite');
+                     $p = explode(",", $sess);
+                     if(in_array($request->get('c'), $p)){
+                         unset($p[array_search($request->get('c'), $p)]);
+                     }
+                     else{
+                         $p[] = $request->get('c');
+                     }
+                     $p = implode(',', $p);
+                     session()->put('favorite', $p);
+                    return 1;
+                }
+            }
+            else{
+                //no user is set, we set it in session only
+                $sess = session()->get('favorite');
+                     $p = explode(",", $sess);
+                     if(in_array($request->get('c'), $p)){
+                         unset($p[array_search($request->get('c'), $p)]);
+                     }
+                     else{
+                         $p[] = $request->get('c');
+                     }
+                     $p = implode(',', $p);
+                     session()->put('favorite', $p);
+                return 1;
+            }
+        }
+        return 1;
     }
 
     /**
@@ -322,5 +548,92 @@ class ProductsController extends Controller
         $content =str_replace("base64,", "", $img[2]);
         \File::put(public_path(). '/products/' . $name, base64_decode($content));
         return $name;
+    }
+
+    public static function checkfhf(){
+        //check favorites, hidden and flagged
+        //first, we check if there is user
+        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        $data = [
+            'favorites' => [],
+            'hidden' => [],
+            'flagged' => []
+        ];
+        if($user == 0){
+            //there is no user, check the session
+            if(session()->get('flagged') != null){
+                $s = explode(",", session()->get('flagged'));
+                foreach($s as $v){
+                    if($v != "") $data['flagged'][] = $v;
+                }
+            }
+            if(session()->get('favorite') != null){
+                $s = explode(",", session()->get('favorite'));
+                foreach($s as $v){
+                    if($v != "") $data['favorites'][] = $v;
+                }
+            }
+            if(session()->get('hide') != null){
+                $s = explode(",", session()->get('hide'));
+                foreach($s as $v){
+                    if($v != "") $data['hidden'][] = $v;
+                }
+            }
+
+        }
+        else{
+            //there is user, check if it is real user
+            $usr = User::find($user);
+            //user is real, proceed
+            if($usr != null){
+                $id = $usr->id;
+                $flagged = Flagged::where('user_id', '=', $id)->get();
+                $flagged = $flagged[0];
+                $p = $flagged->product_id;
+                $p = explode(",", $p);
+                foreach($p as $k){
+                    if($k != "") $data['flagged'][] = $k;
+                }
+
+                $hidden = Hide::where('user_id', '=', $id)->get();
+                $hidden = $hidden[0];
+                $p = $hidden->product_id;
+                $p = explode(",", $p);
+                foreach($p as $k){
+                    if($k != "") $data['hidden'][] = $k;
+                }
+
+                $favorites = Favorite::where('user_id', '=', $id)->get();
+                $favorites = $favorites[0];
+                $p = $favorites->product_id;
+                $p = explode(",", $p);
+                foreach($p as $k){
+                    if($k != "") $data['favorites'][] = $k;
+                }
+                
+            }
+            else{
+                //check the session, the user is not real
+                if(session()->get('flagged') != null){
+                    $s = explode(",", session()->get('flagged'));
+                    foreach($s as $v){
+                        if($v != "") $data['flagged'][] = $v;
+                    }
+                }
+                if(session()->get('favorite') != null){
+                    $s = explode(",", session()->get('favorite'));
+                    foreach($s as $v){
+                        if($v != "") $data['favorites'][] = $v;
+                    }
+                }
+                if(session()->get('hide') != null){
+                    $s = explode(",", session()->get('hide'));
+                    foreach($s as $v){
+                        if($v != "") $data['hidden'][] = $v;
+                    }
+                }
+            }
+        }
+        return $data;
     }
 }

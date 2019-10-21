@@ -131,6 +131,14 @@ Route::post('/inapprove', 'LicencesController@inapprove')->middleware('cookies',
 Route::post('/indecline', 'LicencesController@indecline')->middleware('cookies', 'verified');
 //============END CU LICENCE ROUTES
 
+//set flag on a product
+Route::get('/flag', 'ProductsController@setflag')->middleware('cookies');
+
+//hide a product
+Route::get('/hide', 'ProductsController@setHide')->middleware('cookies');
+
+//favorite a product
+Route::get('/favorite', 'ProductsController@setfavorite')->middleware('cookies');
 
 //set hemp or cannabis
 Route::get('/sethc', 'ProductsController@sethc')->middleware('cookies');

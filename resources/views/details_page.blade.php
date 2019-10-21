@@ -1,7 +1,10 @@
 @extends('partials.layout')
 
 @section('css_links')
-
+@php
+use App\Http\Controllers\ProductsController;
+$fhf = ProductsController::checkfhf();
+@endphp
 @endsection
 @php $country = json_decode(session()->get('country'), true); @endphp
 @section('content')
@@ -64,9 +67,9 @@
                                 <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
-                                <span><i class="far fa-star"></i><br />Favorite</span>
-                                <span><i class="far fa-window-close"></i><br />Hide</span>
-                                <span><i class="far fa-flag"></i><br />Flag</span>
+                                <span class="favorite" id="{{$product->id}}"><i class="far fa-star"></i><br />Favorite</span>
+                                <span class="hide" id="{{$product->id}}"><i class="far fa-window-close"></i><br />Hide</span>
+                                <span class="flag" id="{{$product->id}}"><i class="far fa-flag"></i><br />Flag</span>
                             </div>
                         </div>
                     </div>

@@ -277,7 +277,7 @@ class UserController extends Controller
             $response = ['success'=>true, 'data'=>['name'=>$user->name,'id'=>$user->id,'email'=>$request->email,'auth_token'=>$token]];
         }
         else{
-            $response = ['success'=>false, 'data'=>'Couldnt register user'];
+            $response = ['success'=>false, 'data'=>'Couldnt register user, please try again later'];
         }
         return response()->json($response, 201);
     }

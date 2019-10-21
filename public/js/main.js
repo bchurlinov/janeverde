@@ -49,6 +49,42 @@ $(document).ready(function () {
         );
     });
 
+    $(".flag").click(function(){
+        var t = $(this).attr('id');
+        $.get(
+            "/flag", {
+                c: t
+            },
+            function (d) {
+                $(".flag").css('background', 'red');
+            }
+        );
+    });
+
+    $(".hide").click(function(){
+        var t = $(this).attr('id');
+        $.get(
+            "/hide", {
+                c: t
+            },
+            function (d) {
+                $(".hide").css('background', 'yellow');
+            }
+        );
+    });
+
+    $(".favorite").click(function(){
+        var t = $(this).attr('id');
+        $.get(
+            "/favorite", {
+                c: t
+            },
+            function (d) {
+                $(".favorite").css('background', 'green');
+            }
+        );
+    });
+
     $(".ctype").click(function(){
         var t = $(this).attr('id');
         $.get(
