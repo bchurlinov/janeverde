@@ -30,4 +30,9 @@ class Product extends Model
     public function category(){
         return $this->hasOne('App\Categories', 'number', 'category_id');
     }
+
+    //subcategory relation
+    public function subcategory(){
+        return $this->hasOne('App\Subcategories', 'number', 'subcategory_id');
+    }
 }

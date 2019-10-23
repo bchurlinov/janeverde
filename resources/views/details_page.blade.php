@@ -73,7 +73,7 @@ $fhf = ProductsController::checkfhf();
                             </div>
                         </div>
                     </div>
-B
+
                     <div class="reply-show" style="display:none;">
                         <div class="reply-info js-only" style="display: block;">
                             <aside class="reply-flap js-captcha">

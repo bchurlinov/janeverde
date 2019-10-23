@@ -379,7 +379,7 @@ class UserController extends Controller
         //save licence
         $licence->save();
 
-        echo json_encode(['status' => 'success']);
+        return json_encode(['status' => 'success']);
     }
 
     public function newInLicence(){
@@ -418,7 +418,7 @@ class UserController extends Controller
         //save licence
         $licence->save();
 
-        echo json_encode(['status' => 'success']);
+        return json_encode(['status' => 'success']);
     }
 
     public function newCuLicence(){
@@ -457,7 +457,7 @@ class UserController extends Controller
         //save licence
         $licence->save();
 
-        echo json_encode(['status' => 'success']);
+        return json_encode(['status' => 'success']);
     }
 
     public function processImage($img, $type){

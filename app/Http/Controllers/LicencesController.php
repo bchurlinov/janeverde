@@ -34,9 +34,9 @@ class LicencesController extends Controller
         //remove the status, and unlink the uploaded image
         $licence->verified = -1;
         $licence->image = 0;
-        $path = $licence->image;
+        $path = "/aglicence/".$licence->image;
         //delete the image by calling unlink
-        unlink(public_path($path));
+        unlink(public_path().$path);
         $licence->image = "";
         $licence->save();
         return $this->getAgLicences(true);
@@ -68,9 +68,9 @@ class LicencesController extends Controller
         //remove the status, and unlink the uploaded image
         $licence->verified = -1;
         $licence->image = 0;
-        $path = $licence->image;
+        $path = "/culicence/".$licence->image;
         //delete the image by calling unlink
-        unlink(public_path($path));
+        unlink(public_path().$path);
         $licence->image = "";
         $licence->save();
         return $this->getCuLicences(true);
@@ -102,9 +102,9 @@ class LicencesController extends Controller
         //remove the status, and unlink the uploaded image
         $licence->verified = -1;
         $licence->image = 0;
-        $path = $licence->image;
+        $path = "/inlicence".$licence->image;
         //delete the image by calling unlink
-        unlink(public_path($path));
+        unlink(public_path().$path);
         $licence->image = "";
         $licence->save();
         return $this->getInLicences(true);
