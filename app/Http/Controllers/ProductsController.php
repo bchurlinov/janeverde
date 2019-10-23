@@ -416,7 +416,9 @@ class ProductsController extends Controller
         }
         $product = Product::with('user', 'country', 'category')->find($id);
 
-        return view('details_page')->with(['product' => $product, 'previous' => $previous, "next" => $next]);
+        //flagged, hidden or favorited by user
+        $fhf = self::checkfhf();
+        return view('details_page')->with(['product' => $product, 'previous' => $previous, "next" => $next, 'fhf' => $fhf]);
     }
 
     /**
@@ -468,6 +470,8 @@ class ProductsController extends Controller
             'type' => 'required', //hemp or cannabis
             'category' => 'required|numeric', //integer only, check categories table for numbers
             'image' => 'required',
+            'phone' => 'requred',
+            'contact_preferences' => 'nullable'
         ]);
 
         //get user id, we need it to connect it to the product
@@ -530,6 +534,8 @@ class ProductsController extends Controller
         $product->img8 = $img8;
         $product->img9 = $img9;
         $product->img10 = $img10;
+        $product->phone = request()->get('phone');
+        $product->contact_preferences = request()->get('contact_preferences');
 
         //save product
         $product->save();

@@ -67,13 +67,13 @@ $fhf = ProductsController::checkfhf();
                                 <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
-                                <span class="favorite" id="{{$product->id}}"><i class="far fa-star"></i><br />Favorite</span>
-                                <span class="hide" id="{{$product->id}}"><i class="far fa-window-close"></i><br />Hide</span>
-                                <span class="flag" id="{{$product->id}}"><i class="far fa-flag"></i><br />Flag</span>
+                                <span class="favorite" id="{{$product->id}}"{{in_array($product->id, $fhf['favorites']) ? ' style=background:green;' : ""}}><i class="far fa-star"></i><br />Favorite</span>
+                                <span class="hide" id="{{$product->id}}"{{in_array($product->id, $fhf['hidden']) ? ' style=background:yellow;' : ""}}><i class="far fa-window-close"></i><br />Hide</span>
+                                <span class="flag" id="{{$product->id}}"><i class="far fa-flag"{{in_array($product->id, $fhf['flagged']) ? ' style=background:red;' : ""}}></i><br />Flag</span>
                             </div>
                         </div>
                     </div>
-
+B
                     <div class="reply-show" style="display:none;">
                         <div class="reply-info js-only" style="display: block;">
                             <aside class="reply-flap js-captcha">

@@ -262,11 +262,24 @@ class UserController extends Controller
     {
         $payload = [
             'password'=>\Hash::make($request->password),
+            'password_confirm' => $request->password_confirm,
             'email'=>$request->email,
             'name'=>$request->name,
             'lastname'=>$request->lastname,
             'auth_token'=> ''
         ];
+
+        //check for email and then for passwords
+        $user = User::where('email', '=', $request->email)->get();
+        if(count($user) > 0){
+            return response()->json(['success'=>false, 'data'=>'The username exists, try choose another']);
+        }
+        //email is unique, proceed with password
+        if($request->password != $request->password_confirm){
+            return response()->json(['success'=>false, 'data'=>'Passwords do not match']);
+        }
+        //passwords are identical, add the user
+
         $user = new \App\User($payload);
         if ($user->save()){
             $token = self::getToken($request->email, $request->password); // generate user token
