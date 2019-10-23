@@ -77,7 +77,7 @@
                                                     <td>
                                                         <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
                                                             View uploaded picture
-                                                            <img height="0" width="0" id="{{$licence->id}}" src="{{asset('/aglicence/'.$licence->image)}}" />
+                                                            <img height="0" width="0" id="{{$licence->id}}" src="{{asset($licence->image)}}" />
 
                                                         </a>
                                                     </td>

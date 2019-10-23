@@ -34,6 +34,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //add Cultivation License
     Route::post('/user/newCuLicence', 'UserController@newCuLicence');
 
+    //add picture ID
+    Route::post('/user/newPictureId', 'UserController@newPictureId');
+
     //user logout
     Route::post('user/logout', function(Request $request){
         $request->validate(['token' => 'required']);

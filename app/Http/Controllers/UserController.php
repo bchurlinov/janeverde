@@ -13,6 +13,7 @@ use App\Countries;
 use App\AgriculturalLicense;
 use App\CultivationLicense;
 use App\IndustrialLicense;
+use App\PictureID;
 
 class UserController extends Controller
 {
@@ -454,6 +455,44 @@ class UserController extends Controller
 
         //save licence
         $licence->save();
+
+        return json_encode(['status' => 'success']);
+    }
+
+    public function newPictureId(Request $request){
+        $request->validate([
+            'identification_name' => 'required',
+            'identification_lastname' => 'required',
+            'identification_country' => 'required',
+            'identification_number' => 'required',
+            'identification_street_address' => 'required',
+            'image' => 'required'
+        ]);
+        //get user id
+        $loggedUserId = auth()->user()->id;
+
+        //check for country details
+        $country = Countries::where('name', '=', request()->get('identification_country'))->get()->first();
+        if($country == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
+
+        $img = request()->get('image');
+        $name = $this->processImage($img, 'pictureID');
+
+        $user = new PictureID();
+        $user->user_id = $loggedUserId;
+        $user->cardname = $request->get('identification_name');
+        $user->cardlastname = $request->get('identification_lastname');
+        $user->country_id = $country->id;
+        $user->cardnumber = $request->get('identification_number');
+        $user->cardstreet = $request->get('identification_street_address');
+        $user->image = 'pictureID/'.$name;
+        $user->verified = 2;
+
+        //save the new picture id
+        $user->save();
 
         return json_encode(['status' => 'success']);
     }
