@@ -304,18 +304,16 @@ class UserController extends Controller
         $validate = $request->validate([
             'user_id' => 'required|numeric'
         ]);
-
-        $user = User::find($request->user_id);
+        $userId = (int)$request->get('user_id');
+        $user = User::find($userId);
         $products = $user->products;
-
         $response = ['status' => 'success', 'products' => []];
-
         if(count($products) > 0){
             foreach($products as $product){
                 $response['products'][$product->id] = $product;
             }
         }
-        echo json_encode($response);
+        return json_encode($response);    
     }
 
     /**
@@ -337,7 +335,7 @@ class UserController extends Controller
             //convert the object to array if there is any product found
             $response['product'] = $product[0]->toArray();
         }
-        echo json_encode($response);
+        return json_encode($response);
     }
 
     /**
