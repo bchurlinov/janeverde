@@ -346,7 +346,7 @@ class UserController extends Controller
         request()->validate([
             'agriculture_business_name' => 'required',
             'agriculture_country' => 'required',
-            'agricultural_license' => 'required|numeric',
+            'agriculture_licence' => 'required|numeric',
             'agriculture_bus_license' => 'required',
             'image' => 'required',
         ]);
@@ -369,7 +369,7 @@ class UserController extends Controller
         $licence->user_id = $loggedUserId;
         $licence->businessName = request()->get('agriculture_business_name');
         $licence->country_id = $country->id;
-        $licence->agriculturalLicence = request()->get('agricultural_license');
+        $licence->agriculturalLicense = request()->get('agriculture_licence');
         $licence->bltid = request()->get('agriculture_bus_license');
         $licence->image = "aglicence/".$name;
         $licence->verified = 2;
@@ -408,7 +408,7 @@ class UserController extends Controller
         $licence->user_id = $loggedUserId;
         $licence->businessName = request()->get('industrial_business_name');
         $licence->country_id = $country->id;
-        $licence->industrialLicence = request()->get('industrial_license');
+        $licence->industrialLicense = request()->get('industrial_license');
         $licence->bltid = request()->get('industrial_bus_license');
         $licence->image = "inlicence/".$name;
         $licence->verified = 2;
@@ -447,7 +447,7 @@ class UserController extends Controller
         $licence->user_id = $loggedUserId;
         $licence->businessName = request()->get('cultivation_business_name');
         $licence->country_id = $country->id;
-        $licence->cultivationLicence = request()->get('cultivation_license');
+        $licence->cultivationLicense = request()->get('cultivation_license');
         $licence->bltid = request()->get('cultivation_bus_license');
         $licence->image = "culicence/".$name;
         $licence->verified = 2;
