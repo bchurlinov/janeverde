@@ -466,7 +466,7 @@ class UserController extends Controller
             'identification_country' => 'required',
             'identification_number' => 'required',
             'identification_street_address' => 'required',
-            'image' => 'required'
+            'identification_image' => 'required'
         ]);
         //get user id
         $loggedUserId = auth()->user()->id;
@@ -478,7 +478,7 @@ class UserController extends Controller
             return;
         }
 
-        $img = request()->get('image');
+        $img = request()->get('identification_image');
         $name = $this->processImage($img, 'pictureID');
 
         $user = new PictureID();
@@ -495,6 +495,76 @@ class UserController extends Controller
         $user->save();
 
         return json_encode(['status' => 'success']);
+    }
+
+    public function editUserPictureId(Request $request){
+        $request->validate([
+            'identification_name' => 'required',
+            'identification_lastname' => 'required',
+            'identification_country' => 'required',
+            'identification_number' => 'required',
+            'identification_street_address' => 'required',
+            'image' => 'required',
+            'current_password' => 'nullable',
+            'new_password' => 'nullable',
+            'password_confirmation' => 'nullable'
+        ]);
+        //get user id
+        $loggedUserId = auth()->user()->id;
+        $user = User::find($loggedUserId);
+
+        //get picture id settings
+        $pic = PictureID::where('user_id', '=', $loggedUserId)->get();
+        
+        if(count($pic) == 0){
+            return json_encode(['status' => 'failed', 'reason' => 'The user doesnt exist']);
+        }
+        
+
+        if($request->get('current_password') != ""){
+            if (!(Hash::check($request->get('current_password'), $user->password))) {
+                // The passwords doesnt is wrong
+                return json_encode(["status" => "failed", "reason","Your current password does not match with the password you provided"]);
+            }
+            if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
+                //Current password and new password are same
+                return json_encode(["status" => "failed", "reason" => "New Password cannot be same as your current password. Please choose a different password"]);
+            }
+            if(strcmp($request->get('new_password'), $request->get('password_confirmation')) != 0){
+                //new password and password confirmation dont match
+                return json_encode(['status' => 'failed', 'reason' => 'New password and confirmation passwords dont match']);
+            }
+            //all checks are good, update user password
+            $user->password = bcrypt($request->get('new_password'));
+            //update the password
+            $user->save();
+        }
+
+        //check for country details
+        $country = Countries::where('name', '=', request()->get('identification_country'))->get()->first();
+        if($country == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
+        //create new object
+        $picid = PictureID::find($pic[0]['id']);
+
+        //unlink the old image
+        unlink(public_path().$picid->image);
+        $img = request()->get('image');
+        $name = $this->processImage($img, 'pictureID');
+
+        $picid->user_id = $loggedUserId;
+        $picid->cardname = $request->get('identification_name');
+        $picid->cardlastname = $request->get('identification_lastname');
+        $picid->country_id = $country->id;
+        $picid->cardnumber = $request->get('identification_number');
+        $picid->cardstreet = $request->get('identification_street_address');
+        $picid->id_pic_name = 'pictureID/'.$name;
+        $picid->verified = 2;
+        
+        $picid->save();
+        return json_encode(["status" => "success", "reason" => "User data updated successfuly"]);
     }
 
     public function processImage($img, $type){

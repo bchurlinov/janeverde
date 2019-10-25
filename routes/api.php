@@ -35,7 +35,10 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     Route::post('/user/newCuLicence', 'UserController@newCuLicence');
 
     //add picture ID
-    Route::post('/user/newPictureId', 'UserController@newPictureId');
+    Route::post('/user/verificationDataId', 'UserController@newPictureId');
+
+    //edit user details
+    Route::post('/user/edit', 'UserController@editUserPictureId');
 
     //user logout
     Route::post('user/logout', function(Request $request){
