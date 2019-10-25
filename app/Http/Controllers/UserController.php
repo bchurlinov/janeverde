@@ -502,12 +502,11 @@ class UserController extends Controller
             'identification_name' => 'required',
             'identification_lastname' => 'required',
             'identification_country' => 'required',
-            'identification_number' => 'required',
-            'identification_street_address' => 'required',
             'image' => 'required',
             'current_password' => 'nullable',
             'new_password' => 'nullable',
-            'password_confirmation' => 'nullable'
+            'password_confirmation' => 'nullable',
+            'phone_number' => 'nullable'
         ]);
         //get user id
         $loggedUserId = auth()->user()->id;
@@ -550,7 +549,7 @@ class UserController extends Controller
         $picid = PictureID::find($pic[0]['id']);
 
         //unlink the old image
-        unlink(public_path().$picid->image);
+        //unlink(public_path()."/".$picid->image);
         $img = request()->get('image');
         $name = $this->processImage($img, 'pictureID');
 
@@ -558,13 +557,12 @@ class UserController extends Controller
         $picid->cardname = $request->get('identification_name');
         $picid->cardlastname = $request->get('identification_lastname');
         $picid->country_id = $country->id;
-        $picid->cardnumber = $request->get('identification_number');
-        $picid->cardstreet = $request->get('identification_street_address');
-        $picid->id_pic_name = 'pictureID/'.$name;
+        $picid->phone_number = $request->get('phone_number');
+        $picid->image = 'pictureID/'.$name;
         $picid->verified = 2;
         
         $picid->save();
-        return json_encode(["status" => "success", "reason" => "User data updated successfuly"]);
+        return json_encode(["status" => "success", "reason" => "User data updated successfully"]);
     }
 
     public function processImage($img, $type){
