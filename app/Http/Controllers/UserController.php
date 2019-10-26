@@ -14,6 +14,7 @@ use App\AgriculturalLicense;
 use App\CultivationLicense;
 use App\IndustrialLicense;
 use App\PictureID;
+use App\Subcategories;
 
 class UserController extends Controller
 {
@@ -324,10 +325,15 @@ class UserController extends Controller
         $response = ['status' => 'success', 'products' => []];
         if (count($products) > 0) {
             foreach ($products as $product) {
+                $product->subcategory_id = $this->getSubCategory($product->subcategory_id)['name'];
                 $response['products'][$product->id] = $product;
             }
         }
         return json_encode($response);
+    }
+
+    public function getSubCategory($catId){
+        return Subcategories::where('number', '=', $catId)->get();
     }
 
     /**
