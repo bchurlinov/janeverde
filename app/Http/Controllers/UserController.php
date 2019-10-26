@@ -323,10 +323,10 @@ class UserController extends Controller
         $user = User::find($userId);
         $products = $user->products;
         $response = ['status' => 'success', 'products' => []];
-        if (count($products) > 0) {
+        if ($products->count() > 0) {
             foreach ($products as $product) {
                 $product->subcategory_id = $this->getSubCategory($product->subcategory_id)['name'];
-                $response['products'][$product->id] = $product;
+                $response['products'][] = $product;
             }
         }
         return json_encode($response);
@@ -574,7 +574,7 @@ class UserController extends Controller
 
         //unlink the old image
         if ($user->id_pic_name != null && count($request->get('image')) > 0) {
-            unlink(public_path() . "/users/" . $user->id_pic_name);
+            //unlink(public_path() . "/users/" . $user->id_pic_name);
         }
         
         $img = request()->get('image');
