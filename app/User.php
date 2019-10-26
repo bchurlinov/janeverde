@@ -5,7 +5,6 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\Product;
 
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Model;
@@ -61,10 +60,6 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
         return [];
     }
 
-    public function products(){
-        return $this->hasMany('App\Product');
-    }
-
     //agricultural license relation
     public function agriculturalLicense(){
         return $this->hasOne('App\AgriculturalLicense');
@@ -82,5 +77,10 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
 
     public function pictureID(){
         return $this->hasOne('App\PictureID');
+    }
+
+    //user country relation
+    public function country(){
+        return $this->hasOne('App\Countries', 'name', 'country');
     }
 }

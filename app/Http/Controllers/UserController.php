@@ -499,30 +499,33 @@ class UserController extends Controller
 
     public function editUserPictureId(Request $request){
         $request->validate([
-            'identification_name' => 'required',
-            'identification_lastname' => 'required',
-            'identification_country' => 'required',
-            'image' => 'required',
-            'current_password' => 'nullable',
+            'identification_name' => 'required', //name
+            'identification_lastname' => 'required', //lastname
+            'identification_country' => 'required', //to be added
+            'image' => 'nullable', //id_pic_name
+            'current_password' => 'nullable', //password
             'new_password' => 'nullable',
             'password_confirmation' => 'nullable',
-            'phone_number' => 'nullable'
+            'phone_number' => 'nullable' //to be added
         ]);
         //get user id
         $loggedUserId = auth()->user()->id;
         $user = User::find($loggedUserId);
-
-        //get picture id settings
-        $pic = PictureID::where('user_id', '=', $loggedUserId)->get();
         
-        if(count($pic) == 0){
+        if($user == null){
             return json_encode(['status' => 'failed', 'reason' => 'The user doesnt exist']);
         }
-        
+
+        //check for country details
+        $country = Countries::where('name', '=', request()->get('identification_country'))->get()->first();
+        if($country == null){
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
 
         if($request->get('current_password') != ""){
             if (!(Hash::check($request->get('current_password'), $user->password))) {
-                // The passwords doesnt is wrong
+                // The passwords is wrong
                 return json_encode(["status" => "failed", "reason","Your current password does not match with the password you provided"]);
             }
             if(strcmp($request->get('current_password'), $request->get('new_password')) == 0){
@@ -535,33 +538,22 @@ class UserController extends Controller
             }
             //all checks are good, update user password
             $user->password = bcrypt($request->get('new_password'));
-            //update the password
-            $user->save();
         }
 
-        //check for country details
-        $country = Countries::where('name', '=', request()->get('identification_country'))->get()->first();
-        if($country == null){
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
-            return;
-        }
-        //create new object
-        $picid = PictureID::find($pic[0]['id']);
+        //update user name and last name
+        $user->name = $request->get('identification_name');
+        $user->lastname = $request->get('identification_lastname');
+        $user->country-> $country->name;
 
         //unlink the old image
-        //unlink(public_path()."/".$picid->image);
-        $img = request()->get('image');
-        $name = $this->processImage($img, 'pictureID');
-
-        $picid->user_id = $loggedUserId;
-        $picid->cardname = $request->get('identification_name');
-        $picid->cardlastname = $request->get('identification_lastname');
-        $picid->country_id = $country->id;
-        $picid->phone_number = $request->get('phone_number');
-        $picid->image = 'pictureID/'.$name;
-        $picid->verified = 2;
+        if($user->id_pic_name != null) { unlink(public_path()."/users/".$user->id_pic_name); }
         
-        $picid->save();
+        $img = request()->get('image');
+        $name = $img != '' ? $this->processImage($img, 'users') : NULL;
+
+        $user->phone_number = $request->get('phone_number');
+        
+        $user->save();
         return json_encode(["status" => "success", "reason" => "User data updated successfully"]);
     }
 
