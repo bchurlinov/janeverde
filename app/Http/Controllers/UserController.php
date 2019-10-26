@@ -325,7 +325,7 @@ class UserController extends Controller
         $response = ['status' => 'success', 'products' => []];
         if ($products->count() > 0) {
             foreach ($products as $product) {
-                $product->subcategory_id = $this->getSubCategory($product->subcategory_id)['name'];
+                $product->subcategory_id = $this->getSubCategory($product->subcategory_id)[0]['name'];
                 $response['products'][] = $product;
             }
         }

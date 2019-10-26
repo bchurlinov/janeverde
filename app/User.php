@@ -83,4 +83,9 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
     public function country(){
         return $this->hasOne('App\Countries', 'name', 'country');
     }
+
+    //user products
+    public function products(){
+        return $this->hasMany('App\Product');
+    }
 }

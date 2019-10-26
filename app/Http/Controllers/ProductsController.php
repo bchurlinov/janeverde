@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Countries;
 use App\Categories;
+use App\Subcategories;
 use Illuminate\Support\Str; //for random image name
 use Tymon\JWTAuth\Facades\JWTAuth;
 use App\User;
@@ -470,7 +471,7 @@ class ProductsController extends Controller
             'type' => 'required', //hemp or cannabis
             'category' => 'required|numeric', //integer only, check categories table for numbers
             'image' => 'required',
-            'phone' => 'requred',
+            'phone' => 'nullable',
             'contact_preferences' => 'nullable'
         ]);
 
@@ -484,11 +485,12 @@ class ProductsController extends Controller
             return;
         }
         //all is fine with the country, check category
-        $category = Categories::where('number', '=', request()->get('category'))->get()->first();
-        if($category == null){
+        $subcategory = Subcategories::where('number', '=', request()->get('category'))->get()->first();
+        if($subcategory == null){
             echo json_encode(['status' => 'failed', 'reason' => 'invalid category']);
             return;
         }
+        $category = Categories::where('number', '=', $subcategory->category_id)->get()->first();
         //all is fine with category, check type
         $type = request()->get('type');
 
@@ -523,6 +525,7 @@ class ProductsController extends Controller
         $product->is_deleted = 0;
         $product->type = $type;
         $product->category_id = $category->number;
+        $product->subcategory_id = $subcategory->number;
         $product->state = $country->name;
         $product->img1 = $name;
         $product->img2 = $img2;
