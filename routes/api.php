@@ -43,6 +43,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //edit user details
     Route::post('/user/edit', 'UserController@editUserPictureId');
 
+    //reactivate product
+    Route::post('/user/reactivatepost', 'ProductsController@reactivateProduct');
+
     //user logout
     Route::post('user/logout', function(Request $request){
         $request->validate(['token' => 'required']);

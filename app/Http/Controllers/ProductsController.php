@@ -775,4 +775,28 @@ class ProductsController extends Controller
         }
         return $data;
     }
+
+    public function reactivateProduct(Request $request){
+        $request->validate([
+            'product_id' => 'required|numeric'
+        ]);
+        $user = auth()->user()->id;
+        $product = Product::find($request->get('product_id'));
+        
+        if($product == null){
+            return json_encode(["status" => "falied", "reason" => "Post doesn't exist"]);
+        }
+
+        if($user != $product->user_id){
+            return json_encode(["status" => "falied", "reason" => "Permission denied"]);
+        }
+
+        $date = date("Y-m-d h:i:s");
+        $product->created_at = $date;
+        $product->updated_at = $date;
+
+        $product->save();
+
+        return json_encode(["status" => "success"]);
+    }
 }
