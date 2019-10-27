@@ -324,14 +324,37 @@ class UserController extends Controller
         $userId = (int) $request->get('user_id');
         $user = User::find($userId);
         $products = $user->products;
-        $response = ['status' => 'success', 'products' => []];
+        $response = ['status' => 'success', 'products' => 
+            [
+                "active" => [],
+                "expired" => [],
+                "favorite" => []
+            ]
+        ];
         if ($products->count() > 0) {
             foreach ($products as $product) {
                 $product->subcategory_id = $this->getSubCategory($product->subcategory_id)[0]['name'];
                 $product->type = ucfirst($product->type);
-                $response['products'][] = $product;
+                $created = $product->created_at;
+                $today = Carbon::createFromFormat('Y-m-d h:i:s', date('Y-m-d h:i:s'));
+                $days = $today->diff($created)->days;
+                $days > 90 ? $response['products']['expired'][] = $product : $response['products']['active'][] = $product;
             }
         }
+
+        //get favorites, and add them to the favorite array
+        $fav = Favorite::where('user_id', '=', $userId)->get();
+        if($fav->count() > 0){
+            $favorite = array_filter(explode(',', $fav[0]->product_id));
+            //find the products now
+            $prd = Product::whereIn("id", $favorite)->get();
+            if($prd->count() > 0){
+                foreach($prd as $p){
+                    $response['products']['favorite'][] = $p;
+                }
+            }
+        }
+
         return json_encode($response);
     }
 
@@ -367,6 +390,8 @@ class UserController extends Controller
                     unset($product[$key]);
                 }
             }
+            $product['type'] = ucfirst($product['type']);
+            $product['subcategory_id'] = $this->getSubCategory($product['subcategory_id'])[0]['name'];
             $product['images'] = $images;
             $response['product'] = $product;
             
