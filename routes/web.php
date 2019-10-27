@@ -1,22 +1,24 @@
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-use App\Countries;
-use App\User;
+use App\Product;
 
-//Route::get('/', function () {
-//    return redirect('/cannabis');
-    //return view('home')->with('country', $country);
-//});
+Route::get('/trt', function(){
+    $p = Product::find(67);
+    $productImagesPresentCount = 0;
+        
+    //all product images
+    $images = [];
+    for($i = 0; $i < 10; $i++){
+        $br = $i + 1;
+        $im = "img".$br;
+        $images[$i] = $p->$im;
+        if($p->$im != null){
+            $productImagesPresentCount += 1;
+        }
+    }
+
+    echo $productImagesPresentCount;
+});
 
 //hc = hemp or cannabis
 Route::get('/{hc}/{cat}/search', 'ProductsController@index')->middleware('cookies');
@@ -86,27 +88,6 @@ Route ::post('/pupdate', 'ProductsController@updateProduct')->middleware('cookie
 
 Route::get('/setcountry', 'CountriesController@setCountry')->middleware('cookies');
 
-use App\Categories;
-use App\Product;
-/*
-Route::get('/cats', function(){
-    $cats = ["Biomass", "Concentrates", "Retail Products", "Grow Equipment", "Lab Equipment", "Promotional", "Misc",
-        "Events / Promotional", "Groups / Activities", "General", "Commercial for Sale", "Commercial for Rent",
-        "Farm / Land", "Grow Indoor", "Grow Outdoor", "Trimming", "Hemp Extract", "THC Extract", "Drying", "Sales",
-        "Marketing", "Business", "Admin", "Design / Web", "Retail", "Distribution", "Laboratory", "Regulatory",
-        "Construction"];
-    $entered = [];
-    for($i = 0; $i < 29; $i++){
-        $cat = new Categories;
-        $rand = rand(2000, 7000);
-        $cat->number = $rand;
-        $cat->name = $cats[$i];
-        $cat->save();
-        $entered[] = '/'.$rand.'/search" >'.$cats[$i].'</a></li>';
-    }
-    dd($entered);
-});
-*/
 //===== AG LICENCE APPROVAL AND DECLINE ROUTES
 Route::get('/aglicences', 'LicencesController@getAgLicences')->middleware('cookies', 'verified');
 //approve user agricultural licence
@@ -152,15 +133,6 @@ Route::get('/test', 'UserController@getProductDetailsByUserIDAPI');
 Route::get('/', function(){
     return redirect('/cannabis');
 })->middleware('cookies');
-
-Route::get('/usr', function(){
-    //load user with all his relations: licences, picture id, and his products
-    //$user = User::with('agriculturalLicense', 'cultivationLicense', 'industrialLicense', 'pictureID', 'products')->find(9);
-    //dd($user);
-    //load product with relations: user and country
-    $p = Product::with('user', 'country', 'category')->find(51);
-    dd($p);
-});
 
 //by default, redirect to /cannabis, otherwise, hemp. redirect to /cannabis if other category is entered that does not comply with hemp/cannabis
 Route::get('/{type?}', function($type = ""){

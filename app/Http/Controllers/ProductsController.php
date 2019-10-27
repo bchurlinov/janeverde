@@ -464,12 +464,12 @@ class ProductsController extends Controller
     public function newProduct(){
         //header("Access-Control-Allow-Origin:*");
         request()->validate([
-            'title' => 'required', //Some title
-            'description' => 'required', //description, alpha numeric
-            'price' => 'required|numeric', //strict numeric
-            'country' => 'required', //like new_york, all_states, not: Arizona, New York
-            'type' => 'required', //hemp or cannabis
-            'category' => 'required|numeric', //integer only, check categories table for numbers
+            'title' => 'required', 
+            'description' => 'required', 
+            'price' => 'required|numeric', 
+            'country' => 'required', 
+            'type' => 'required', 
+            'category' => 'required|numeric', 
             'image' => 'required',
             'phone' => 'nullable',
             'contact_preferences' => 'nullable'
@@ -537,6 +537,136 @@ class ProductsController extends Controller
         $product->img8 = $img8;
         $product->img9 = $img9;
         $product->img10 = $img10;
+        $product->phone = request()->get('phone');
+        $product->contact_preferences = request()->get('contact_preferences');
+
+        //save product
+        $product->save();
+
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function editProduct(){
+        request()->validate([
+            'id' => 'required'
+        ]);
+
+        //get user id, we need it to connect it to the product
+        $loggedUserId = auth()->user()->id;
+
+        //create Product instance, we update a product
+        $product = Product::find(request()->get('id'));
+        
+        //if inexistent product, return an error
+        if($product == null){
+            return json_encode(["status" => "failed", "reason" => "The product doesn't exist"]);
+        }
+
+        //check if the user is owner of the product, if it isnt, then return an error
+        if($loggedUserId != $product->user_id){
+            return json_encode(["status" => "failed", "reason" => "Not allowed to edit this product"]);
+        }
+
+        //if country is not sent in form, get it from the product
+        $countryname = request()->get('country') == null ? $product->state : request()->get('country');
+
+        //get country details
+        $country = Countries::where('name', '=', $countryname)->get()->first();
+        if($country == null){
+            echo json_encode(["status" => "failed", "reason" => "invalid country"]);
+            return;
+        }
+
+        //if subcategory is not sent in the form, get it from the product
+        $subcategoryname = request()->get('category') == null ? $product->subcategory_id : request()->get('category');
+
+        //all is fine with the country, check category
+        $subcategory = Subcategories::where('number', '=', $subcategoryname)->get()->first();
+        if($subcategory == null){
+            echo json_encode(["status" => "failed", "reason" => "invalid category"]);
+            return;
+        }
+        $category = Categories::where('number', '=', $subcategory->category_id)->get()->first();
+        
+        //all is fine with category, check type
+        $type = request()->get('type') == null ? $product->type : request()->get('type');
+
+        if($type != "hemp" && $type != "cannabis"){
+            echo json_encode(["status" => "failed", "reason" => "invalid type"]);
+            return;
+        }
+        //all is fine with type, proceed with image
+
+        $img = request()->get('image');
+        $imagesForDeletion = request()->get('delete');
+        //$img1 = $img2 = $img3 =$img4 = $img5 = $img6 = $img7 = $img8 = $img9 = $img10 = null;
+        
+        //we need to check if the images for deletion + 
+        $imgCount = $img != null ? count($img) : 0;
+        $deletionCount = $imagesForDeletion != null ? count($imagesForDeletion) : 0;
+        $productImagesPresentCount = 0;
+        
+        //all product images
+        $images = [];
+        for($i = 0; $i < 10; $i++){
+            $br = $i + 1;
+            $im = "img".$br;
+            $images[$i] = $product->$im;
+            if($product->$im != null){
+                $productImagesPresentCount += 1;
+            }
+        }
+
+        $finalCount = $productImagesPresentCount - $deletionCount + $imgCount;
+
+        if($finalCount > 10 || $finalCount < 1){
+            return json_encode(["status" => "failed", "reason" => "Minimum number of images is 1 and maximum is 10"]);
+        }
+
+        if($imagesForDeletion != null){
+            //there are images to delete
+            foreach($imagesForDeletion as $im){
+                //get the array key so we can replace the value and delete the old image
+                //and set it to null
+                $key = array_search($im, $images);
+                $toDelete = $images[$key];
+                $images[$key] = null;
+                unlink(public_path().'/products/'.$toDelete);
+            }
+        }
+
+        //go through the potential images for upload, if there are any
+        if(count($img) > 0){
+            //there are new images to upload, go through them
+            foreach($img as $key => $value){
+                if(!in_array($value, $images)){
+                    $k = array_search(null, $images);
+                    $images[$k] = $this->processImage($img, $k);
+                }
+            }
+        }
+        
+        $product->user_id = $loggedUserId;
+        $product->title = request()->get('title') == null ? $product->title : request()->get('title');
+        $product->description = request()->get('description') == null ? $product->description : request()->get('description');
+        $product->price = request()->get('price') == null ? $product->price : request()->get('price');
+        $product->location = $country->full_country;
+        $product->country_id = $country->id;
+        $product->is_deleted = 0;
+        $product->type = $type;
+        $product->category_id = $category->number;
+        $product->subcategory_id = $subcategory->number;
+        $product->state = $country->name;
+        $product->img1 = $images[0];
+        $product->img2 = $images[1];
+        $product->img3 = $images[2];
+        $product->img4 = $images[3];
+        $product->img5 = $images[4];
+        $product->img6 = $images[5];
+        $product->img7 = $images[6];
+        $product->img8 = $images[7];
+        $product->img9 = $images[8];
+        $product->img10 = $images[9];
         $product->phone = request()->get('phone');
         $product->contact_preferences = request()->get('contact_preferences');
 

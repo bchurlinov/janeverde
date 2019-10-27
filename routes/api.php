@@ -25,6 +25,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //get product details by user id and product id
     Route::post('/user/product', 'UserController@getProductDetailsByUserIDAPI');
 
+    //edit product route
+    Route::post('/user/editproduct', 'ProductsController@editProduct');
+
     //add Agricultural licence
     Route::post('/user/newAgLicence', 'UserController@newAgLicence');
 
