@@ -326,6 +326,7 @@ class UserController extends Controller
         if ($products->count() > 0) {
             foreach ($products as $product) {
                 $product->subcategory_id = $this->getSubCategory($product->subcategory_id)[0]['name'];
+                $product->type = ucfirst($product->type);
                 $response['products'][] = $product;
             }
         }
@@ -353,8 +354,20 @@ class UserController extends Controller
         $response = ['status' => 'success', 'product' => []];
 
         if (count($product) > 0) {
+            $images = [];
             //convert the object to array if there is any product found
-            $response['product'] = $product[0]->toArray();
+            $product = $product[0]->toArray();
+            foreach($product as $key => $value){
+                if(substr($key, 0, 3) === "img"){
+                    if($value != null){
+                        $images[] = $value;
+                    }
+                    unset($product[$key]);
+                }
+            }
+            $product['images'] = $images;
+            $response['product'] = $product;
+            
         }
         return json_encode($response);
     }
