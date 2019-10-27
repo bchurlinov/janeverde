@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable implements MustVerifyEmail,JWTSubject
+class User extends Authenticatable implements /*MustVerifyEmail,*/JWTSubject
 {
     use Notifiable;
 
@@ -87,5 +87,9 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
     //user products
     public function products(){
         return $this->hasMany('App\Product');
+    }
+
+    public function postsCount(){
+        return "1";
     }
 }

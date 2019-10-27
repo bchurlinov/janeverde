@@ -1,23 +1,14 @@
 <?php
 
 use App\Product;
+use App\Favorite;
 
 Route::get('/trt', function(){
-    $p = Product::find(67);
-    $productImagesPresentCount = 0;
-        
-    //all product images
-    $images = [];
-    for($i = 0; $i < 10; $i++){
-        $br = $i + 1;
-        $im = "img".$br;
-        $images[$i] = $p->$im;
-        if($p->$im != null){
-            $productImagesPresentCount += 1;
+    $fav = Favorite::where('user_id', '=', 6)->get();
+        if($fav->count() > 0){
+            $all = $fav[0]->product_id;
+            print_r(count(array_filter(explode(",", $all))));
         }
-    }
-
-    echo $productImagesPresentCount;
 });
 
 //hc = hemp or cannabis

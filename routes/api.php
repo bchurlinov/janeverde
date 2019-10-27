@@ -11,7 +11,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     Route::get('users/list', function(){
         //load user relations, and return all of them
         $users = App\User::with('agriculturalLicense', 'cultivationLicense', 'industrialLicense', 'pictureID', 'country')->find(auth()->user()->id);
-
+        $users->postsCount = app('App\Http\Controllers\UserController')::postsCount(auth()->user()->id);
         $response = ['success'=>true, 'data'=>$users];
         return response()->json($response, 201);
     });

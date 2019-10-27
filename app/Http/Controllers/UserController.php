@@ -15,6 +15,8 @@ use App\CultivationLicense;
 use App\IndustrialLicense;
 use App\PictureID;
 use App\Subcategories;
+use Carbon\Carbon;
+use App\Favorite;
 
 class UserController extends Controller
 {
@@ -612,5 +614,45 @@ class UserController extends Controller
         $content = str_replace("base64,", "", $img[2]);
         \File::put(public_path() . '/' . $type . '/' . $name, base64_decode($content));
         return $name;
+    }
+
+    public static function postsCount($uid){
+        $usr = User::find($uid);
+        $counts = [
+            'active' => 0,
+            'expired' => 0,
+            'favorite' => 0
+        ];
+        if($usr == null){
+            return $counts;
+        }
+
+        $active = 0;
+        $expired = 0;
+        $favorite = 0;
+
+        //get user's products so we can count
+        $products = Product::where('user_id', '=', $uid)->get();
+        if($products->count() > 0){
+            foreach($products as $product){
+                $created = $product->created_at;
+                $today = Carbon::createFromFormat('Y-m-d h:i:s', date('Y-m-d h:i:s'));
+                $days = $today->diff($created)->days;
+                $days > 90 ? $expired += 1 : $active += 1;
+            }
+        }
+
+        //get favorited, so we can count
+        $fav = Favorite::where('user_id', '=', $uid)->get();
+        if($fav->count() > 0){
+            $favorite = count(array_filter(explode(',', $fav[0]->product_id)));
+        }
+
+        //set the corresponding numbers
+        $counts['active']   = $active;
+        $counts['expired']  = $expired;
+        $counts['favorite'] = $favorite;
+
+        return $counts;
     }
 }
