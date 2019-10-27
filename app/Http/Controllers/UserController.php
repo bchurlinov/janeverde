@@ -279,7 +279,7 @@ class UserController extends Controller
     {
         $payload = [
             'password' => \Hash::make($request->password),
-            'password_confirm' => $request->password_confirm,
+            'password_confirmation' => $request->password_confirm,
             'email' => $request->email,
             'name' => $request->name,
             'lastname' => $request->lastname,
@@ -292,7 +292,7 @@ class UserController extends Controller
             return response()->json(['success' => false, 'data' => 'The username exists, try choose another']);
         }
         //email is unique, proceed with password
-        if ($request->password != $request->password_confirm) {
+        if ($request->password != $request->password_confirmation) {
             return response()->json(['success' => false, 'data' => 'Passwords do not match']);
         }
         //passwords are identical, add the user
