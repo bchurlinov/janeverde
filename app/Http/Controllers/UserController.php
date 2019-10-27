@@ -553,7 +553,7 @@ class UserController extends Controller
         if ($request->get('current_password') != "") {
             if (!(Hash::check($request->get('current_password'), $user->password))) {
                 // The passwords is wrong
-                return json_encode(["status" => "failed", "reason", "Your current password does not match with the password you provided"]);
+                return json_encode(["status" => "failed", "reason" => "Your current password does not match with the password you provided"]);
             }
             if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
                 //Current password and new password are same
@@ -561,7 +561,7 @@ class UserController extends Controller
             }
             if (strcmp($request->get('new_password'), $request->get('password_confirmation')) != 0) {
                 //new password and password confirmation dont match
-                return json_encode(['status' => 'failed', 'reason' => 'New password and confirmation passwords dont match']);
+                return json_encode(["status" => "failed", "reason" => "New password and confirmation passwords don't match"]);
             }
             //all checks are good, update user password
             $user->password = bcrypt($request->get('new_password'));
