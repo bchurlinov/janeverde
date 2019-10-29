@@ -6,10 +6,12 @@
         @endphp
         <h1><a href="/{{$cookieSet}}"><img src="{{asset('/images/Janeverde_logo.svg')}}" /></a></h1>
         <div class="toggle-countries toggle-desktop">
+        @if(!empty($_COOKIE['_main']))
             <div class="hemp-cannabis-toggle">
                 <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp">HEMP</button>
                 <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis">CANNABIS</button>
             </div>
+        @endif
             <div id="country" style="display:none;">{{$country['dropdown']}}</div>
             <div id="typehc" style="display:none;">{{$cookieSet}}</div>
             @if (request()->segment(1) !== "view")

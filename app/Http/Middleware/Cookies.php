@@ -22,12 +22,42 @@ class Cookies
     }
 
     public function handleCookies(){
-        //===================== TYPE COOKIE =====================
-        //type cookie - hemp or cannabis
+        //===================== TYPE =====================
+        if(empty($_COOKIE['_main'])){
+            session()->put('type', 'hemp');
+        }
+        else{
+            if(session()->get('type') == null){
+                session()->put('type', 'hemp');
+            }
+        }
+        /*
+        if(session()->get('type') == null){
+            //default is hemp, set it
+            session()->put('type', 'hemp');
+        }
+        else{
+            //check for logged user id
+            if(!empty($_COOKIE['_main'])){
+                //user is logged, check session
+                if(session()->get('type') == null){
+                    //hasnt set up hemp or cannabis
+                    session()->put('type', 'hemp');
+                }
+                else{
+                    //do nothing, he has something set
+                }
+
+            }
+            else{
+                session()->put('type', 'hemp');
+            }
+        }
+        ///////////////////////
         if(!empty($_COOKIE['type'])){
             $allowed = ['hemp', 'cannabis'];
             if(!in_array($_COOKIE['type'], $allowed)){
-                //default one is cannabis, set it now
+                //default one is hemp, set it now
                 session()->put('type', 'hemp');
             }
             //else, it is allowed, dont mess with it
@@ -36,8 +66,9 @@ class Cookies
             //cookie not present, set it now
             session()->put('type', 'hemp');
         }
+        */
 
-        //===================== PRODUCTS SEARCH COOKIE =====================
+        //===================== PRODUCTS SEARCH =====================
         if(session()->get('search') == 'null'){
             //no cookie is set, set a default to viewAll
             session()->put('searchType', 'viewAll');
@@ -46,11 +77,10 @@ class Cookies
             $allowedTypes = ['viewAll', 'verifiedOnly'];
             if(!in_array(session()->get('searchType'), $allowedTypes)){
                 session()->put('searchType', 'viewAll');
-                //setcookie("searchType", 'viewAll', time() + 60 * 60 * 24 * 30, "/");
             }
         }
 
-        //===================== COUNTRY COOKIE =====================
+        //===================== COUNTRY =====================
         $country = ["dropdown" => "all", "fullName" => "All states"];
 
         if(session()->get('country') == null){

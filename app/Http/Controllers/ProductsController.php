@@ -336,11 +336,17 @@ class ProductsController extends Controller
     public function sethc(Request $request){
         $horc = $request->get('c');
         if($horc != "hemp" && $horc != "cannabis"){
-            session()->put('type', 'cannabis');
-            echo "cannabis";
+            session()->put('type', 'hemp');
+            echo "hemp";
         }
         else{
-            session()->put('type', $horc);
+            if(empty($_COOKIE['_main'])){
+                $horc = 'hemp';
+                session()->put('type', 'hemp');
+            }
+            else{
+                session()->put('type', $horc);
+            }
             echo $horc;
         }
     }
