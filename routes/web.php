@@ -12,7 +12,7 @@ Route::get('/trt', function(){
 });
 
 //hc = hemp or cannabis
-Route::get('/{hc}/{cat}/search', 'ProductsController@index')->middleware('cookies');
+Route::get('/{hc}/{cat}/{subcat}/search', 'ProductsController@index')->middleware('cookies');
 
 Route::get('/view/{id}', 'ProductsController@view')->middleware('cookies');
 

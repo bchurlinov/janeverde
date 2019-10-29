@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="647a35a0-3245-4e9e-bb1d-21b419211aa9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/Http/Middleware/Cookies.php" beforeDir="false" afterPath="$PROJECT_DIR$/app/Http/Middleware/Cookies.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/partials/leftMenu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/leftMenu.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/auth_page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/auth_page.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/details_page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/details_page.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/mainCategories.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/mainCategories.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/partials/mobileMenu.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/partials/mobileMenu.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/views/search_page.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/search_page.blade.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/web.php" beforeDir="false" afterPath="$PROJECT_DIR$/routes/web.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,11 +24,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/routes/web.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="219">
-              <caret line="147" column="93" selection-start-line="147" selection-start-column="93" selection-end-line="147" selection-end-column="93" />
+            <state relative-caret-position="299">
+              <caret line="14" column="64" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -77,13 +79,40 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/details_page.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="194">
+              <caret line="47" column="117" selection-start-line="47" selection-start-column="117" selection-end-line="47" selection-end-column="117" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/resources/views/search_page.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="125" column="76" lean-forward="true" selection-start-line="125" selection-start-column="76" selection-end-line="125" selection-end-column="76" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductsController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="362">
-              <caret line="341" column="13" lean-forward="true" selection-start-line="341" selection-start-column="13" selection-end-line="341" selection-end-column="13" />
+            <state relative-caret-position="667">
+              <caret line="110" column="94" lean-forward="true" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
               <folding>
                 <element signature="e#40#68#0#PHP" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/resources/views/auth_page.blade.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="206">
+              <caret line="27" column="132" selection-start-line="27" selection-start-column="132" selection-end-line="27" selection-end-column="132" />
             </state>
           </provider>
         </entry>
@@ -92,9 +121,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>usersverification</find>
-      <find>$user</find>
-      <find>getUsersForVerification</find>
       <find>usersveri</find>
       <find>getelement</find>
       <find>Users</find>
@@ -122,6 +148,9 @@
       <find>horc</find>
       <find>sethc</find>
       <find>function sethc</find>
+      <find>action=&quot;/{{session()-&gt;get('type') == 'null'</find>
+      <find>/0/search</find>
+      <find>verified</find>
     </findStrings>
     <replaceStrings>
       <replace>javascript:;</replace>
@@ -148,9 +177,7 @@
         <option value="$PROJECT_DIR$/resources/views/admin/dashboard.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/productsmanagement.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/usersManagement.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/partials/mobileMenu.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/CountriesController.php" />
-        <option value="$PROJECT_DIR$/resources/views/auth_page.blade.php" />
         <option value="$PROJECT_DIR$/public/js/main.js" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/jwtMiddleware.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/API.php" />
@@ -169,7 +196,6 @@
         <option value="$PROJECT_DIR$/app/User.php" />
         <option value="$PROJECT_DIR$/vendor/laravel/framework/src/Illuminate/Auth/GuardHelpers.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/VerifyCsrfToken.php" />
-        <option value="$PROJECT_DIR$/resources/views/search_page.blade.php" />
         <option value="$PROJECT_DIR$/resources/views/partials/admin/sidebar.blade.php" />
         <option value="$PROJECT_DIR$/app/AgriculturalLicense.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/agverification.blade.php" />
@@ -181,14 +207,17 @@
         <option value="$PROJECT_DIR$/routes/api.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/LicencesController.php" />
         <option value="$PROJECT_DIR$/resources/views/admin/usersVerification.blade.php" />
-        <option value="$PROJECT_DIR$/resources/views/details_page.blade.php" />
         <option value="$PROJECT_DIR$/app/Subcategories.php" />
-        <option value="$PROJECT_DIR$/resources/views/partials/mainCategories.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Controllers/UserController.php" />
         <option value="$PROJECT_DIR$/resources/views/partials/leftMenu.blade.php" />
         <option value="$PROJECT_DIR$/app/Http/Middleware/Cookies.php" />
-        <option value="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" />
+        <option value="$PROJECT_DIR$/resources/views/auth_page.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/details_page.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/search_page.blade.php" />
         <option value="$PROJECT_DIR$/routes/web.php" />
+        <option value="$PROJECT_DIR$/app/Http/Controllers/ProductsController.php" />
+        <option value="$PROJECT_DIR$/resources/views/partials/mainCategories.blade.php" />
+        <option value="$PROJECT_DIR$/resources/views/partials/mobileMenu.blade.php" />
       </list>
     </option>
   </component>
@@ -414,12 +443,12 @@
       <workItem from="1571817677293" duration="833000" />
       <workItem from="1572212354073" duration="3589000" />
       <workItem from="1572293932071" duration="1661000" />
-      <workItem from="1572371727820" duration="3960000" />
+      <workItem from="1572371727820" duration="7425000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="234403000" />
+    <option name="totallyTimeSpent" value="237868000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -431,7 +460,7 @@
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="bottom" id="Command Line Tools Console" order="0" weight="0.32998884" />
       <window_info anchor="bottom" id="Message" order="1" />
-      <window_info anchor="bottom" id="Find" order="2" weight="0.26867336" />
+      <window_info anchor="bottom" id="Find" order="2" weight="0.30880713" />
       <window_info anchor="bottom" id="Run" order="3" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
@@ -441,7 +470,7 @@
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.43589744" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
       <window_info anchor="bottom" id="TypeScript" order="11" weight="0.32936078" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.49946696" visible="true" weight="0.25195095" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="12" sideWeight="0.49946696" visible="true" weight="0.31438127" />
       <window_info anchor="bottom" id="Event Log" order="13" sideWeight="0.50053304" side_tool="true" weight="0.32887402" />
       <window_info anchor="bottom" id="Messages" order="14" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -662,20 +691,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/auth_page.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="398">
-          <caret line="140" column="59" selection-start-line="140" selection-start-column="59" selection-end-line="140" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/search_page.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="705">
-          <caret line="143" column="58" lean-forward="true" selection-start-line="143" selection-start-column="58" selection-end-line="143" selection-end-column="58" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/resources/views/partials/admin/sidebar.blade.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
@@ -810,13 +825,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/views/details_page.blade.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1725">
-          <caret line="75" selection-start-line="75" selection-end-line="75" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/UserController.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="400">
@@ -861,20 +869,41 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/auth_page.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="206">
+          <caret line="27" column="132" selection-start-line="27" selection-start-column="132" selection-end-line="27" selection-end-column="132" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/views/details_page.blade.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="47" column="117" selection-start-line="47" selection-start-column="117" selection-end-line="47" selection-end-column="117" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/routes/web.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="14" column="64" selection-start-line="14" selection-start-column="63" selection-end-line="14" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/Http/Controllers/ProductsController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="362">
-          <caret line="341" column="13" lean-forward="true" selection-start-line="341" selection-start-column="13" selection-end-line="341" selection-end-column="13" />
+        <state relative-caret-position="667">
+          <caret line="110" column="94" lean-forward="true" selection-start-line="110" selection-start-column="94" selection-end-line="110" selection-end-column="94" />
           <folding>
             <element signature="e#40#68#0#PHP" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/web.php">
+    <entry file="file://$PROJECT_DIR$/resources/views/search_page.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="147" column="93" selection-start-line="147" selection-start-column="93" selection-end-line="147" selection-end-column="93" />
+        <state relative-caret-position="222">
+          <caret line="125" column="76" lean-forward="true" selection-start-line="125" selection-start-column="76" selection-end-line="125" selection-end-column="76" />
         </state>
       </provider>
     </entry>

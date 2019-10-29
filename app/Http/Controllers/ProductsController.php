@@ -28,27 +28,58 @@ class ProductsController extends Controller
         $postFields = $request->all();
         $horcTypes = ['cannabis', 'hemp'];
         $allProducts = [];
-        $hOrC = request()->segment(1);
-        $category = request()->segment(2);
-        $search = request()->segment(3);
-        if($hOrC == null || $category == null || $search == null){
-            return redirect('/');
+
+        if(empty($_COOKIES['_main'])){
+            session()->put('type', 'hemp');
+            $hOrC = "hemp";
         }
-        $categories = Categories::all()->toArray();
-        $catExists = false;
-        $categoryObject = "";
-        foreach($categories as $cat){
-            if($category == $cat['number']) {
-                $catExists = true;
-                $categoryObject = $cat;
+        else{
+            $allowed = ["hemp", "cannabis"];
+            $hOrC = request()->segment(1) != null ? request()->segment(1) : null;
+            if(!in_array($hOrC, $allowed)){
+                session()->put('type', 'hemp');
+                return redirect('/');
             }
         }
-        if($category == 0){
-            $catExists = true;
+
+        $category = request()->segment(2) != null ? request()->segment(2) : null;
+        $subcategory = request()->segment(3) != null ? request()->segment(3) : null;
+        $search = request()->segment(4) != null ? request()->segment(4) : null;
+
+        $conditions = [
+            ['is_deleted', '=', 0],
+            ['type', '=', $hOrC]
+        ];
+
+        //check if category is a valid one
+        if($category != 0){
+            $cat = Categories::where('number', '=', $category)->get();
+            if($cat->count() == 0){
+                //category doesnt exist
+                return redirect('/');
+            }
+            else{
+                $conditions[] = ["category_id", "=", $category];
+            }
         }
 
-        //we have all route segments, move to check individual
-        if(!in_array($hOrC, $horcTypes) || !$catExists || $search != "search") return redirect('/');
+        //check if subcategory and its parent category is a valid one
+        if($subcategory != 0){
+            $subcat = Subcategories::where([['number', '=', $subcategory], ['category_id', '=', $category]])->get();
+
+            if($subcat->count() == 0){
+                //category doesnt exist
+                return redirect('/');
+            }
+            else{
+                $conditions[] = ["subcategory_id", "=", $subcategory];
+            }
+        }
+
+        if($search == null || $search != "search"){
+            return redirect('/');
+        }
+
         //all is fine with params, proceed with country
         $country = json_decode(session()->get('country'), true)['dropdown'];
 
@@ -58,30 +89,23 @@ class ProductsController extends Controller
 
         $keyword = "";
 
-        $whereClause = [
-            ['is_deleted', '=', 0],
-            ['type', '=', $hOrC]
-        ];
-        if($category != 0){
-            $catNum = $categoryObject['number'];
-            $whereClause[] = ['category_id', '=', $catNum];
-        }
         if($country != "all"){
-            $whereClause[] = ['state', '=', $country];
+            $conditions[] = ['state', '=', $country];
         }
+
         //if verified only is clicked, add another case
         if(session()->get('searchType') != 'null' && session()->get('searchType') == 'verifiedOnly') {
-            $whereClause[] = ['verified', '=', 1];
+            $conditions[] = ['verified', '=', 1];
         }
 
         if(count($postFields) == 0){
             //only /search is clicked
-            $allProducts = Product::where($whereClause)->orderBy('created_at', 'desc')->paginate(6);
+            $allProducts = Product::where($conditions)->orderBy('created_at', 'desc')->paginate(6);
         }
         else{
             $keyword = $request->get('keyword');
-            $allProducts = $keyword == null ? $allProducts = Product::where($whereClause)->orderBy('created_at', 'desc')->paginate(6) :
-                                                             Product::search($keyword)->where($whereClause)->orderBy('created_at', 'desc')->paginate(6);
+            $allProducts = $keyword == null ? $allProducts = Product::where($conditions)->orderBy('created_at', 'desc')->paginate(6) :
+                                                             Product::search($keyword)->where($conditions)->orderBy('created_at', 'desc')->paginate(6);
         }
         //return them to the view
         return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);

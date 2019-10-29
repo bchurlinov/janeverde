@@ -29,7 +29,7 @@
 
                 <div class="search-mobile">
                     <div class="current-state-heading__item">
-                        <form method="GET" action="/{{session()->get('type')}}/0/search">
+                        <form method="GET" action="/{{session()->get('type')}}/0/0/search">
                             <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                             <button type="submit">
                                 <img src={{asset('images/search_white.svg')}} alt="Jane Verde SVG Image" />

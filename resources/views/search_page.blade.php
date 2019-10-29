@@ -1,5 +1,6 @@
 @extends('partials.layout')
 @php
+    $category =
     $country = json_decode(session()->get('country'), true);
 @endphp
 @section("css_links")
@@ -47,7 +48,8 @@
                         </div>
                         <div class="current-state-heading__item current-state-heading__desktop">
                             <form method="GET"
-                                action="/{{session()->get('type') == 'null' ? 'cannabis' : session()->get('type')}}/{{request()->segment(2)}}/search">
+                                  <?php //TODO: GET PARENT CATEGORY AND PUT IT BEFORE SEGMENT 2 BELOW  ?>
+                                action="/{{session()->get('type') == 'null' ? 'cannabis' : session()->get('type')}}/{{request()->segment(2)}}/{{request()->segment(3)}}/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src={{asset('images/search_white.svg')}} alt="Jane Verde - SVG Icon" />

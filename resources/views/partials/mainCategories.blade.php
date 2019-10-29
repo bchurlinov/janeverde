@@ -8,7 +8,7 @@ $country = session()->get('country') == 'null' ? ["dropdown" => "all", "fullName
             <h3>{{$country['fullName']}} / <span>{{strtoupper($type)}}</span></h3>
         </div>
         <div class="current-state-heading__item current-state-heading__desktop">
-            <form method="GET" action="/{{$type}}/0/search">
+            <form method="GET" action="/{{$type}}/0/0/search">
                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                 <button type="submit">
                     <img src="{{asset('images/search_white.svg')}}" alt="Jane Verde SVG Icon" />
