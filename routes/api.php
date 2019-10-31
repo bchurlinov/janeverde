@@ -5,7 +5,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::group(['middleware' => ['jwt.auth','api-header']], function () {
+Route::group(['middleware' => ['jwt.auth','api-header','cors']], function () {
     //header("Access-Control-Allow-Origin:*");
     // all routes to protected resources are registered here
     Route::get('users/list', function(){
@@ -17,7 +17,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     });
 
     //add new product route
-    Route::post('user/newproduct', 'ProductsController@newProduct');
+    Route::post('user/newproduct', 'ProductsController@newProduct')->middleware('cors');
 
     //get user's products
     Route::post('/user/products', "UserController@getProductsAPI");
@@ -55,7 +55,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         echo json_encode(["status" => "success"]);
     });
 });
-Route::group(['middleware' => 'api-header'], function () {
+Route::group(['middleware' => ['api-header','cors']], function () {
 
     // The registration and login requests doesn't come with tokens
     // as users at that point have not been authenticated yet
