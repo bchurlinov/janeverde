@@ -424,7 +424,7 @@ class UserController extends Controller
 
         $licence->user_id = $loggedUserId;
         $licence->licensenumber = request()->get('industrial_license_number');
-        $licence->expiration_date = request()->get('_expiration_date');
+        $licence->expiration_date = request()->get('industrial_expiration_date');
         $licence->img1 = "inlicence/" . $name;
         $licence->img2 = $img2 == null ? null : "inlicence/".$img2;
         $licence->img3 = $img3 == null ? null : "inlicence/".$img3;
