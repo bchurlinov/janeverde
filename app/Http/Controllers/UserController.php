@@ -476,35 +476,20 @@ class UserController extends Controller
 
     public function newPictureId(Request $request)
     {
-        //kje treba samo dve polinja da ima
         $request->validate([
-            'identification_name' => 'required',
-            'identification_lastname' => 'required',
-            'identification_country' => 'required',
-            'identification_number' => 'required',
-            'identification_street_address' => 'required',
+            'identification_expiration_date' => 'required',
             'identification_image' => 'required'
         ]);
         //get user id
         $loggedUserId = auth()->user()->id;
-
-        //check for country details
-        $country = Countries::where('name', '=', request()->get('identification_country'))->get()->first();
-        if ($country == null) {
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
-            return;
-        }
 
         $img = request()->get('identification_image');
         $name = $this->processImage($img, 'pictureID');
 
         $user = new PictureID();
         $user->user_id = $loggedUserId;
-        $user->cardname = $request->get('identification_name');
-        $user->cardlastname = $request->get('identification_lastname');
-        $user->country_id = $country->id;
-        $user->cardnumber = $request->get('identification_number');
-        $user->cardstreet = $request->get('identification_street_address');
+        $user->expiration_date = $request->get('identification_expiration_date');
+
         $user->image = 'pictureID/' . $name;
         $user->verified = 2;
 
@@ -514,72 +499,72 @@ class UserController extends Controller
         return json_encode(['status' => 'success']);
     }
 
-    public function editUserPictureId(Request $request)
-    {
-        //i tuka kje treba samo dve polinja da ima
-        $request->validate([
-            'identification_name' => 'nullable', //name
-            'identification_lastname' => 'nullable', //lastname
-            'identification_country' => 'nullable', //to be added
-            'image' => 'nullable', //id_pic_name
-            'current_password' => 'nullable', //password
-            'new_password' => 'nullable',
-            'password_confirmation' => 'nullable',
-            'phone_number' => 'nullable' //to be added
-        ]);
-        //get user id
-        $loggedUserId = auth()->user()->id;
-        $user = User::find($loggedUserId);
+    // public function editUserPictureId(Request $request)
+    // {
+    //     //i tuka kje treba samo dve polinja da ima
+    //     $request->validate([
+    //         'identification_name' => 'nullable', //name
+    //         'identification_lastname' => 'nullable', //lastname
+    //         'identification_country' => 'nullable', //to be added
+    //         'image' => 'nullable', //id_pic_name
+    //         'current_password' => 'nullable', //password
+    //         'new_password' => 'nullable',
+    //         'password_confirmation' => 'nullable',
+    //         'phone_number' => 'nullable' //to be added
+    //     ]);
+    //     //get user id
+    //     $loggedUserId = auth()->user()->id;
+    //     $user = User::find($loggedUserId);
 
-        if ($user == null) {
-            return json_encode(['status' => 'failed', 'reason' => 'The user doesnt exist']);
-        }
+    //     if ($user == null) {
+    //         return json_encode(['status' => 'failed', 'reason' => 'The user doesnt exist']);
+    //     }
 
-        if ($request->get("identification_country") != "") {
-            //check for country details
-            $country = Countries::where('name', '=', request()->get('identification_country'))->get()->first();
-            if ($country == null) {
-                echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
-                return;
-            }
-        }
+    //     if ($request->get("identification_country") != "") {
+    //         //check for country details
+    //         $country = Countries::where('name', '=', request()->get('identification_country'))->get()->first();
+    //         if ($country == null) {
+    //             echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+    //             return;
+    //         }
+    //     }
 
-        if ($request->get('current_password') != "") {
-            if (!(Hash::check($request->get('current_password'), $user->password))) {
-                // The passwords is wrong
-                return json_encode(["status" => "failed", "reason" => "Your current password does not match with the password you provided"]);
-            }
-            if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
-                //Current password and new password are same
-                return json_encode(["status" => "failed", "reason" => "New Password cannot be same as your current password. Please choose a different password"]);
-            }
-            if (strcmp($request->get('new_password'), $request->get('password_confirmation')) != 0) {
-                //new password and password confirmation dont match
-                return json_encode(["status" => "failed", "reason" => "New password and confirmation passwords don't match"]);
-            }
-            //all checks are good, update user password
-            $user->password = bcrypt($request->get('new_password'));
-        }
+    //     if ($request->get('current_password') != "") {
+    //         if (!(Hash::check($request->get('current_password'), $user->password))) {
+    //             // The passwords is wrong
+    //             return json_encode(["status" => "failed", "reason" => "Your current password does not match with the password you provided"]);
+    //         }
+    //         if (strcmp($request->get('current_password'), $request->get('new_password')) == 0) {
+    //             //Current password and new password are same
+    //             return json_encode(["status" => "failed", "reason" => "New Password cannot be same as your current password. Please choose a different password"]);
+    //         }
+    //         if (strcmp($request->get('new_password'), $request->get('password_confirmation')) != 0) {
+    //             //new password and password confirmation dont match
+    //             return json_encode(["status" => "failed", "reason" => "New password and confirmation passwords don't match"]);
+    //         }
+    //         //all checks are good, update user password
+    //         $user->password = bcrypt($request->get('new_password'));
+    //     }
 
-        //update user name and last name
-        $user->name = $request->get('identification_name') == null ? $user->name : $request->get('identification_name');
-        $user->lastname = $request->get('identification_lastname') == null ? $user->lastname : $request->get('identification_lastname');
-        $user->country = empty($country) ? $user->country : $country->name;
+    //     //update user name and last name
+    //     $user->name = $request->get('identification_name') == null ? $user->name : $request->get('identification_name');
+    //     $user->lastname = $request->get('identification_lastname') == null ? $user->lastname : $request->get('identification_lastname');
+    //     $user->country = empty($country) ? $user->country : $country->name;
 
-        //unlink the old image
-        if ($user->id_pic_name != null && count($request->get('image')) > 0) {
-            //unlink(public_path() . "/users/" . $user->id_pic_name);
-        }
+    //     //unlink the old image
+    //     if ($user->id_pic_name != null && count($request->get('image')) > 0) {
+    //         //unlink(public_path() . "/users/" . $user->id_pic_name);
+    //     }
         
-        $img = request()->get('image');
-        $name = count($img) > 0 ? $this->processImage($img, 'users') : $user->id_pic_name;
+    //     $img = request()->get('image');
+    //     $name = count($img) > 0 ? $this->processImage($img, 'users') : $user->id_pic_name;
 
-        $user->phone_number = $request->get('phone_number') == null ? $user->phone_number : $request->get('phone_number');
-        $user->id_pic_name = $name;
+    //     $user->phone_number = $request->get('phone_number') == null ? $user->phone_number : $request->get('phone_number');
+    //     $user->id_pic_name = $name;
         
-        $user->save();
-        return json_encode(["status" => "success", "reason" => "User data updated successfully"]);
-    }
+    //     $user->save();
+    //     return json_encode(["status" => "success", "reason" => "User data updated successfully"]);
+    // }
 
     public function processImage($img, $type)
     {

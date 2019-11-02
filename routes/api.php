@@ -37,7 +37,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //add picture ID
     Route::post('/user/verificationDataId', 'UserController@newPictureId');
 
-    //edit user details
+    //edit user details <- SAMO PASSWORD KJE MOZI DA SE MENUVA
     Route::post('/user/edit', 'UserController@editUserPictureId');
 
     //reactivate product
