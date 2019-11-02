@@ -65,6 +65,10 @@ class User extends Authenticatable implements /*MustVerifyEmail,*/JWTSubject
         return $this->hasOne('App\IndustrialLicense');
     }
 
+    public function businessLicense(){
+        return null;
+    }
+
     public function pictureID(){
         return $this->hasOne('App\PictureID');
     }
