@@ -6,7 +6,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::group(['middleware' => ['jwt.auth','api-header']], function () {
-    //header("Access-Control-Allow-Origin:*");
+    // header("Access-Control-Allow-Origin:*");
     // all routes to protected resources are registered here
     Route::get('users/list', function(){
         //load user relations, and return all of them
@@ -52,6 +52,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
         echo json_encode(["status" => "success"]);
     });
 });
+
 Route::group(['middleware' => 'api-header'], function () {
 
     // The registration and login requests doesn't come with tokens
