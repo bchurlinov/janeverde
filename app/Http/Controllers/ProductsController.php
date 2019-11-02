@@ -757,29 +757,34 @@ class ProductsController extends Controller
             if($usr != null){
                 $id = $usr->id;
                 $flagged = Flagged::where('user_id', '=', $id)->get();
-                $flagged = $flagged[0];
-                $p = $flagged->product_id;
-                $p = explode(",", $p);
-                foreach($p as $k){
-                    if($k != "") $data['flagged'][] = $k;
-                }
+                if(count($flagged) > 0){
+                    $flagged = $flagged[0];
+                    $p = $flagged->product_id;
+                    $p = explode(",", $p);
+                    foreach($p as $k){
+                        if($k != "") $data['flagged'][] = $k;
+                    }
+                }                    
 
                 $hidden = Hide::where('user_id', '=', $id)->get();
-                $hidden = $hidden[0];
-                $p = $hidden->product_id;
-                $p = explode(",", $p);
-                foreach($p as $k){
-                    if($k != "") $data['hidden'][] = $k;
-                }
+                if(count($hidden) > 0){
+                    $hidden = $hidden[0];
+                    $p = $hidden->product_id;
+                    $p = explode(",", $p);
+                    foreach($p as $k){
+                        if($k != "") $data['hidden'][] = $k;
+                    }
+                }                    
 
                 $favorites = Favorite::where('user_id', '=', $id)->get();
-                $favorites = $favorites[0];
-                $p = $favorites->product_id;
-                $p = explode(",", $p);
-                foreach($p as $k){
-                    if($k != "") $data['favorites'][] = $k;
+                if(count($favorites) > 0){
+                    $favorites = $favorites[0];
+                    $p = $favorites->product_id;
+                    $p = explode(",", $p);
+                    foreach($p as $k){
+                        if($k != "") $data['favorites'][] = $k;
+                    }
                 }
-                
             }
             else{
                 //check the session, the user is not real
