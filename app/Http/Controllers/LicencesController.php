@@ -66,11 +66,16 @@ class LicencesController extends Controller
         $licence = BusinessLicense::find($request->input('id'));
         //remove the status, and unlink the uploaded image
         $licence->verified = -1;
-        $licence->image = 0;
-        $path = "/bulicence".$licence->image;
-        //delete the image by calling unlink
-        unlink(public_path().$path);
-        $licence->image = "";
+        unlink(public_path()."/".$licence->img1);
+        $licence->img1 = "";
+        if($licence->img2 != ""){
+            unlink(public_path()."/".$licence->img2);
+            $licence->img2 = "";
+        }
+        if($licence->img3 != ""){
+            unlink(public_path()."/".$licence->img3);
+            $licence->img3 = "";
+        }
         $licence->save();
         return $this->getBuLicences(true);
     }

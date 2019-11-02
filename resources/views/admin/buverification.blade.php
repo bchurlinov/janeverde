@@ -71,10 +71,10 @@
                                                     <td>{{$licence->licensenumber}}</td>
                                                     @php
                                                     $date = $licence->expiration_date;
-                                                    $date = explode("-", $date);
-                                                    $date = $date[1]." ".$date[2]." ".$date[0];
+                                                    //$date = explode("-", $date);
+                                                    //$date = $date[1]." ".$date[2]." ".$date[0];
                                                     @endphp
-                                                    <td>{{$date}}</td>
+                                                    <td>{{date("M d Y", strtotime($date))}}</td>
                                                     <td>
                                                         <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
                                                             View uploaded picture
@@ -83,14 +83,14 @@
                                                         </a>
                                                     </td>
                                                     <td>
-                                                        <form id="{{$licence->id}}" action="/agapprove" method="POST">
+                                                        <form id="{{$licence->id}}" action="/buapprove" method="POST">
                                                             <input type="hidden" name="id" value="{{$licence->id}}" >
                                                             @csrf
                                                             <input type="submit" name="submit" class="btn btn-success" value="Approve">
                                                         </form>
                                                     </td>
                                                     <td>
-                                                        <form id="{{$licence->id. '_' . $licence->id}}" action="/agdecline" method="POST">
+                                                        <form id="{{$licence->id. '_' . $licence->id}}" action="/budecline" method="POST">
                                                             <input type="hidden" name="id" value="{{$licence->id}}" >
                                                             @csrf
                                                             <input type="submit" name="submit" class="btn btn-danger" value="Decline">
