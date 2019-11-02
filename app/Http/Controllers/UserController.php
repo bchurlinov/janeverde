@@ -400,36 +400,34 @@ class UserController extends Controller
 
     public function newInLicence()
     {
-        //header("Access-Control-Allow-Origin:*");
         request()->validate([
-            'industrial_business_name' => 'required',
-            'industrial_country' => 'required',
-            'industrial_licence' => 'required|numeric',
-            'industrial_bus_license' => 'required',
-            'image' => 'required',
+            'industrial_license_number' => 'required',
+            'industrial_expiration_date' => 'required',
+            'industrial_image' => 'required',
         ]);
 
         //get user id
         $loggedUserId = auth()->user()->id;
 
-        //check for country details
-        $country = Countries::where('name', '=', request()->get('industrial_country'))->get()->first();
-        if ($country == null) {
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
-            return;
-        }
+        // if(count(request()->get(image)) == 0){
+        //     return json_encode(['status' => 'failed', 'reason' => 'No images sent']);
+        // }
 
-        $img = request()->get('image');
-        $name = $this->processImage($img, 'inlicence');
+        $img = request()->get('industrial_image');
+        $name = $this->processImageLicense($img, 0, 'inlicense');
+        $img2 = $img3 = null;
+
+        if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'inlicense'); }
+        if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'inlicense'); }
 
         $licence = new IndustrialLicense();
 
         $licence->user_id = $loggedUserId;
-        $licence->businessName = request()->get('industrial_business_name');
-        $licence->country_id = $country->id;
-        $licence->industrialLicense = request()->get('industrial_licence');
-        $licence->bltid = request()->get('industrial_bus_license');
-        $licence->image = "inlicence/" . $name;
+        $licence->licensenumber = request()->get('industrial_license_number');
+        $licence->expiration_date = request()->get('_expiration_date');
+        $licence->img1 = "inlicence/" . $name;
+        $licence->img2 = $img2 == null ? null : "inlicence/".$img2;
+        $licence->img3 = $img3 == null ? null : "inlicence/".$img3;
         $licence->verified = 2;
 
         //save licence
@@ -466,8 +464,8 @@ class UserController extends Controller
         $licence->licensenumber = request()->get('business_license_number');
         $licence->expiration_date = request()->get('business_expiration_date');
         $licence->img1 = "bulicence/" . $name;
-        $licence->img2 = $img2;
-        $licence->img3 = $img3;
+        $licence->img2 = $img2 == null ? null : "bulicence/".$img2;
+        $licence->img3 = $img3 == null ? null : "bulicence/".$img3;
         $licence->verified = 2;
 
         //save licence
