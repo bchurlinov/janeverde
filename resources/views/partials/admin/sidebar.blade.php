@@ -40,9 +40,7 @@
         </a>
         <div id="collapseThree" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-
-                <a class="collapse-item" href="/aglicences">Agricultural licences</a>
-                <a class="collapse-item" href="/culicences">Cultivation licences</a>
+                <a class="collapse-item" href="/bulicences">Business licences</a>
                 <a class="collapse-item" href="/inlicences">Industrial licences</a>
             </div>
         </div>

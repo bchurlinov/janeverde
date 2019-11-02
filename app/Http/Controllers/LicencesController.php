@@ -44,7 +44,7 @@ class LicencesController extends Controller
 
     //==================================================================== BUSINESS METHODS ========================================================================
     public function getBuLicences($redirect = false){
-        $verificationPendingLicences = BusinessLicense::with('user', 'country')->where('verified', 2)->get();
+        $verificationPendingLicences = BusinessLicense::where('verified', 2)->get();
         if($redirect){
             return redirect('/bulicences')->with('licences', $verificationPendingLicences);
         }

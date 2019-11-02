@@ -442,7 +442,7 @@ class UserController extends Controller
     {
         request()->validate([
             'business_license_number' => 'required',
-            'business_bus_license' => 'required',
+            'expiration_date' => 'required',
             'image' => 'required',
         ]);
 
@@ -464,7 +464,7 @@ class UserController extends Controller
 
         $licence->user_id = $loggedUserId;
         $licence->licensenumber = request()->get('business_license_number');
-        $licence->expiration_date = request()->get('business_bus_license');
+        $licence->expiration_date = request()->get('expiration_date');
         $licence->img1 = "bulicence/" . $name;
         $licence->img2 = $img2;
         $licence->img3 = $img3;
