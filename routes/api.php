@@ -31,6 +31,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //add Industrial License
     Route::post('/user/newInLicence', 'UserController@newInLicence');
 
+    //add Business License
+    Route::post('/user/newBuLicence', 'UserController@newBuLicence');
+
     //add picture ID
     Route::post('/user/verificationDataId', 'UserController@newPictureId');
 

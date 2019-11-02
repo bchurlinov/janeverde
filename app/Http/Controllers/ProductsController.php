@@ -29,7 +29,7 @@ class ProductsController extends Controller
         $horcTypes = ['cannabis', 'hemp'];
         $allProducts = [];
 
-        if(empty($_COOKIES['_main'])){
+        if(empty($_COOKIE['_main'])){
             session()->put('type', 'hemp');
             $hOrC = "hemp";
         }

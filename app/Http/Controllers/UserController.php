@@ -11,6 +11,7 @@ use JWTAuthException;
 use App\Product;
 use App\Countries;
 use App\IndustrialLicense;
+use App\BusinessLicense;
 use App\PictureID;
 use App\Subcategories;
 use Carbon\Carbon;
@@ -437,6 +438,44 @@ class UserController extends Controller
         return json_encode(['status' => 'success']);
     }
 
+    public function newBuLicence()
+    {
+        request()->validate([
+            'business_license_number' => 'required',
+            'business_bus_license' => 'required',
+            'image' => 'required',
+        ]);
+
+        //get user id
+        $loggedUserId = auth()->user()->id;
+
+        // if(count(request()->get(image)) == 0){
+        //     return json_encode(['status' => 'failed', 'reason' => 'No images sent']);
+        // }
+
+        $img = request()->get('image');
+        $name = $this->processImageLicense($img, 0, 'bulicense');
+        $img2 = $img3 = null;
+
+        if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'bulicense'); }
+        if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'bulicense'); }
+
+        $licence = new BusinessLicense();
+
+        $licence->user_id = $loggedUserId;
+        $licence->licensenumber = request()->get('business_license_number');
+        $licence->expiration_date = request()->get('business_bus_license');
+        $licence->img1 = "bulicence/" . $name;
+        $licence->img2 = $img2;
+        $licence->img3 = $img3;
+        $licence->verified = 2;
+
+        //save licence
+        $licence->save();
+
+        return json_encode(['status' => 'success']);
+    }
+
     public function newPictureId(Request $request)
     {
         //kje treba samo dve polinja da ima
@@ -555,6 +594,19 @@ class UserController extends Controller
         $name = md5(implode(".", $name)) . time() . "." . $extension;
         $content = str_replace("base64,", "", $img[2]);
         \File::put(public_path() . '/' . $type . '/' . $name, base64_decode($content));
+        return $name;
+    }
+
+    public function processImageLicense($img, $index, $type){
+        $img = $img[$index];
+        $img = explode(';', $img);
+        $name = str_replace("name=", "", $img[1]);
+        $name = explode(".", $name);
+        $extension = $name[count($name) - 1];
+        unset($name[count($name) - 1]);
+        $name = md5(implode(".", $name)).time().".".$extension;
+        $content =str_replace("base64,", "", $img[2]);
+        \File::put(public_path(). '/' . $type . '/' . $name, base64_decode($content));
         return $name;
     }
 
