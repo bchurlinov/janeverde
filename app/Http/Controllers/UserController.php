@@ -442,8 +442,8 @@ class UserController extends Controller
     {
         request()->validate([
             'business_license_number' => 'required',
-            'expiration_date' => 'required',
-            'image' => 'required',
+            'business_expiration_date' => 'required',
+            'business_image' => 'required',
         ]);
 
         //get user id
@@ -453,7 +453,7 @@ class UserController extends Controller
         //     return json_encode(['status' => 'failed', 'reason' => 'No images sent']);
         // }
 
-        $img = request()->get('image');
+        $img = request()->get('business_image');
         $name = $this->processImageLicense($img, 0, 'bulicense');
         $img2 = $img3 = null;
 
@@ -464,7 +464,7 @@ class UserController extends Controller
 
         $licence->user_id = $loggedUserId;
         $licence->licensenumber = request()->get('business_license_number');
-        $licence->expiration_date = request()->get('expiration_date');
+        $licence->expiration_date = request()->get('business_expiration_date');
         $licence->img1 = "bulicence/" . $name;
         $licence->img2 = $img2;
         $licence->img3 = $img3;
