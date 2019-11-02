@@ -10,7 +10,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     // all routes to protected resources are registered here
     Route::get('users/list', function(){
         //load user relations, and return all of them
-        $users = App\User::with('agriculturalLicense', 'cultivationLicense', 'industrialLicense', 'pictureID', 'country')->find(auth()->user()->id);
+        $users = App\User::with('industrialLicense', 'pictureID', 'country')->find(auth()->user()->id);
         $users->postsCount = app('App\Http\Controllers\UserController')::postsCount(auth()->user()->id);
         $response = ['success'=>true, 'data'=>$users];
         return response()->json($response, 201);
@@ -28,15 +28,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //edit product route
     Route::post('/user/editproduct', 'ProductsController@editProduct');
 
-    //add Agricultural licence
-    Route::post('/user/newAgLicence', 'UserController@newAgLicence');
-
     //add Industrial License
     Route::post('/user/newInLicence', 'UserController@newInLicence');
-
-    //add Cultivation License
-    Route::post('/user/newCuLicence', 'UserController@newCuLicence');
-
+    
     //add picture ID
     Route::post('/user/verificationDataId', 'UserController@newPictureId');
 
@@ -45,6 +39,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     //reactivate product
     Route::post('/user/reactivatepost', 'ProductsController@reactivateProduct');
+
+    //verification step 1
+    Route::post('/verificationstep1', 'UserController@vf1');
 
     //user logout
     Route::post('user/logout', function(Request $request){

@@ -60,16 +60,6 @@ class User extends Authenticatable implements /*MustVerifyEmail,*/JWTSubject
         return [];
     }
 
-    //agricultural license relation
-    public function agriculturalLicense(){
-        return $this->hasOne('App\AgriculturalLicense');
-    }
-
-    //cultivation license relation
-    public function cultivationLicense(){
-        return $this->hasOne('App\CultivationLicense');
-    }
-
     //industrial license relation
     public function industrialLicense(){
         return $this->hasOne('App\IndustrialLicense');

@@ -3,14 +3,6 @@
 use App\Product;
 use App\Favorite;
 
-Route::get('/trt', function(){
-    $fav = Favorite::where('user_id', '=', 6)->get();
-        if($fav->count() > 0){
-            $all = $fav[0]->product_id;
-            print_r(count(array_filter(explode(",", $all))));
-        }
-});
-
 //hc = hemp or cannabis
 Route::get('/{hc}/{cat}/{subcat}/search', 'ProductsController@index')->middleware('cookies');
 
@@ -79,29 +71,13 @@ Route ::post('/pupdate', 'ProductsController@updateProduct')->middleware('cookie
 
 Route::get('/setcountry', 'CountriesController@setCountry')->middleware('cookies');
 
-//===== AG LICENCE APPROVAL AND DECLINE ROUTES
-Route::get('/aglicences', 'LicencesController@getAgLicences')->middleware('cookies', 'verified');
-//approve user agricultural licence
-Route::post('/agapprove', 'LicencesController@approve')->middleware('cookies', 'verified');
-//decline user picture id
-Route::post('/agdecline', 'LicencesController@decline')->middleware('cookies', 'verified');
-//============END AG LICENCE ROUTES
-
-//===== CU LICENCE APPROVAL AND DECLINE ROUTES
-Route::get('/culicences', 'LicencesController@getCuLicences')->middleware('cookies', 'verified');
-//approve user agricultural licence
-Route::post('/cuapprove', 'LicencesController@cuapprove')->middleware('cookies', 'verified');
-//decline user picture id
-Route::post('/cudecline', 'LicencesController@cudecline')->middleware('cookies', 'verified');
-//============END CU LICENCE ROUTES
-
-//===== CU LICENCE APPROVAL AND DECLINE ROUTES
+//===== IN LICENCE APPROVAL AND DECLINE ROUTES
 Route::get('/inlicences', 'LicencesController@getInLicences')->middleware('cookies', 'verified');
 //approve user agricultural licence
 Route::post('/inapprove', 'LicencesController@inapprove')->middleware('cookies', 'verified');
 //decline user picture id
 Route::post('/indecline', 'LicencesController@indecline')->middleware('cookies', 'verified');
-//============END CU LICENCE ROUTES
+//============END IN LICENCE ROUTES
 
 //set flag on a product
 Route::get('/flag', 'ProductsController@setflag')->middleware('cookies');

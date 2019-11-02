@@ -10,8 +10,6 @@ use JWTAuth;
 use JWTAuthException;
 use App\Product;
 use App\Countries;
-use App\AgriculturalLicense;
-use App\CultivationLicense;
 use App\IndustrialLicense;
 use App\PictureID;
 use App\Subcategories;
@@ -399,49 +397,6 @@ class UserController extends Controller
         return json_encode($response);
     }
 
-    /**
-     * add new agriculture licence
-     */
-    public function newAgLicence()
-    {
-        //header("Access-Control-Allow-Origin:*");
-        request()->validate([
-            'agriculture_business_name' => 'required',
-            'agriculture_country' => 'required',
-            'agriculture_licence' => 'required|numeric',
-            'agriculture_bus_license' => 'required',
-            'image' => 'required',
-        ]);
-
-        //get user id
-        $loggedUserId = auth()->user()->id;
-
-        //check for country details
-        $country = Countries::where('name', '=', request()->get('agriculture_country'))->get()->first();
-        if ($country == null) {
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
-            return;
-        }
-
-        $img = request()->get('image');
-        $name = $this->processImage($img, 'aglicence');
-
-        $licence = new AgriculturalLicense();
-
-        $licence->user_id = $loggedUserId;
-        $licence->businessName = request()->get('agriculture_business_name');
-        $licence->country_id = $country->id;
-        $licence->agriculturalLicense = request()->get('agriculture_licence');
-        $licence->bltid = request()->get('agriculture_bus_license');
-        $licence->image = "aglicence/" . $name;
-        $licence->verified = 2;
-
-        //save licence
-        $licence->save();
-
-        return json_encode(['status' => 'success']);
-    }
-
     public function newInLicence()
     {
         //header("Access-Control-Allow-Origin:*");
@@ -482,48 +437,9 @@ class UserController extends Controller
         return json_encode(['status' => 'success']);
     }
 
-    public function newCuLicence()
-    {
-        //header("Access-Control-Allow-Origin:*");
-        request()->validate([
-            'cultivation_business_name' => 'required',
-            'cultivation_country' => 'required',
-            'cultivation_licence' => 'required|numeric',
-            'cultivation_bus_license' => 'required',
-            'image' => 'required',
-        ]);
-
-        //get user id
-        $loggedUserId = auth()->user()->id;
-
-        //check for country details
-        $country = Countries::where('name', '=', request()->get('cultivation_country'))->get()->first();
-        if ($country == null) {
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
-            return;
-        }
-
-        $img = request()->get('image');
-        $name = $this->processImage($img, 'culicence');
-
-        $licence = new CultivationLicense();
-
-        $licence->user_id = $loggedUserId;
-        $licence->businessName = request()->get('cultivation_business_name');
-        $licence->country_id = $country->id;
-        $licence->cultivationLicense = request()->get('cultivation_licence');
-        $licence->bltid = request()->get('cultivation_bus_license');
-        $licence->image = "culicence/" . $name;
-        $licence->verified = 2;
-
-        //save licence
-        $licence->save();
-
-        return json_encode(['status' => 'success']);
-    }
-
     public function newPictureId(Request $request)
     {
+        //kje treba samo dve polinja da ima
         $request->validate([
             'identification_name' => 'required',
             'identification_lastname' => 'required',
@@ -563,6 +479,7 @@ class UserController extends Controller
 
     public function editUserPictureId(Request $request)
     {
+        //i tuka kje treba samo dve polinja da ima
         $request->validate([
             'identification_name' => 'nullable', //name
             'identification_lastname' => 'nullable', //lastname
@@ -679,5 +596,51 @@ class UserController extends Controller
         $counts['favorite'] = $favorite;
 
         return $counts;
+    }
+
+    public function vf1(Request $request){
+        $request->validate([
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'state' => 'required',
+            'company_name' => 'required',
+            'entity_type' => 'required',
+            'phone' => 'required'
+        ]);
+
+        $loggedUserId = auth()->user()->id;
+        $user = User::find($loggedUserId);
+
+        $allowed_entity_types = ["farmer", "processor", "manufacturer", "broker_wholesaler", "consultant",
+        "retail", "equipment_manufacturer", "other"];
+
+        $types = $request->get('entity_type');
+        $typesok = true;
+        foreach($types as $type){
+            if(!in_array($type, $allowed_entity_types)){
+                $typesok = false;
+            }
+        }
+        if(!$typesok) { return json_encode(['status' => 'failed', 'reason' => 'One or more Type of entity is incorrect']); }
+
+        //check for country details
+        $country = Countries::where('name', '=', $request->get('state'))->get()->first();
+        if ($country == null) {
+            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+            return;
+        }
+
+        $user->name = $request->get('first_name');
+        $user->lastname = $request->get('last_name');
+        $user->country = $request->get('state');
+        $user->company = $request->get('company_name');
+        $user->entity_type = implode(',', $request->get('entity_type'));
+        $user->phone_number = $request->get('phone');
+        $user->verification_step_1 = 1;
+
+        $user->save();
+
+        return json_encode(['status' => 'success']);
+
     }
 }
