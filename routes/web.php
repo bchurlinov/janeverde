@@ -87,6 +87,14 @@ Route::post('/buapprove', 'LicencesController@buapprove')->middleware('cookies',
 Route::post('/budecline', 'LicencesController@budecline')->middleware('cookies', 'verified');
 //============END BU LICENCE ROUTES
 
+//===== SUPPORTING DOCUMENTS APPROVAL AND DECLINE ROUTES
+Route::get('/sdlicences', 'LicencesController@getSdLicences')->middleware('cookies', 'verified');
+//approve user business licence
+Route::post('/sdapprove', 'LicencesController@sdapprove')->middleware('cookies', 'verified');
+//decline user picture id
+Route::post('/sddecline', 'LicencesController@sddecline')->middleware('cookies', 'verified');
+//============END SUPPORTING DOCUMENTS ROUTES
+
 //set flag on a product
 Route::get('/flag', 'ProductsController@setflag')->middleware('cookies');
 

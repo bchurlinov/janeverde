@@ -10,7 +10,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     // all routes to protected resources are registered here
     Route::get('users/list', function(){
         //load user relations, and return all of them
-        $users = App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country')->find(auth()->user()->id);
+        $users = App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments')->find(auth()->user()->id);
         $users->postsCount = app('App\Http\Controllers\UserController')::postsCount(auth()->user()->id);
         $response = ['success'=>true, 'data'=>$users];
         return response()->json($response, 201);
@@ -45,6 +45,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
 
     //verification step 1
     Route::post('/verificationstep1', 'UserController@vf1');
+
+    //supporting documents
+    Route::post('/supportingdocuments', 'UserController@supportingDocuments');
 
     //user logout
     Route::post('user/logout', function(Request $request){

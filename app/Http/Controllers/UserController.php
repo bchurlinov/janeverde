@@ -16,6 +16,7 @@ use App\PictureID;
 use App\Subcategories;
 use Carbon\Carbon;
 use App\Favorite;
+use App\SupportingDocuments;
 
 class UserController extends Controller
 {
@@ -631,6 +632,31 @@ class UserController extends Controller
         $counts['favorite'] = $favorite;
 
         return $counts;
+    }
+
+    public function supportingDocuments(Request $request){
+        $request->validate([
+            'additional_documents' => 'required'
+        ]);
+
+        $img = $request->get('additional_documents');
+        $name = $this->processImageLicense($img, 0, 'supportingdocuments');
+        $img2 = $img3 = null;
+
+        if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'supportingdocuments'); }
+        if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'supportingdocuments'); }
+
+        $loggedUserId = auth()->user()->id;
+
+        $sd = new SupportingDocuments();
+
+        $sd->user_id = $loggedUserId;
+        $sd->img1 = $name;
+        $sd->img2 = $img2;
+        $sd->img3 = $img3;
+
+        $sd->save();
+        return json_encode(['status' => 'success']);
     }
 
     public function vf1(Request $request){

@@ -86,4 +86,8 @@ class User extends Authenticatable implements /*MustVerifyEmail,*/JWTSubject
     public function postsCount(){
         return "1";
     }
+
+    public function supportingDocuments(){
+        return $this->hasOne('App\SupportingDocuments');
+    }
 }

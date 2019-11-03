@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\IndustrialLicense;
 use App\BusinessLicense;
+use App\SupportingDocuments;
 
 class LicencesController extends Controller
 {
@@ -80,4 +81,43 @@ class LicencesController extends Controller
         return $this->getBuLicences(true);
     }
     //==================================================================== END BUSINESS METHODS ========================================================================
+
+    //==================================================================== SUPPORTING DOCUMENTS METHODS ========================================================================
+    public function getSdLicences($redirect = false){
+        $verificationPendingLicences = SupportingDocuments::where('verified', 2)->get();
+        if($redirect){
+            return redirect('/sdlicences')->with('licences', $verificationPendingLicences);
+        }
+        return view('admin.sdverification')->with('licences', $verificationPendingLicences);
+    }
+
+    public function sdapprove(Request $request){
+        //get the agricultural licence by id
+        $licence = SupportingDocuments::find($request->input('id'));
+        //update the verification status
+        $licence->verified = 1;
+        //save the status
+        $licence->save();
+        return $this->getSdLicences(true);
+    }
+
+    public function sddecline(Request $request){
+        //get the user by id
+        $licence = SupportingDocuments::find($request->input('id'));
+        //remove the status, and unlink the uploaded image
+        $licence->verified = -1;
+        unlink(public_path()."/".$licence->img1);
+        $licence->img1 = "";
+        if($licence->img2 != ""){
+            unlink(public_path()."/".$licence->img2);
+            $licence->img2 = "";
+        }
+        if($licence->img3 != ""){
+            unlink(public_path()."/".$licence->img3);
+            $licence->img3 = "";
+        }
+        $licence->save();
+        return $this->getSdLicences(true);
+    }
+    //==================================================================== END SUPPORTING DOCUMENTS METHODS ========================================================================
 }

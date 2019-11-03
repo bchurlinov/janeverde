@@ -42,6 +42,7 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="/bulicences">Business licences</a>
                 <a class="collapse-item" href="/inlicences">Industrial licences</a>
+                <a class="collapse-item" href="/sdlicences">Supporting Documents</a>
             </div>
         </div>
     </li>
