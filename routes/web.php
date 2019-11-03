@@ -3,6 +3,15 @@
 use App\Product;
 use App\Favorite;
 
+Route::get('/pp', function(){
+    return view('welcome');
+});
+
+Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');
+Route::get('paypal/express-checkout-success', 'PaypalController@expressCheckoutSuccess');
+Route::post('paypal/notify', 'PaypalController@notify');
+Route::get('paypal/cancelsubscription', 'PaypalController@cancelRecurringSubscription');
+
 //hc = hemp or cannabis
 Route::get('/{hc}/{cat}/{subcat}/search', 'ProductsController@index')->middleware('cookies');
 
