@@ -421,7 +421,8 @@ class UserController extends Controller
         if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'inlicense'); }
         if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'inlicense'); }
 
-        $licence = new IndustrialLicense();
+        $b = IndustrialLicense::where('user_id', '=', $loggedUserId)->get();
+        $licence = $b->count() > 0 ? IndustrialLicense::find($b[0]['id']) : new IndustrialLicense();
 
         $licence->user_id = $loggedUserId;
         $licence->licensenumber = request()->get('industrial_license_number');
@@ -459,7 +460,8 @@ class UserController extends Controller
         if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'bulicense'); }
         if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'bulicense'); }
 
-        $licence = new BusinessLicense();
+        $b = BusinessLicense::where('user_id', '=', $loggedUserId)->get();
+        $licence = $b->count() > 0 ? BusinessLicense::find($b[0]['id']) : new BusinessLicense();
 
         $licence->user_id = $loggedUserId;
         $licence->licensenumber = request()->get('business_license_number');
@@ -487,7 +489,8 @@ class UserController extends Controller
         $img = request()->get('identification_image');
         $name = $this->processImage($img, 'pictureID');
 
-        $user = new PictureID();
+        $b = PictureID::where('user_id', '=', $loggedUserId)->get();
+        $user = $b->count() > 0 ? PictureID::find($b[0]['id']) : new PictureID();
         $user->user_id = $loggedUserId;
         $user->expiration_date = $request->get('identification_expiration_date');
 
@@ -641,19 +644,25 @@ class UserController extends Controller
 
         $img = $request->get('additional_documents');
         $name = $this->processImageLicense($img, 0, 'supportingdocuments');
-        $img2 = $img3 = null;
+        $img2 = $img3 = $img4 = $img5 = null;
 
         if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'supportingdocuments'); }
         if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'supportingdocuments'); }
+        if(!empty($img[3])){ $img4 = $this->processImageLicense($img, 3, 'supportingdocuments'); }
+        if(!empty($img[4])){ $img5 = $this->processImageLicense($img, 4, 'supportingdocuments'); }
 
         $loggedUserId = auth()->user()->id;
 
-        $sd = new SupportingDocuments();
+        $b = SupportingDocuments::where('user_id', '=', $loggedUserId)->get();
+        $sd = $b->count() > 0 ? SupportingDocuments::find($b[0]['id']) : new SupportingDocuments();
 
         $sd->user_id = $loggedUserId;
         $sd->img1 = $name;
         $sd->img2 = $img2;
         $sd->img3 = $img3;
+        $sd->img4 = $img4;
+        $sd->img5 = $img5;
+        $sd->verified = 2;
 
         $sd->save();
         return json_encode(['status' => 'success']);

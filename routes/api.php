@@ -47,7 +47,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     Route::post('/verificationstep1', 'UserController@vf1');
 
     //supporting documents
-    Route::post('/supportingdocuments', 'UserController@supportingDocuments');
+    Route::post('/user/supportingdocuments', 'UserController@supportingDocuments');
 
     //user logout
     Route::post('user/logout', function(Request $request){
