@@ -658,10 +658,10 @@ class UserController extends Controller
 
         $sd->user_id = $loggedUserId;
         $sd->img1 = $name;
-        $sd->img2 = $img2;
-        $sd->img3 = $img3;
-        $sd->img4 = $img4;
-        $sd->img5 = $img5;
+        $sd->img2 = $img2 == null ? null : "supportingdocuments/".$img2;
+        $sd->img3 = $img3 == null ? null : "supportingdocuments/".$img3;
+        $sd->img4 = $img4 == null ? null : "supportingdocuments/".$img4;
+        $sd->img5 = $img5 == null ? null : "supportingdocuments/".$img5;
         $sd->verified = 2;
 
         $sd->save();
