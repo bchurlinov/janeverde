@@ -25,11 +25,13 @@ class PaypalController extends Controller
 
         // Get the cart data
         $cart = $this->getCart($recurring, $invoice_id);
-
+        $uid = $request->get('id');
+        
         // create new invoice
         $invoice = new Invoice();
         $invoice->title = $cart['invoice_description'];
         $invoice->price = $cart['total'];
+        $invoice->user_id = $uid;
         $invoice->save();
 
 
@@ -40,7 +42,7 @@ class PaypalController extends Controller
 
         // if there is no link redirect back with error message
         if (!$response['paypal_link']) {
-            return redirect('/pp')->with(['code' => 'danger', 'message' => 'Something went wrong with PayPal']);
+            return redirect("http://127.0.0.1:3000/verification-payment?payment=0"); /*->with(['code' => 'danger', 'message' => 'Something went wrong with PayPal']);*/
             // For the actual error message dump out $response and see what's in there
         }
 
@@ -82,7 +84,8 @@ class PaypalController extends Controller
                 // every invoice id must be unique, else you'll get an error from paypal
                 'invoice_id' => config('paypal.invoice_prefix') . '_' . $invoice_id,
                 'invoice_description' => "Order #". $invoice_id ." Invoice",
-                'cancel_url' => url('/pp'),
+                'cancel_url' => url('http://127.0.0.1:3000/verification-payment?payment=0'),
+                'notify_url' => url('paypal/notify'),
                 // total is calculated by multiplying price with quantity of all cart items and then adding them up
                 // in this case total is 9.99 because price is 9.99 and quantity is 1
                 'total' => 9.99, // Total price of the cart
@@ -120,7 +123,7 @@ class PaypalController extends Controller
     public function expressCheckoutSuccess(Request $request) {
 
         // check if payment is recurring
-        $recurring = $request->input('recurring', false) ? true : false;
+        //$recurring = $request->input('recurring', false) ? true : false;
         $recurring = true;
         $token = $request->get('token');
 
@@ -135,7 +138,7 @@ class PaypalController extends Controller
         // if response ACK value is not SUCCESS or SUCCESSWITHWARNING
         // we return back with error
         if (!in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-            return redirect('/pp')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);
+            return redirect('http://127.0.0.1:3000/verification-payment?payment=0'); /*->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);*/
         }
 
         // invoice id is stored in INVNUM
@@ -157,7 +160,7 @@ class PaypalController extends Controller
             $status = 'Invalid';
             // if after creating the subscription paypal responds with activeprofile or pendingprofile
             // we are good to go and we can set the status to Processed, else status stays Invalid
-            echo "<pre>"; print_r($response); echo "</pre>";
+            
             if (!empty($response['PROFILESTATUS']) && in_array($response['PROFILESTATUS'], ['ActiveProfile', 'PendingProfile'])) {
                 $status = 'Processed';
             }
@@ -188,10 +191,10 @@ class PaypalController extends Controller
         // App\Invoice has a paid attribute that returns true or false based on payment status
         // so if paid is false return with error, else return with success message
         if ($invoice->paid) {
-            return redirect('/pp')->with(['code' => 'success', 'message' => 'Order ' . $invoice->id . ' has been paid successfully!']);
+            return redirect('http://127.0.0.1:3000/verification-payment?payment=1');
         }
 
-        return redirect('/pp')->with(['code' => 'danger', 'message' => 'Error processing PayPal payment for Order ' . $invoice->id . '!']);
+        return redirect('http://127.0.0.1:3000/verification-payment?payment=0');
     }
 
     public function notify(Request $request)
@@ -206,7 +209,6 @@ class PaypalController extends Controller
         // send the data to PayPal for validation
         $response = (string) $this->provider->verifyIPN($post);
 
-        dd($request->all());
 
         //if PayPal responds with VERIFIED we are good to go
         if ($response === 'VERIFIED') {
@@ -217,6 +219,9 @@ class PaypalController extends Controller
             if we find that data we create new invoice
              */
             if ($post['txn_type'] == 'recurring_payment' && $post['payment_status'] == 'Completed') {
+                //we need to check the invoice number, if existent, then we need to update the current row, not to write a new one
+                $b = Invoice::where('recurring_id', '=', $post['recurring_payment_id'])->get();
+                $licence = $b->count() > 0 ? Invoice::find($b[0]['id']) : new Invoice();
                 $invoice = new Invoice();
                 $invoice->title = 'Recurring payment';
                 $invoice->price = $post['amount'];

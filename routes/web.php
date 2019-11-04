@@ -122,6 +122,13 @@ Route::get('/setav', 'ProductsController@setav')->middleware('cookies');
 //test route
 Route::get('/test', 'UserController@getProductDetailsByUserIDAPI');
 
+// change your existing app route to this:
+// we are basically just giving it an optional parameter of "anything"
+// Route::get('/{path?}', function($path = null){
+//     return View::make('app');
+// })->where('path', '.*'); 
+//regex to match anything (dots, slashes, letters, numbers, etc)
+
 Route::get('/', function(){
     if(empty($_COOKIE['_main'])){
         session()->put('type', 'hemp');
