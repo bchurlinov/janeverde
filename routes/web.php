@@ -2,9 +2,18 @@
 
 use App\Product;
 use App\Favorite;
+use App\User;
 
 Route::get('/pp', function(){
-    return view('welcome');
+    //dd(App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(6));
+    $year = date('Y');
+    $month = date('m');
+    $startday = "01";
+    $endDay = date('t');
+    $from = date("$year-$month-$startday");
+    $to = date("$year-$month-$endDay");
+    $res = Product::where('user_id', '=', 6)->whereBetween('created_at', [$from, $to])->get();
+    dd($res);
 });
 
 Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');
@@ -130,23 +139,11 @@ Route::get('/test', 'UserController@getProductDetailsByUserIDAPI');
 //regex to match anything (dots, slashes, letters, numbers, etc)
 
 Route::get('/', function(){
-    if(empty($_COOKIE['_main'])){
-        session()->put('type', 'hemp');
-        return redirect('/hemp');
-    }
-    else{
-        if(session()->get('type') == null){
-            return redirect('/hemp');
-        }
-        else{
-            return redirect(session()->get('type'));
-        }
-    }
-
+    return view('home');
 })->middleware('cookies');
 
 //by default, redirect to /cannabis, otherwise, hemp. redirect to /cannabis if other category is entered that does not comply with hemp/cannabis
-Route::get('/{type?}', function($type = ""){
+/*Route::get('/{type?}', function($type = ""){
     if($type != "" && ($type == "cannabis" || $type == "hemp")){
         if(session()->get('type') == null){
             session()->put('type', 'hemp');
@@ -174,7 +171,7 @@ Route::get('/{type?}', function($type = ""){
     else{
         return redirect('/hemp');
     }
-})->middleware('cookies');
+})->middleware('cookies');*/
 
 
 

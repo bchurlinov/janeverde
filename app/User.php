@@ -90,4 +90,8 @@ class User extends Authenticatable implements /*MustVerifyEmail,*/JWTSubject
     public function supportingDocuments(){
         return $this->hasOne('App\SupportingDocuments');
     }
+
+    public function subscription(){
+        return $this->hasOne('App\Invoice');
+    }
 }

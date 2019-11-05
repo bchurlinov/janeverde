@@ -359,6 +359,26 @@ class ProductsController extends Controller
      */
     public function sethc(Request $request){
         $horc = $request->get('c');
+
+        if(empty($_COOKIE['_main']) || auth()->user() == null){
+            session()->put('type', 'hemp');
+        }
+        else{
+            $sess = session()->get('type');
+            if($sess == null){
+                session()->put('type', 'hemp');
+            }
+            else{
+                if($horc != 'hemp' || $horc != "cannabis"){
+                    session()->put('type', 'hemp');
+                }
+                else{
+                    session()->put('type', $horc);
+                }
+            }
+        }
+
+
         if($horc != "hemp" && $horc != "cannabis"){
             session()->put('type', 'hemp');
             echo "hemp";
@@ -492,6 +512,51 @@ class ProductsController extends Controller
 
 
     public function newProduct(){
+        //check the validity of user if he can post or not
+        $loggedUserId = auth()->user()->id;
+
+        //load the user with all his relations
+        $canPost = false;
+        $threeAMonth = 0;
+
+        $users = App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(auth()->user()->id);
+
+        if($users->verification_step_1 == 1){
+            $users->canPost = 1;
+            $threeAMonth = 1;
+        }
+        if($users->verification_step_1 == 1 && $users->pictureID != null && $users->pictureID->verified == 1 &&
+            $users->subscription != null && $users->subscription->id > 0 && $users->subscription->active == 1){
+            $users->canPost = 1;
+            $threeAMonth = 2;
+        }
+        if($users->verification_step_1 == 1 && $users->pictureID != null && $users->pictureID->verified == 1 &&
+            $users->businessLicense != null && $users->businessLicense->verified == 1 &&
+            $users->industrialLicense != null && $users->industrialLicense->verified == 1){
+            $users->canPost = 1;
+            $threeAMonth = 2;
+        }
+
+        if($threeAMonth == 0){
+            return json_encode(['status' => 'failed', 'reason' => 'you are not allowed to post']);
+        }
+        if($threeAMonth == 1){
+            $year = date('Y');
+            $month = date('m');
+            $startday = "01";
+            $endDay = date('t');
+            $from = date("$year-$month-$startday");
+            $to = date("$year-$month-$endDay");
+            $res = Product::where('user_id', '=', 6)->whereBetween('created_at', [$from, $to])->get();
+            if($res->count() < 3){
+                return json_encode(['status' => 'failed', 'reason' => 'you have reached your monthly limit']);
+            }
+        }
+
+        if(!$canPost){
+            return json_encode(['status' => 'failed', 'reason' => 'you are not allowed to post']);
+        }
+
         //header("Access-Control-Allow-Origin:*");
         request()->validate([
             'title' => 'required', 
@@ -505,8 +570,6 @@ class ProductsController extends Controller
             'contact_preferences' => 'nullable'
         ]);
 
-        //get user id, we need it to connect it to the product
-        $loggedUserId = auth()->user()->id;
 
         //first, get country details
         $country = Countries::where('name', '=', request()->get('country'))->get()->first();

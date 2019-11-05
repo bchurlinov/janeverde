@@ -1,5 +1,5 @@
 @php
-$type = session()->get('type') == 'null' ? 'cannabis' : session()->get('type');
+$type = session()->get('type') == 'null' ? 'hemp' : session()->get('type');
 $country = session()->get('country') == 'null' ? ["dropdown" => "all", "fullName" => "All states"] : json_decode(session()->get('country'), true);
 @endphp
 <div class="home-wrap__item">

@@ -43,13 +43,13 @@
                     <div class="current-state-heading">
                         <div class="current-state-heading__item">
                             <h3>{{$country['fullName']}} /
-                                {{session()->get('type') == 'null' ? 'CANNABIS' : strtoupper(session()->get('type'))}} /
+                                {{session()->get('type') == 'null' ? 'HEMP' : strtoupper(session()->get('type'))}} /
                                 {{strtoupper(App\Http\Controllers\ProductsController::getCategoryName(request()->segment(2)))}}</h3>
                         </div>
                         <div class="current-state-heading__item current-state-heading__desktop">
                             <form method="GET"
                                   <?php //TODO: GET PARENT CATEGORY AND PUT IT BEFORE SEGMENT 2 BELOW  ?>
-                                action="/{{session()->get('type') == 'null' ? 'cannabis' : session()->get('type')}}/{{request()->segment(2)}}/{{request()->segment(3)}}/search">
+                                action="/{{session()->get('type') == 'null' ? 'hemp' : session()->get('type')}}/{{request()->segment(2)}}/{{request()->segment(3)}}/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
                                     <img src={{asset('images/search_white.svg')}} alt="Jane Verde - SVG Icon" />

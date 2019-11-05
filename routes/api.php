@@ -10,8 +10,85 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     // all routes to protected resources are registered here
     Route::get('users/list', function(){
         //load user relations, and return all of them
-        $users = App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments')->find(auth()->user()->id);
+        $users = App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(auth()->user()->id);
         $users->postsCount = app('App\Http\Controllers\UserController')::postsCount(auth()->user()->id);
+        if($users->businessLicense == null){
+            unset($users->businessLicense);
+            $users->business_license = [
+                'id' => 0,
+                'user_id' => auth()->user()->id,
+                'licensenumber' => '0',
+                'expiration_date' => '1970-01-01',
+                'img1' => '',
+                'img2' => '',
+                'img3' => '',
+                'verified' => -10
+            ];
+        }
+        if($users->industrialLicense == null){
+            unset($users->industrialLicense);
+            $users->industrial_license = [
+                'id' => 0,
+                'user_id' => auth()->user()->id,
+                'licensenumber' => '0',
+                'expiration_date' => '1970-01-01',
+                'img1' => '',
+                'img2' => '',
+                'img3' => '',
+                'verified' => -10
+            ];
+        }
+
+        if($users->pictureID == null){
+            unset($users->pictureID);
+            $users->picture_i_d = [
+                'id' => 0,
+                'user_id' => auth()->user()->id,
+                'image' => '',
+                'verified' => -10,
+            ];
+        }
+
+        if($users->supportingDocuments == null){
+            unset($users->supportingDocuments);
+            $users->supporting_documents = [
+                'id' => 0,
+                'user_id' => auth()->user()->id,
+                'img1' => '',
+                'img2' => '',
+                'img3' => '',
+                'img4' => '',
+                'img5' => '',
+                'verified' => -10
+            ];
+        }
+
+        if($users->subscription == null){
+           unset($users->subscription);
+           $users->subscription = [
+               'id' => 0,
+               'user_id' => auth()->user()->id,
+               'title' => '0',
+               'price' => '0',
+               'payment_status' => '0',
+               'recurring_id' => '0',
+               'active' => -10
+           ];
+        }
+        $users->canPost = 0;
+        //can the user post?
+        if($users->verification_step_1 == 1){
+            $users->canPost = 1;
+        }
+        if($users->verification_step_1 == 1 && $users->picture_i_d['verified'] == 1 &&
+           $users->subscription['id'] > 0 && $users->subscription['active'] == 1){
+            $users->canPost = 1;
+        }
+        if($users->verification_step_1 == 1 && $users->picture_i_d['verified'] == 1 &&
+           $users->business_license['verified'] == 1 && $users->industrial_license['verified'] == 1){
+            $users->canPost = 1;
+        }
+
         $response = ['success'=>true, 'data'=>$users];
         return response()->json($response, 201);
     });

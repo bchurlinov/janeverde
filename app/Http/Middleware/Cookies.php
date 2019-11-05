@@ -23,6 +23,30 @@ class Cookies
 
     public function handleCookies(){
         //===================== TYPE =====================
+        //if cookie is not set
+        $type = session()->get('type');
+        if(empty($_COOKIE['main']) || auth()->user() == null){
+            if($type == null){
+                session()->put('type', 'hemp');
+            }
+            else{
+                if($type != "hemp" && $type != "cannabis"){
+                    session()->put('type', 'hemp');
+                }
+            }
+        }
+        else{
+            if($type == null){
+                session()->put('type', 'hemp');
+            }
+            else{
+                if($type != "hemp" && $type != "cannabis"){
+                    session()->put('type', 'hemp');
+                }
+            }
+        }
+
+
         if(empty($_COOKIE['_main'])){
             session()->put('type', 'hemp');
         }
@@ -30,43 +54,9 @@ class Cookies
             if(session()->get('type') == null){
                 session()->put('type', 'hemp');
             }
-        }
-        /*
-        if(session()->get('type') == null){
-            //default is hemp, set it
-            session()->put('type', 'hemp');
-        }
-        else{
-            //check for logged user id
-            if(!empty($_COOKIE['_main'])){
-                //user is logged, check session
-                if(session()->get('type') == null){
-                    //hasnt set up hemp or cannabis
-                    session()->put('type', 'hemp');
-                }
-                else{
-                    //do nothing, he has something set
-                }
 
-            }
-            else{
-                session()->put('type', 'hemp');
-            }
         }
-        ///////////////////////
-        if(!empty($_COOKIE['type'])){
-            $allowed = ['hemp', 'cannabis'];
-            if(!in_array($_COOKIE['type'], $allowed)){
-                //default one is hemp, set it now
-                session()->put('type', 'hemp');
-            }
-            //else, it is allowed, dont mess with it
-        }
-        else{
-            //cookie not present, set it now
-            session()->put('type', 'hemp');
-        }
-        */
+
 
         //===================== PRODUCTS SEARCH =====================
         if(session()->get('search') == 'null'){
