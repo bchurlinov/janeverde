@@ -130,6 +130,9 @@
     &:focus, &:active {
       outline: none;
     }
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 }
 

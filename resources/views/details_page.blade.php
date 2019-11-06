@@ -67,9 +67,9 @@ $fhf = ProductsController::checkfhf();
                                 <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
-                                <span class="favorite" id="{{$product->id}}"{{in_array($product->id, $fhf['favorites']) ? ' style=background:green;' : ""}}><i class="far fa-star"></i><br />Favorite</span>
-                                <span class="hide" id="{{$product->id}}"{{in_array($product->id, $fhf['hidden']) ? ' style=background:yellow;' : ""}}><i class="far fa-window-close"></i><br />Hide</span>
-                                <span class="flag" id="{{$product->id}}"><i class="far fa-flag"{{in_array($product->id, $fhf['flagged']) ? ' style=background:red;' : ""}}></i><br />Flag</span>
+                                <span><i id="{{$product->id}}" class="far fa-star favorite" {{in_array($product->id, $fhf['favorites']) ? ' style=color:#FFD700;' : ""}}></i><br />Favorite</span>
+                                <span><i id="{{$product->id}}" class="far fa-window-close hide" {{in_array($product->id, $fhf['hidden']) ? ' style=color:#FF8C00' : ""}}></i><br />Hide</span>
+                                <span><i id="{{$product->id}}" class="far fa-flag flag"{{in_array($product->id, $fhf['flagged']) ? ' style=color:indianred;' : ""}}></i><br />Flag</span>
                             </div>
                         </div>
                     </div>

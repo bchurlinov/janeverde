@@ -26,6 +26,11 @@
 
   &__sorting {
     flex: 0 0 20%;
+
+    span {
+      cursor: pointer !important;
+    }
+
     @media (max-width: 1199px) {
       flex: 0 0 25%;
     }

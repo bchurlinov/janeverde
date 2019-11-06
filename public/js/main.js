@@ -56,7 +56,7 @@ $(document).ready(function () {
                 c: t
             },
             function (d) {
-                $(".flag").css('background', 'red');
+               location.reload();
             }
         );
     });
@@ -68,7 +68,7 @@ $(document).ready(function () {
                 c: t
             },
             function (d) {
-                $(".hide").css('background', 'yellow');
+               location.reload();
             }
         );
     });
@@ -80,7 +80,7 @@ $(document).ready(function () {
                 c: t
             },
             function (d) {
-                $(".favorite").css('background', 'green');
+               location.reload();
             }
         );
     });
@@ -92,7 +92,7 @@ $(document).ready(function () {
                 c: t
             },
             function (d) {
-                var url="/" + d;
+                var url="/";
                 window.location.replace(url);
                 location.reload;
             }
