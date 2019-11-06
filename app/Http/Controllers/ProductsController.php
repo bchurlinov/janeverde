@@ -519,7 +519,7 @@ class ProductsController extends Controller
         $canPost = false;
         $threeAMonth = 0;
 
-        $users = App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(auth()->user()->id);
+        $users = User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(auth()->user()->id);
 
         if($users->verification_step_1 == 1){
             $users->canPost = 1;
@@ -547,8 +547,8 @@ class ProductsController extends Controller
             $endDay = date('t');
             $from = date("$year-$month-$startday");
             $to = date("$year-$month-$endDay");
-            $res = Product::where('user_id', '=', 6)->whereBetween('created_at', [$from, $to])->get();
-            if($res->count() < 3){
+            $res = Product::where('user_id', '=', auth()->user()->id)->whereBetween('created_at', [$from, $to])->get();
+            if($res->count() == 3){
                 return json_encode(['status' => 'failed', 'reason' => 'you have reached your monthly limit']);
             }
         }
