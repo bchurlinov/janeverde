@@ -7,9 +7,18 @@
         <h1><a href="/"><img src="{{asset('/images/Janeverde_logo.svg')}}" /></a></h1>
         <div class="toggle-countries toggle-desktop">
 
+            <?php
+            $disabled = "disabled";
+            if(!empty($_COOKIE['_main']) || auth()->user() != null){
+                $disabled = "";
+            }
+
+            ?>
+            
+            
             <div class="hemp-cannabis-toggle">
-                <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp" <?= empty($_COOKIE['_main']) || auth()->user() == null ? "disabled" : "";?>>HEMP</button>
-                <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis" <?= empty($_COOKIE['_main']) || auth()->user() == null ? "disabled" : ""; ?>>CANNABIS</button>
+                <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp" {{$disabled}}>HEMP</button>
+                <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis" {{$disabled}}>CANNABIS</button>
             </div>
 
             <div id="country" style="display:none;">{{$country['dropdown']}}</div>
