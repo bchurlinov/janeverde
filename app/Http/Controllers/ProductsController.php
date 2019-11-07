@@ -514,7 +514,10 @@ class ProductsController extends Controller
     public function newProduct(){
         //check the validity of user if he can post or not
         $loggedUserId = auth()->user()->id;
-
+        /*
+        phone_calls: true
+        text_sms: true
+        */
         //load the user with all his relations
         $canPost = false;
         $threeAMonth = 0;
