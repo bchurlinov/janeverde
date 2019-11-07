@@ -158,9 +158,17 @@ $fhf = ProductsController::checkfhf();
                                 <div class="product-information-wrap__information">
                                     <p>{{$product->description}}
                                     </p>
-                                    <ul>
-                                        <li>• Do not contact me with unsolicited services or offers</li>
-                                    </ul>
+                                    @php
+                                        if($product->contact_preferences != null){
+                                            $prefs = explode(",", $product->contact_preferences);
+                                            if($prefs[0] == 1){
+                                                echo "<ul><li>Phone calls OK</li></ul>";
+                                            }
+                                            if($prefs[1] == 1){
+                                            echo "<ul><li>Text/SMS OK</li></ul>";
+                                            }
+                                        }
+                                    @endphp
                                 </div>
                             </div>
                         </div>

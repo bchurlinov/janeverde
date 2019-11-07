@@ -571,7 +571,9 @@ class ProductsController extends Controller
             'category' => 'required|numeric', 
             'image' => 'required',
             'phone' => 'nullable',
-            'contact_preferences' => 'nullable'
+            'contact_preferences' => 'nullable',
+            'phone_calls' => 'required|boolean',
+            'text_sms' => 'required|boolean'
         ]);
 
 
@@ -611,6 +613,17 @@ class ProductsController extends Controller
         if(!empty($img[8])){ $img9 = $this->processImage($img, 8); }
         if(!empty($img[9])){ $img10= $this->processImage($img, 9); }
 
+        $phonecalls = request()->get('phone_calls');
+        $textsms =  request()->get('text_sms');
+
+        $phonecalls = $phonecalls == false ? "0" : "1";
+        $textsms = $textsms == false ? ",0" : ",1";
+        $prefs = $phonecalls.$textsms;
+
+        if(request()->get('phone') == "" || request()->get('phone') == null){
+            $prefs = "0,0";
+        }
+        
         //create Product instance, we insert new product
         $product = new Product;
         $product->user_id = $loggedUserId;
@@ -635,7 +648,7 @@ class ProductsController extends Controller
         $product->img9 = $img9;
         $product->img10 = $img10;
         $product->phone = request()->get('phone');
-        $product->contact_preferences = request()->get('contact_preferences');
+        $product->contact_preferences = $prefs;
 
         //save product
         $product->save();

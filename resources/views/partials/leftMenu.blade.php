@@ -8,7 +8,7 @@
         <div class="toggle-countries toggle-desktop">
 
             <?php
-            $disabled = "disabled";
+            $disabled = "disabled title='Log in to be able to toggle between Hemp and Cannabis'";
             if(!empty($_COOKIE['_main']) || auth()->user() != null){
                 $disabled = "";
             }
@@ -17,8 +17,8 @@
             
             
             <div class="hemp-cannabis-toggle">
-                <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp" {{$disabled}}>HEMP</button>
-                <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis" {{$disabled}}>CANNABIS</button>
+                <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp" {!! $disabled !!}>HEMP</button>
+                <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis" {!! $disabled !!}>CANNABIS</button>
             </div>
 
             <div id="country" style="display:none;">{{$country['dropdown']}}</div>
