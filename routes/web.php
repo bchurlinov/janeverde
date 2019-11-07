@@ -4,16 +4,11 @@ use App\Product;
 use App\Favorite;
 use App\User;
 
+
 Route::get('/pp', function(){
     //dd(App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(6));
-    $year = date('Y');
-    $month = date('m');
-    $startday = "01";
-    $endDay = date('t');
-    $from = date("$year-$month-$startday");
-    $to = date("$year-$month-$endDay");
-    $res = Product::where('user_id', '=', 6)->whereBetween('created_at', [$from, $to])->get();
-    dd($res);
+    $email = "hristijan.tintar@gmail.com";
+
 });
 
 Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');

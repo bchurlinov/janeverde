@@ -42,7 +42,7 @@ class PaypalController extends Controller
 
         // if there is no link redirect back with error message
         if (!$response['paypal_link']) {
-            return redirect("http://127.0.0.1:3000/verification-payment?payment=0"); /*->with(['code' => 'danger', 'message' => 'Something went wrong with PayPal']);*/
+            return redirect("http://jv.com/account/verification-payment?payment=0"); /*->with(['code' => 'danger', 'message' => 'Something went wrong with PayPal']);*/
             // For the actual error message dump out $response and see what's in there
         }
 
@@ -84,7 +84,7 @@ class PaypalController extends Controller
                 // every invoice id must be unique, else you'll get an error from paypal
                 'invoice_id' => config('paypal.invoice_prefix') . '_' . $invoice_id,
                 'invoice_description' => "Order #". $invoice_id ." Invoice",
-                'cancel_url' => url('http://127.0.0.1:3000/verification-payment?payment=0'),
+                'cancel_url' => url('http://jv.com/account/verification-payment?payment=0'),
                 'notify_url' => url('paypal/notify'),
                 // total is calculated by multiplying price with quantity of all cart items and then adding them up
                 // in this case total is 9.99 because price is 9.99 and quantity is 1
@@ -138,7 +138,7 @@ class PaypalController extends Controller
         // if response ACK value is not SUCCESS or SUCCESSWITHWARNING
         // we return back with error
         if (!in_array(strtoupper($response['ACK']), ['SUCCESS', 'SUCCESSWITHWARNING'])) {
-            return redirect('http://127.0.0.1:3000/verification-payment?payment=0'); /*->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);*/
+            return redirect('http://jv.com/account/verification-payment?payment=0'); /*->with(['code' => 'danger', 'message' => 'Error processing PayPal payment']);*/
         }
 
         // invoice id is stored in INVNUM
@@ -191,10 +191,10 @@ class PaypalController extends Controller
         // App\Invoice has a paid attribute that returns true or false based on payment status
         // so if paid is false return with error, else return with success message
         if ($invoice->paid) {
-            return redirect('http://127.0.0.1:3000/verification-payment?payment=1');
+            return redirect('http://jv.com/account/verification-payment?payment=1');
         }
 
-        return redirect('http://127.0.0.1:3000/verification-payment?payment=0');
+        return redirect('http://jv.com/account/verification-payment?payment=0');
     }
 
     public function notify(Request $request)

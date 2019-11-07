@@ -139,6 +139,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //supporting documents
     Route::post('/user/supportingdocuments', 'UserController@supportingDocuments');
 
+    //forgot password
+    Route::post('/user/forgotPassword', 'UserController@forgotPasswordReset');
+
     //user logout
     Route::post('user/logout', function(Request $request){
         $request->validate(['token' => 'required']);

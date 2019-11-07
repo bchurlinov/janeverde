@@ -526,6 +526,7 @@ class ProductsController extends Controller
             $threeAMonth = 1;
         }
         if($users->verification_step_1 == 1 && $users->pictureID != null && $users->pictureID->verified == 1 &&
+            $users->businessLicense != null && $users->businessLicense->verified == 1 &&
             $users->subscription != null && $users->subscription->id > 0 && $users->subscription->active == 1){
             $canPost = 1;
             $threeAMonth = 2;

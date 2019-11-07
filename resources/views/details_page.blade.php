@@ -141,24 +141,16 @@ $fhf = ProductsController::checkfhf();
 
                                 <div class="product-information-wrap__slider">
                                     <div class="fotorama" data-nav="thumbs" data-transition="crossfade">
-                                        <img src="https://www.medicalnewstoday.com/content/images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
-                                            alt="Jane Verde Image" data-width="100%" data-minheight="100%">
-                                        <img src="https://g.foolcdn.com/image/?url=https%3A%2F%2Fg.foolcdn.com%2Feditorial%2Fimages%2F536649%2Fcannabidiol-oil-cbd-marijuana-hemp-cannabis-pot-derivative-legal-us-canada-getty.jpg&w=700&op=resize"
-                                            alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://www.medicalnewstoday.com/content/images/articles/320/320984/a-man-holding-a-marijuana-leaf.jpg"
-                                            alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://www.medicalnewstoday.com/content/images/articles/323/323673/cannabis-plant.jpg"
-                                            alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://thumbor.forbes.com/thumbor/960x0/https%3A%2F%2Fblogs-images.forbes.com%2Fjavierhasse%2Ffiles%2F2019%2F03%2FTHC-Hostel-1-1200x900.jpg"
-                                            alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://images.unsplash.com/photo-1556928045-16f7f50be0f3?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&w=1000&q=80"
-                                            alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://www.swindonadvertiser.co.uk/resources/images/7860292.jpg?display=1&htype=0&type=responsive-gallery"
-                                            alt="Jane Verde Image" data-width="100%" data-height="100%">
-                                        <img src="https://www.kidderminstershuttle.co.uk/resources/images/9324128?type=responsive-gallery-fullscreen"
-                                            alt="Jane Verde Image" data-width="100%" data-minheight="100%">
-                                        <img src="https://i2.wp.com/cbdtesters.co/wp-content/uploads/2019/05/shutterstock_470900741.jpg?fit=810%2C541&ssl=1"
-                                            alt="Jane Verde Image" data-width="100%" data-minheight="100%">
+                                        @php
+                                            for($i = 1; $i < 11; $i++){
+                                                $img = "img$i";
+                                                if($product->$img !== null){
+                                                echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde Image" data-width="100%" data-minheight="100%">';
+                                                }
+                                            }
+
+                                        @endphp
+
 
                                     </div>
                                 </div>
@@ -191,7 +183,7 @@ $fhf = ProductsController::checkfhf();
                                     bussiness postings.
                                 </span>
                                 <p style="text-align: center">
-                                    <a href="/auth">Verify my Account</a>
+                                    <a href="http://localhost:3000/">My Account</a>
                                 </p>
                                 @endif
                             </div>

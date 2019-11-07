@@ -17,6 +17,7 @@ use App\Subcategories;
 use Carbon\Carbon;
 use App\Favorite;
 use App\SupportingDocuments;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -711,6 +712,36 @@ class UserController extends Controller
         $user->save();
 
         return json_encode(['status' => 'success']);
+    }
 
+    public function forgotPasswordReset(Request $request){
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        $email = $request->get('email');
+
+        $user = User::all()->where('email', '=', $email)->first();
+        if($user != null){
+            //generate new password
+            $newpass = Str::random(12);
+
+            //change the password in database
+            $user->password = bcrypt($newpass);
+            $user->save();
+
+            $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+                ->setUsername('janeverdeonline@gmail.com')->setPassword('JaneVerde001');
+            $mailer = new \Swift_Mailer($transport);
+
+            $body  = "your new password is: ".$newpass;
+            $body .= "<br /> Visit <a href='http://localhost:3000/signin'> your profile</a> to change the password in user settings.";
+
+            $message = (new \Swift_Message("Password reset"))->setFrom(['john@doe.com' => 'JaneVerde password reset'])
+                ->setTo([$email])->setBody($body);
+
+            $message->setContentType("text/html");
+            $mailer->send($message);
+        }
+        return json_encode(['status' => 'success', 'reason' => 'Please check your email']);
     }
 }
