@@ -58,26 +58,28 @@
                                         <table class="table table-striped" style="width:100%" id="active">
                                             <thead>
                                             <tr>
-                                                <th scope="col">Business Name</th>
-                                                <th scope="col">Country</th>
-                                                <th scope="col">Agricultural licence</th>
-                                                <th scope="col">Bus License / Tax ID</th>
+                                                <th scope="col">License number</th>
+                                                <th scope="col">Expiration date</th>
                                                 <th scope="col">&nbsp;</th>
                                                 <th scope="col">&nbsp;</th>
                                                 <th scope="col">&nbsp;</th>
                                             </tr>
                                             </thead>
                                             <tbody>
+                                                
                                             @foreach($licences as $id => $licence)
                                                 <tr scope="row">
-                                                    <td>{{$licence->businessName}}</td>
-                                                    <td>{{$licence->country->full_country}}</td>
-                                                    <td>{{$licence->industrialLicense}}</td>
-                                                    <td>{{ucfirst($licence->bltid)}}</td>
+                                                    <td>{{$licence->licensenumber}}</td>
+                                                     @php
+                                                    $date = $licence->expiration_date;
+                                                    //$date = explode("-", $date);
+                                                    //$date = $date[1]." ".$date[2]." ".$date[0];
+                                                    @endphp
+                                                    <td>{{date("M d Y", strtotime($date))}}</td>
                                                     <td>
                                                         <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
                                                             View uploaded picture
-                                                            <img height="0" width="0" id="{{$licence->id}}" src="{{asset($licence->image)}}" />
+                                                            <img height="0" width="0" id="{{$licence->id}}" src="{{asset($licence->img1)}}" />
 
                                                         </a>
                                                     </td>

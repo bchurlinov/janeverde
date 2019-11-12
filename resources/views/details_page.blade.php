@@ -125,6 +125,20 @@ $fhf = ProductsController::checkfhf();
                                     <li class="copy-paste-email">
                                         <p>Copy & Paste into your email:</p>
                                         <a href="javascript:;">someemail@janeverde.com</a>
+                                        <br />
+                                        <hr>
+                                        <br />
+                                        @php
+                                                if($product->contact_preferences != null){
+                                                    $prefs = explode(",", $product->contact_preferences);
+                                                    if($prefs[0] == 1){
+                                                        echo "<ul><li>Phone calls OK</li></ul>";
+                                                    }
+                                                    if($prefs[1] == 1){
+                                                    echo "<ul><li>Text/SMS OK</li></ul>";
+                                                    }
+                                                }
+                                            @endphp
                                     </li>
                                 </ul>
                             </aside>
@@ -158,17 +172,6 @@ $fhf = ProductsController::checkfhf();
                                 <div class="product-information-wrap__information">
                                     <p>{{$product->description}}
                                     </p>
-                                    @php
-                                        if($product->contact_preferences != null){
-                                            $prefs = explode(",", $product->contact_preferences);
-                                            if($prefs[0] == 1){
-                                                echo "<ul><li>Phone calls OK</li></ul>";
-                                            }
-                                            if($prefs[1] == 1){
-                                            echo "<ul><li>Text/SMS OK</li></ul>";
-                                            }
-                                        }
-                                    @endphp
                                 </div>
                             </div>
                         </div>

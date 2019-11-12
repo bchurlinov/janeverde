@@ -20,6 +20,10 @@ class Product extends Model
     public function user(){
         return $this->belongsTo('App\User');
     }
+    
+    public function userAlter(){
+        return $this->hasOneThrough('App\BusinessLicense', 'App\User', 'id', 'user_id', 'user_id', 'id');
+    }
 
     //country relation
     public function country(){

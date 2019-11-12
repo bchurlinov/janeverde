@@ -66,7 +66,7 @@
                                     <button class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'verifiedOnly' ? "toggle-active" : ""}}" id="verifiedOnly">Verified</button>
                                 </div>
                             </div>
-                           
+                                
                                 @php
                                 echo $keyword == "" ? $products->links() : $products->appends(['keyword' =>
                                 $keyword])->links();
@@ -125,25 +125,28 @@
 
                                                 <div class="clearfix"></div>
                                                 <span class="qs">
-                                                <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
+                                                    @php
+                                                    $verif = $product->userAlter != null && $product->userAlter->verified == 1 ? true : false;
+                                                    @endphp
+                                                <img src={!! !$verif  ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                         alt="Jane Verde - SVG Icon"  />
+                                                        @if($verif)
                                                     <div class="popover above popover-content">
                                                         <h4>
-                                                            <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
+                                                            <img src={!! !$verif ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                                 alt="Jane Verde - SVG Icon" />
+                                                            @if($verif)
                                                             Verified Business
+                                                            @endif
                                                         </h4>
+                                                        @if($verif)
                                                         <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: Califor
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AGnia
-                                                            </li>
-                                                                - R12315321</li>
+                                                            <li><i class="fas fa-check"></i>Location: {{$product->location}}</li>
+                                                            <li><i class="fas fa-check"></i>License number: {!! $product->userAlter->licensenumber !!}</li>
                                                         </ul>
+                                                        @endif
                                                     </div>
+                                                    @endif
                                                 </span>
                                             </div>
                                         </div>

@@ -61,9 +61,8 @@
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Lastname</th>
                                                 <th scope="col">Email</th>
-                                                <th scope="col">Role</th>
                                                 <th scope="col">Registration date</th>
-                                                <th scope="col">Status</th>
+                                                
                                                 <th scope="col">&nbsp;</th>
                                             </tr>
                                             </thead>
@@ -73,31 +72,8 @@
                                                     <td>{{$user->name}}</td>
                                                     <td>{{$user->lastname}}</td>
                                                     <td>{{$user->email}}</td>
-                                                    <td>{{ucfirst($user->role)}}</td>
                                                     <td>{{$user->created_at}}</td>
-                                                    <td>
-                                                        @php
-                                                        /*
-                                                             * -1: user is denied of the upload, and has to re-upload picture id
-                                                             * 0 : user is created, hasn't uploaded picture id
-                                                             * 1 : user is created, uploaded id and verified(approved by admin)
-                                                             * 2 : user is created, uploaded id, awaiting verification*/
-                                                            switch($user->is_verified){
-                                                            case '-1':
-                                                                echo "Denied ID, needs to reupload";
-                                                                break;
-                                                            case '0':
-                                                                echo 'No picture ID uploaded';
-                                                                break;
-                                                            case '1':
-                                                                echo 'Verified';
-                                                                break;
-                                                            case '2':
-                                                                echo 'Pending verification';
-                                                                break;
-                                                            }
-                                                        @endphp
-                                                    </td>
+                                                    
                                                     <td>
                                                         <a href="/delete"
                                                            onclick="event.preventDefault(); document.getElementById('{{$user->id}}').submit();">

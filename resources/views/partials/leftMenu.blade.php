@@ -28,8 +28,8 @@
             @endif
         </div>
         <div class="listing-account">
-            <a href="/auth" class="button-link">Create Listing</a>
-            <a href="/auth" class="button-link">My Account</a>
+            <a href="http://account.bojanchurlinov.com/" class="button-link">User Account</a>
+            <a href="/auth" class="button-link">Owner Account</a>
         </div>
         <div class="useful-links">
             <a href="/auth" class="button-link" data-account="verify" >

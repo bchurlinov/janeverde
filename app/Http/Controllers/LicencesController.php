@@ -33,11 +33,20 @@ class LicencesController extends Controller
         $licence = IndustrialLicense::find($request->input('id'));
         //remove the status, and unlink the uploaded image
         $licence->verified = -1;
-        $licence->image = 0;
-        $path = "/inlicence".$licence->image;
+        $path = "/".$licence->img1;
         //delete the image by calling unlink
         unlink(public_path().$path);
-        $licence->image = "";
+        $licence->img1 = "";
+        if($licence->img2 != ""){
+            $path = "/".$licence->img2;
+            unlink(public_path().$path);
+            $licence->img2 = "";
+        }
+        if($licence->img3 != ""){
+            $path = "/".$licence->img3;
+            unlink(public_path().$path);
+            $licence->img3 = "";
+        }
         $licence->save();
         return $this->getInLicences(true);
     }

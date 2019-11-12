@@ -29,7 +29,7 @@ class ProductsController extends Controller
         $horcTypes = ['cannabis', 'hemp'];
         $allProducts = [];
 
-        if(empty($_COOKIE['_main'])){
+        if(empty($_COOKIE['_main']) && auth()->user() != null){
             session()->put('type', 'hemp');
             $hOrC = "hemp";
         }
@@ -100,12 +100,12 @@ class ProductsController extends Controller
 
         if(count($postFields) == 0){
             //only /search is clicked
-            $allProducts = Product::where($conditions)->orderBy('created_at', 'desc')->paginate(6);
+            $allProducts = Product::with('userAlter')->where($conditions)->orderBy('created_at', 'desc')->paginate(6);
         }
         else{
             $keyword = $request->get('keyword');
-            $allProducts = $keyword == null ? $allProducts = Product::where($conditions)->orderBy('created_at', 'desc')->paginate(6) :
-                                                             Product::search($keyword)->where($conditions)->orderBy('created_at', 'desc')->paginate(6);
+            $allProducts = $keyword == null ? $allProducts = Product::with('userAlter')->where($conditions)->orderBy('created_at', 'desc')->paginate(6) :
+                                                             Product::with('userAlter')->search($keyword)->where($conditions)->orderBy('created_at', 'desc')->paginate(6);
         }
         //return them to the view
         return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);
@@ -136,7 +136,13 @@ class ProductsController extends Controller
             'c' => 'required|numeric'
         ]);
         //check if user is logged
-        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        $user = 0;
+        if(empty($_COOKIE['_main']) && auth()->user() == null){
+            $user = 0;
+        }
+        else{
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+        }
         $product = Product::find($request->get('c'));
 
         if($product != null){
@@ -167,6 +173,18 @@ class ProductsController extends Controller
                         $p = implode(',', $p);
                         $new->product_id = $p;
                         $new->save();
+                        
+                        $sess = session()->get('flagged');
+                         $p = explode(",", $sess);
+                         if(in_array($request->get('c'), $p)){
+                             unset($p[array_search($request->get('c'), $p)]);
+                         }
+                         else{
+                             $p[] = $request->get('c');
+                         }
+                         $p = implode(',', $p);
+                         session()->put('flagged', $p);
+                        
                         return 1;
                     }
                 }
@@ -208,7 +226,14 @@ class ProductsController extends Controller
             'c' => 'required|numeric'
         ]);
         //check if user is logged
-        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        $user = 0;
+        if(empty($_COOKIE['_main']) && auth()->user() == null){
+            $user = 0;
+        }
+        else{
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+        }
+        
         $product = Product::find($request->get('c'));
 
         if($product != null){
@@ -239,6 +264,18 @@ class ProductsController extends Controller
                         $p = implode(',', $p);
                         $new->product_id = $p;
                         $new->save();
+                        
+                         $sess = session()->get('hide');
+                        $p = explode(",", $sess);
+                        if(in_array($request->get('c'), $p)){
+                            unset($p[array_search($request->get('c'), $p)]);
+                        }
+                        else{
+                            $p[] = $request->get('c');
+                        }
+                        $p = implode(',', $p);
+                        session()->put('hide', $p);
+                        
                         return 1;
                     }
                 }
@@ -286,7 +323,14 @@ class ProductsController extends Controller
             'c' => 'required|numeric'
         ]);
         //check if user is logged
-        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        $user = 0;
+        if(empty($_COOKIE['_main']) && auth()->user() == null){
+            $user = 0;
+        }
+        else{
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+        }
+        
         $product = Product::find($request->get('c'));
 
         if($product != null){
@@ -317,6 +361,17 @@ class ProductsController extends Controller
                         $p = implode(',', $p);
                         $new->product_id = $p;
                         $new->save();
+                        $sess = session()->get('favorite');
+                        
+                         $p = explode(",", $sess);
+                         if(in_array($request->get('c'), $p)){
+                             unset($p[array_search($request->get('c'), $p)]);
+                         }
+                         else{
+                             $p[] = $request->get('c');
+                         }
+                         $p = implode(',', $p);
+                         session()->put('favorite', $p);
                         return 1;
                     }
                 }
@@ -359,8 +414,8 @@ class ProductsController extends Controller
      */
     public function sethc(Request $request){
         $horc = $request->get('c');
-
-        if(empty($_COOKIE['_main']) || auth()->user() == null){
+        
+        if(empty($_COOKIE['_main']) && auth()->user() == null){
             session()->put('type', 'hemp');
         }
         else{
@@ -384,15 +439,16 @@ class ProductsController extends Controller
             echo "hemp";
         }
         else{
-            if(empty($_COOKIE['_main'])){
+            if(empty($_COOKIE['_main']) && auth()->user() == null){
                 $horc = 'hemp';
                 session()->put('type', 'hemp');
             }
             else{
                 session()->put('type', $horc);
             }
-            echo $horc;
         }
+        
+        return back();
     }
 
     public function setav(Request $request){
@@ -802,7 +858,15 @@ class ProductsController extends Controller
     public static function checkfhf(){
         //check favorites, hidden and flagged
         //first, we check if there is user
-        $user = empty($_COOKIE['_main']) ? 0 : $_COOKIE['_main'];
+        
+        $user = 0;
+        if(empty($_COOKIE['_main']) && auth()->user() == null){
+            $user = 0;
+        }
+        else{
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+        }
+        
         $data = [
             'favorites' => [],
             'hidden' => [],
@@ -857,6 +921,7 @@ class ProductsController extends Controller
                 }                    
 
                 $favorites = Favorite::where('user_id', '=', $id)->get();
+                
                 if(count($favorites) > 0){
                     $favorites = $favorites[0];
                     $p = $favorites->product_id;

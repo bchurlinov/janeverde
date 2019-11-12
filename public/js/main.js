@@ -80,6 +80,7 @@ $(document).ready(function () {
                 c: t
             },
             function (d) {
+                console.log(d);
                location.reload();
             }
         );

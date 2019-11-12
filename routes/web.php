@@ -6,8 +6,9 @@ use App\User;
 
 
 Route::get('/pp', function(){
-    //dd(App\User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(6));
-    $email = "hristijan.tintar@gmail.com";
+    $fav = Favorite::where('user_id', '=', 19)->get();
+    dd($fav);
+    
 
 });
 

@@ -31,7 +31,7 @@ class UserController extends Controller
         $user = User::find(auth()->user()->id);
         if ($user->role == "admin") {
             //get all users, excluding the administrator from the counts
-            $allUsers = User::where('role', '!=', 'admin')->get();
+            $allUsers = User::with('pictureID')->where('role', '=', NULL)->get();
             //pending, verified, denied etc initialized to 0 initially 
             $pending = 0;
             $verified = 0;
@@ -39,23 +39,24 @@ class UserController extends Controller
             $denied = 0;
             $deleted = 0;
             $total = $allUsers->count();
-            foreach ($allUsers as $singleUser) {
-                switch ($singleUser->is_verified) {
-                    case "-1":
-                        $denied += 1;
-                        break;
-                    case "0":
+            if($total > 0){
+                foreach ($allUsers as $singleUser) {
+                    $picid = $singleUser->pictureID;
+                    if($picid == null){
                         $noIDUploaded += 1;
-                        break;
-                    case "1":
+                    }
+                    if($picid->verified == -1){
+                        $denied += 1;
+                    }
+                    if($picid->verified == 1){
                         $verified += 1;
-                        break;
-                    case "2":
+                    }
+                    if($picid->verified == 2){
                         $pending += 1;
-                        break;
-                }
-                if ($singleUser->is_deleted == 1) {
-                    $deleted += 1;
+                    }
+                    if ($singleUser->is_deleted == 1) {
+                        $deleted += 1;
+                    }
                 }
             }
             //create the return array for user's statistics
@@ -65,6 +66,9 @@ class UserController extends Controller
             $productsData = Product::count();
 
             return view('admin.dashboard')->with(["usersData" => $usersData, "productsData" => $productsData]);
+        }
+        else{
+            return redirect()->back();
         }
         return view('auth.dashboard')->with('user', $user);
     }
@@ -108,7 +112,7 @@ class UserController extends Controller
      */
     public function getUsersForVerification($redirect = false)
     {
-        $verificationPendingUsers = User::where('is_verified', 2)->where('is_deleted', 0)->get();
+        $verificationPendingUsers = PictureID::with('user')->where('verified', 2)->get();
         if ($redirect) {
             return redirect('/usersverification')->with('users', $verificationPendingUsers);
         }
@@ -117,7 +121,7 @@ class UserController extends Controller
 
     public function getUsersForManagement($redirect = false)
     {
-        $allUsers = User::where('role', '!=', 'admin')->get();
+        $allUsers = User::with('pictureID')->where('role', '=', NULL)->get();
         $deleted = $notDeleted = [];
         foreach ($allUsers as $users) {
             $users->is_deleted == 0 ? $notDeleted[] = $users : $deleted[] = $users;
@@ -134,11 +138,11 @@ class UserController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
     public function approve(Request $request)
-    {
+    {   
         //get the user by id
-        $user = User::find($request->input('id'));
+        $user = PictureID::where('user_id', '=', $request->input('id'))->get()->first();
         //update the verification status
-        $user->is_verified = 1;
+        $user->verified = 1;
         //save the status
         $user->save();
         return $this->getUsersForVerification(true);
@@ -152,14 +156,14 @@ class UserController extends Controller
     public function decline(Request $request)
     {
         //get the user by id
-        $user = User::find(explode("_", $request->input('id'))[0]);
+        $user = PictureID::where('user_id', '=', explode("_", $request->input('id'))[0])->get()->first();
         //remove the status, and unlink the uploaded id
-        $user->is_verified = -1;
-        $user->id_pic_uploaded = 0;
-        $path = 'pictureID/' . $user->id_pic_name;
+        $user->verified = -1;
+        $path = $user->image;
+        $user->image = NULL;
+        
         //delete the image by calling unlink
-        unlink(public_path($path));
-        $user->id_pic_name = "";
+        unlink(public_path()."/".$path);
         $user->save();
         return $this->getUsersForVerification(true);
     }
@@ -221,8 +225,8 @@ class UserController extends Controller
     public function settings(Request $request)
     {
         $validate = $request->validate([
-            'name' => ["required", "regex:/^([a-zA-Z'-\w])((?![0-9]).)*$/m"],
-            'lastname' => ["required", "regex:/^([a-zA-Z'-\w])((?![0-9]).)*$/m"]
+            'name' => "required",
+            'lastname' => "required"
         ]);
         $user = User::find(Auth::user()->id);
         $user->name = $request->get('name');
@@ -322,7 +326,9 @@ class UserController extends Controller
         $validate = $request->validate([
             'user_id' => 'required|numeric'
         ]);
-        $userId = (int) $request->get('user_id');
+        
+        $userId = (int)$request->get('user_id');
+        
         $user = User::find($userId);
         $products = $user->products;
         $response = ['status' => 'success', 'products' => 
@@ -334,8 +340,15 @@ class UserController extends Controller
         ];
         if ($products->count() > 0) {
             foreach ($products as $product) {
-                $product->subcategory_id = $this->getSubCategory($product->subcategory_id)[0]['name'];
+                $product->id = (int)$product->id;
+                $product->user_id = (int)$product->user_id;
+                $product->price = (int)$product->price;
+                $product->country_id = (int)$product->country_id;
+                $product->is_deleted = (int)$product->is_deleted;
                 $product->type = ucfirst($product->type);
+                $product->category_id = (int)$product->category_id;
+                $product->verified = (int)$product->verified;
+                $product->subcategory_id = $this->getSubCategory($product->subcategory_id)[0]['name'];
                 $created = $product->created_at;
                 $today = Carbon::createFromFormat('Y-m-d h:i:s', date('Y-m-d h:i:s'));
                 $days = $today->diff($created)->days;
@@ -344,13 +357,22 @@ class UserController extends Controller
         }
 
         //get favorites, and add them to the favorite array
-        $fav = Favorite::where('user_id', '=', $userId)->get();
+        $fav = Favorite::where('user_id', '=', (int)$userId)->get();
         if($fav->count() > 0){
             $favorite = array_filter(explode(',', $fav[0]->product_id));
             //find the products now
             $prd = Product::whereIn("id", $favorite)->get();
             if($prd->count() > 0){
                 foreach($prd as $p){
+                    $p->id = (int)$p->id;
+                    $p->user_id = (int)$p->user_id;
+                    $p->price = (int)$p->price;
+                    $p->country_id = (int)$p->country_id;
+                    $p->is_deleted = (int)$p->is_deleted;
+                    $p->type = ucfirst($p->type);
+                    $p->category_id = (int)$p->category_id;
+                    $p->verified = (int)$p->verified;
+                    $p->subcategory_id = $this->getSubCategory($p->subcategory_id)[0]['name'];
                     $response['products']['favorite'][] = $p;
                 }
             }
@@ -416,11 +438,11 @@ class UserController extends Controller
         // }
 
         $img = request()->get('industrial_image');
-        $name = $this->processImageLicense($img, 0, 'inlicense');
+        $name = $this->processImageLicense($img, 0, 'inlicence');
         $img2 = $img3 = null;
 
-        if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'inlicense'); }
-        if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'inlicense'); }
+        if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'inlicence'); }
+        if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'inlicence'); }
 
         $b = IndustrialLicense::where('user_id', '=', $loggedUserId)->get();
         $licence = $b->count() > 0 ? IndustrialLicense::find($b[0]['id']) : new IndustrialLicense();
@@ -455,11 +477,11 @@ class UserController extends Controller
         // }
 
         $img = request()->get('business_image');
-        $name = $this->processImageLicense($img, 0, 'bulicense');
+        $name = $this->processImageLicense($img, 0, 'bulicence');
         $img2 = $img3 = null;
 
-        if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'bulicense'); }
-        if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'bulicense'); }
+        if(!empty($img[1])){ $img2 = $this->processImageLicense($img, 1, 'bulicence'); }
+        if(!empty($img[2])){ $img3 = $this->processImageLicense($img, 2, 'bulicence'); }
 
         $b = BusinessLicense::where('user_id', '=', $loggedUserId)->get();
         $licence = $b->count() > 0 ? BusinessLicense::find($b[0]['id']) : new BusinessLicense();
@@ -658,7 +680,7 @@ class UserController extends Controller
         $sd = $b->count() > 0 ? SupportingDocuments::find($b[0]['id']) : new SupportingDocuments();
 
         $sd->user_id = $loggedUserId;
-        $sd->img1 = $name;
+        $sd->img1 = "supportingdocuments/".$name;
         $sd->img2 = $img2 == null ? null : "supportingdocuments/".$img2;
         $sd->img3 = $img3 == null ? null : "supportingdocuments/".$img3;
         $sd->img4 = $img4 == null ? null : "supportingdocuments/".$img4;

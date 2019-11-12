@@ -1,4 +1,3 @@
-
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
@@ -20,3 +19,11 @@
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteRule ^ index.php [L]
 </IfModule>
+<IfModule mod_headers.c>
+    
+    Header always set Access-Control-Allow-Origin %{REQUEST_ORIGIN}e env=REQUEST_ORIGIN
+    Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE"
+    
+    Header add Access-Control-Allow-Headers "Authorization, origin, x-requested-with, content-type"
+</IfModule>
+

@@ -61,7 +61,6 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Lastname</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Role</th>
                                     <th scope="col">Registration date</th>
                                     <th scope="col">&nbsp;</th>
                                     <th scope="col">&nbsp;</th>
@@ -69,30 +68,30 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                
                                 @foreach($users as $id => $user)
                                 <tr scope="row">
-                                    <td>{{$user->name}}</td>
-                                    <td>{{$user->lastname}}</td>
-                                    <td>{{$user->email}}</td>
-                                    <td>{{ucfirst($user->role)}}</td>
-                                    <td>{{$user->created_at}}</td>
+                                    <td>{{$user->user->name}}</td>
+                                    <td>{{$user->user->lastname}}</td>
+                                    <td>{{$user->user->email}}</td>
+                                    <td>{{$user->user->created_at}}</td>
                                     <td>
                                         <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
-                                            View uploaded picture
-                                            <img height="0" width="0" id="{{$user->id}}" src="{{asset('/pictureID/'.$user->id_pic_name)}}" />
+                                            View uploaded picture ID
+                                            <img height="0" width="0" id="{{$user->user->id}}" src="{{asset($user->image)}}" />
 
                                         </a>
                                     </td>
                                     <td>
                                         <form id="{{$user->id}}" action="/approve" method="POST">
-                                            <input type="hidden" name="id" value="{{$user->id}}" >
+                                            <input type="hidden" name="id" value="{{$user->user->id}}" >
                                             @csrf
                                             <input type="submit" name="submit" class="btn btn-success" value="Approve">
                                         </form>
                                     </td>
                                     <td>
                                         <form id="{{$user->id. '_' . $user->id}}" action="/decline" method="POST">
-                                            <input type="hidden" name="id" value="{{$user->id. '_' . $user->id}}" >
+                                            <input type="hidden" name="id" value="{{$user->user->id. '_' . $user->user->id}}" >
                                             @csrf
                                             <input type="submit" name="submit" class="btn btn-danger" value="Decline">
                                         </form>

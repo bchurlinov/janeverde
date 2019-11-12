@@ -22,15 +22,15 @@ $country = session()->get('country') == 'null' ? ["dropdown" => "all", "fullName
             <div class="category-item" data-category="forums">
                 <h5>Discussions / Forums</h5>
                 <ul>
-                    <li><a href="/search" >Outdoor Grow</a></li>
-                    <li><a href="/search" >Indoor Grow</a></li>
-                    <li><a href="/search" >Extraction</a></li>
-                    <li><a href="/search" >Lab / Testing</a></li>
+                    <li><a href="javascript:;" >Outdoor Grow</a></li>
+                    <li><a href="javascript:;" >Indoor Grow</a></li>
+                    <li><a href="javascript:;" >Extraction</a></li>
+                    <li><a href="javascript:;" >Lab / Testing</a></li>
                 </ul>
                 <ul>
-                    <li><a href="/search" >Production / Distribution</a>
+                    <li><a href="javascript:;" >Production / Distribution</a>
                     </li>
-                    <li><a href="/search" >General</a></li>
+                    <li><a href="javascript:;" >General</a></li>
                 </ul>
             </div>
             <div class="clearfix"></div>

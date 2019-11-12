@@ -26,6 +26,22 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
                 'verified' => -10
             ];
         }
+        else{
+            $new = [
+                'id' => $users->businessLicense->id,
+                'user_id' => auth()->user()->id,
+                'licensenumber' => $users->businessLicense->licensenumber,
+                'expiration_date' => $users->businessLicense->expiration_date,
+                'img1' => $users->businessLicense->img1,
+                'img2' => $users->businessLicense->img2,
+                'img3' => $users->businessLicense->img3,
+                'verified' => (int)$users->businessLicense->verified
+            ];
+            $users->business_license = $new;
+             unset($users->businessLicense);
+             
+        }
+        
         if($users->industrialLicense == null){
             unset($users->industrialLicense);
             $users->industrial_license = [
@@ -39,6 +55,20 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
                 'verified' => -10
             ];
         }
+        else{
+             $new = [
+                'id' => $users->industrialLicense->id,
+                'user_id' => auth()->user()->id,
+                'licensenumber' => $users->industrialLicense->licensenumber,
+                'expiration_date' => $users->industrialLicense->expiration_date,
+                'img1' => $users->industrialLicense->img3,
+                'img2' => $users->industrialLicense->img2,
+                'img3' => $users->industrialLicense->img3,
+                'verified' => (int)$users->industrialLicense->verified
+            ];
+            unset($users->industrialLicense);
+            $users->industrial_license = $new;
+        }
 
         if($users->pictureID == null){
             unset($users->pictureID);
@@ -48,6 +78,16 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
                 'image' => '',
                 'verified' => -10,
             ];
+        }
+        else{
+            $new = [
+                'id' => $users->pictureID->id,
+                'user_id' => auth()->user()->id,
+                'image' => $users->pictureID->image,
+                'verified' => (int)$users->pictureID->verified,
+                ];
+                 unset($users->pictureID);
+                 $users->picture_i_d = $new;
         }
 
         if($users->supportingDocuments == null){
@@ -63,9 +103,39 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
                 'verified' => -10
             ];
         }
+        else{
+            $new = [
+                'id' => $users->supportingDocuments->id,
+                'user_id' => auth()->user()->id,
+                'img1' => $users->supportingDocuments->img1,
+                'img2' => $users->supportingDocuments->img2,
+                'img3' => $users->supportingDocuments->img3,
+                'img4' => $users->supportingDocuments->img4,
+                'img5' => $users->supportingDocuments->img5,
+                'verified' => (int)$users->supportingDocuments->verified
+                ];
+            
+            $users->supporting_documents = $new;
+            unset($users->supportingDocuments);
+        }
 
-        if($users->subscription == null){
-           unset($users->subscription);
+        if($users->subscription != null){
+            $new = [
+                'id' => $users->subscription->id,
+               'user_id' => auth()->user()->id,
+               'title' => $users->subscription->title,
+               'price' => $users->subscription->price,
+               'payment_status' => $users->subscription->payment_status,
+               'recurring_id' => $users->subscription->recurring_id,
+               'active' => (int)$users->subscription->active
+                ];
+            
+            unset($users->subscription);
+            $users->subscription = $new;
+          
+        }
+        else{
+             unset($users->subscription);
            $users->subscription = [
                'id' => 0,
                'user_id' => auth()->user()->id,
@@ -76,6 +146,7 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
                'active' => -10
            ];
         }
+        
         $users->canPost = 0;
         //can the user post?
         if($users->verification_step_1 == 1){
@@ -102,6 +173,8 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
             $users->canPost = 1;
         }
 
+        //force verification step to be returned as integer instead of string in some cases
+        $users->verification_step_1 = (int) $users->verification_step_1;
         $response = ['success'=>true, 'data'=>$users];
         return response()->json($response, 201);
     });
