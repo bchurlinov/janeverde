@@ -156,30 +156,31 @@
                                                 <a href="/view/{{$product->id}}">
                                                     @php
                                                         echo strlen($product->title) > 45 ? substr($product->title, 0, 50) . "..." : $product->title;    
+                                                        $verif = $product->userAlter != null && $product->userAlter->verified == 1 ? true : false;
                                                     @endphp
                                                 </a>
                                                 <span class="product-location" style="display: inline">({{$product->location}})</span>
                                               
                                                 <span class="qs qs-list-view" >
-                                                    <img src= {!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
+                                                    <img src= {!! !$verif  ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                         alt="Jane Verde - SVG Icon" />
+                                                         @if($verif)
                                                     <div class="popover above popover-content">
                                                         <h4>
                                                             <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                                 alt="Jane Verde - SVG Icon" />
+                                                            @if($verif)
                                                             Verified Business
+                                                            @endif
                                                         </h4>
+                                                        @if($verif)
                                                         <ul>
-                                                            <li><i class="fas fa-check"></i>Bussiness Name: Jane
-                                                                Verde LTD</li>
-                                                            <li><i class="fas fa-check"></i>Location: California
-                                                            </li>
-                                                            <li><i class="fas fa-check"></i>Bus License/TAX ID:
-                                                                93-1356489</li>
-                                                            <li><i class="fas fa-check"></i>Agricultural License: AG
-                                                                - R12315321</li>
+                                                            <li><i class="fas fa-check"></i>Location: {{$product->location}}</li>
+                                                            <li><i class="fas fa-check"></i>License number: {!! $product->userAlter->licensenumber !!}</li>
                                                         </ul>
+                                                        @endif
                                                     </div>
+                                                    @endif
                                                 </span>
                                                
                                             </h4>
