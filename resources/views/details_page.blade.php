@@ -170,11 +170,17 @@ $fhf = ProductsController::checkfhf();
                                 <div class="product-information-wrap__slider">
                                     <div class="fotorama" data-nav="thumbs" data-transition="crossfade" data-width="100%"  data-maxheight="100%"  data-arrows="true">
                                         @php
+                                        $allImgs = 0;
                                         for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
+                                            $allImgs += 1;
                                             echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde
                                                 Image" data-width="100%" data-minheight="100%">';
                                             }
-                                            }
+                                        }
+                                        if($allImgs == 0){
+                                            echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane Verde
+                                                Image" style="width:100%; height:400px;" data-width="100%" data-minheight="100%">';
+                                        }
 
                                             @endphp
                                     </div>

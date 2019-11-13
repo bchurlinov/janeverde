@@ -44,18 +44,23 @@ class UserController extends Controller
                     $picid = $singleUser->pictureID;
                     if($picid == null){
                         $noIDUploaded += 1;
+                        continue;
                     }
                     if($picid->verified == -1){
                         $denied += 1;
+                        continue;
                     }
                     if($picid->verified == 1){
                         $verified += 1;
+                        continue;
                     }
                     if($picid->verified == 2){
                         $pending += 1;
+                        continue;
                     }
                     if ($singleUser->is_deleted == 1) {
                         $deleted += 1;
+                        continue;
                     }
                 }
             }

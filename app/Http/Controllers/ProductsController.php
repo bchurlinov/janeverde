@@ -625,7 +625,7 @@ class ProductsController extends Controller
             'country' => 'required', 
             'type' => 'required', 
             'category' => 'required|numeric', 
-            'image' => 'required',
+            'image' => 'nullable',
             'phone' => 'nullable',
             'contact_preferences' => 'nullable',
             'phone_calls' => 'required|boolean',
@@ -656,9 +656,9 @@ class ProductsController extends Controller
         //all is fine with type, proceed with image
 
         $img = request()->get('image');
-        $name = $this->processImage($img, 0);
-        $img2 = $img3 =$img4 = $img5 = $img6 = $img7 = $img8 = $img9 = $img10 = null;
+        $name = $img2 = $img3 =$img4 = $img5 = $img6 = $img7 = $img8 = $img9 = $img10 = null;
 
+        if(!empty($img[0])){ $name = $this->processImage($img, 0); }
         if(!empty($img[1])){ $img2 = $this->processImage($img, 1); }
         if(!empty($img[2])){ $img3 = $this->processImage($img, 2); }
         if(!empty($img[3])){ $img4 = $this->processImage($img, 3); }
@@ -709,7 +709,9 @@ class ProductsController extends Controller
         //save product
         $product->save();
 
-        echo json_encode(['status' => 'success']);
+        $newID = $product->id;
+
+        echo json_encode(['status' => 'success', 'id' => $newID]);
     }
 
     public function editProduct(){
@@ -864,7 +866,7 @@ class ProductsController extends Controller
             $user = 0;
         }
         else{
-            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['_main'];
         }
         
         $data = [
@@ -872,7 +874,7 @@ class ProductsController extends Controller
             'hidden' => [],
             'flagged' => []
         ];
-        if($user == 0){
+        /*if($user == 0){
             //there is no user, check the session
             if(session()->get('flagged') != null){
                 $s = explode(",", session()->get('flagged'));
@@ -894,7 +896,7 @@ class ProductsController extends Controller
             }
 
         }
-        else{
+        else{ */
             //there is user, check if it is real user
             $usr = User::find($user);
             //user is real, proceed
@@ -903,8 +905,7 @@ class ProductsController extends Controller
                 $flagged = Flagged::where('user_id', '=', $id)->get();
                 if(count($flagged) > 0){
                     $flagged = $flagged[0];
-                    $p = $flagged->product_id;
-                    $p = explode(",", $p);
+                    $p = array_filter(explode(",", $flagged->product_id));
                     foreach($p as $k){
                         if($k != "") $data['flagged'][] = $k;
                     }
@@ -913,25 +914,22 @@ class ProductsController extends Controller
                 $hidden = Hide::where('user_id', '=', $id)->get();
                 if(count($hidden) > 0){
                     $hidden = $hidden[0];
-                    $p = $hidden->product_id;
-                    $p = explode(",", $p);
+                    $p = array_filter(explode(",", $hidden->product_id));
                     foreach($p as $k){
                         if($k != "") $data['hidden'][] = $k;
                     }
-                }                    
+                }
 
                 $favorites = Favorite::where('user_id', '=', $id)->get();
-                
                 if(count($favorites) > 0){
                     $favorites = $favorites[0];
-                    $p = $favorites->product_id;
-                    $p = explode(",", $p);
+                    $p = array_filter(explode(",", $favorites->product_id));
                     foreach($p as $k){
                         if($k != "") $data['favorites'][] = $k;
                     }
                 }
             }
-            else{
+            /*else{
                 //check the session, the user is not real
                 if(session()->get('flagged') != null){
                     $s = explode(",", session()->get('flagged'));
@@ -951,8 +949,8 @@ class ProductsController extends Controller
                         if($v != "") $data['hidden'][] = $v;
                     }
                 }
-            }
-        }
+            } */
+        //}
         return $data;
     }
 
