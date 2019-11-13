@@ -125,21 +125,20 @@ $fhf = ProductsController::checkfhf();
                                     <li class="copy-paste-email">
                                         <p>Copy & Paste into your email:</p>
                                         <a href="javascript:;">someemail@janeverde.com</a>
-                                        <br />
-                                        <hr>
-                                        <br />
-                                        @php
-                                                if($product->contact_preferences != null){
-                                                    $prefs = explode(",", $product->contact_preferences);
-                                                    if($prefs[0] == 1){
-                                                        echo "<ul><li>Phone calls OK</li></ul>";
-                                                    }
-                                                    if($prefs[1] == 1){
-                                                    echo "<ul><li>Text/SMS OK</li></ul>";
-                                                    }
-                                                }
-                                            @endphp
                                     </li>
+                                    <hr style="margin-top: 10px; margin-bottom: 10px"/>
+                                    <li><b>Phone: </b> {{$product->phone}}</li>
+                                    @php
+                                    if($product->contact_preferences != null){
+                                        $prefs = explode(",", $product->contact_preferences);
+                                        if($prefs[0] == 1){
+                                            echo "<li><img src='/images/smartphone.svg' alt='Jane Verde - Smartphone Logo' />Phone calls - <b>OK</b></li>";
+                                        }
+                                        if($prefs[1] == 1){
+                                        echo "<li><li><img src='/images/sms-text.svg' alt='Jane Verde - Smartphone Logo' />Text/SMS - <b>OK</b></li>";
+                                        }
+                                    }
+                                    @endphp
                                 </ul>
                             </aside>
                         </div>
@@ -164,8 +163,6 @@ $fhf = ProductsController::checkfhf();
                                             }
 
                                         @endphp
-
-
                                     </div>
                                 </div>
 

@@ -138,36 +138,40 @@ Route::get('/', function(){
     return view('home');
 })->middleware('cookies');
 
+Route::get('/privacy-policy', function () {
+    return view('privacy_policy');
+});
+
 //by default, redirect to /cannabis, otherwise, hemp. redirect to /cannabis if other category is entered that does not comply with hemp/cannabis
-/*Route::get('/{type?}', function($type = ""){
-    if($type != "" && ($type == "cannabis" || $type == "hemp")){
-        if(session()->get('type') == null){
-            session()->put('type', 'hemp');
-        }
+// Route::get('/{type?}', function($type = ""){
+//     if($type != "" && ($type == "cannabis" || $type == "hemp")){
+//         if(session()->get('type') == null){
+//             session()->put('type', 'hemp');
+//         }
 
-        if($type == "cannabis"){
-            //if there is no cookie( no user is logged ), we must not allow to go to cannabis
-            if(empty($_COOKIE['_main'])){
-                session()->put('type', 'hemp');
-                return redirect('/hemp');
-            }
-            else {
-                //set hemp or cannabis
-                session()->put('type', $type);
-                return view('home');
-            }
-        }
-        else{
-            //set hemp or cannabis
-            session()->put('type', $type);
-            return view('home');
+//         if($type == "cannabis"){
+//             //if there is no cookie( no user is logged ), we must not allow to go to cannabis
+//             if(empty($_COOKIE['_main'])){
+//                 session()->put('type', 'hemp');
+//                 return redirect('/hemp');
+//             }
+//             else {
+//                 //set hemp or cannabis
+//                 session()->put('type', $type);
+//                 return view('home');
+//             }
+//         }
+//         else{
+//             //set hemp or cannabis
+//             session()->put('type', $type);
+//             return view('home');
 
-        }
-    }
-    else{
-        return redirect('/hemp');
-    }
-})->middleware('cookies');*/
+//         }
+//     }
+//     else{
+//         return redirect('/hemp');
+//     }
+// })->middleware('cookies');
 
 
 

@@ -37,7 +37,7 @@
                 Verify Account
             </a>
             <a href="javascript:;" class="button-link">Help / Faq</a>
-            <a href="javascript:;" class="button-link">Privacy Policy</a>
+            <a href="/privacy-policy" class="button-link">Privacy Policy</a>
             <a href="javascript:;" class="button-link">Avoid Scams & Fraud</a>
         </div>
     </div>

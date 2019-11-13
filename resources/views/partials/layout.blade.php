@@ -37,9 +37,10 @@
 
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
+    <link rel="shortcut icon" type="image/png" href="../../images/favicon.ico">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
-    <link rel="stylesheet" type="text/css" href={{asset('css/app.css')}}
+    <link rel="stylesheet" type="text/css" href={{asset('css/app.css')}}>
 </head>
 
 <body>

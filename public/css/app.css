@@ -2757,9 +2757,9 @@ a:hover {
 .hemp-cannabis-toggle button {
   flex: 0 0 50%;
   height: 36px;
-  background: #1c6d5a;
+  background: white;
   border: none;
-  color: white;
+  color: #1c6d5a;
   text-align: center;
   font-size: 10px;
   font-weight: bold;
@@ -2782,8 +2782,10 @@ a:hover {
 }
 
 .toggle-active {
-  background: white !important;
-  color: #1c6d5a !important;
+  background: #1c6d5a !important;
+  color: white !important;
+  transform: scale(1.1);
+  border: 1px solid #1c6d5a !important;
 }
 
 .listing-account {
@@ -2934,6 +2936,15 @@ a:hover {
   text-align: left;
   margin-top: 10px;
   margin-bottom: 20px;
+}
+
+.category-item h5 a {
+  color: #393536;
+  transition: all 0.1s ease-in-out;
+}
+
+.category-item h5 a:hover {
+  color: #1c6d5a;
 }
 
 .category-item ul li {
@@ -3488,4 +3499,42 @@ footer div:last-of-type ul li a:after {
   color: white !important;
   background: #21816b;
 }
+
+/* Privacy Policy */
+
+.privacy-policy-content {
+  padding: 18px 0 30px;
+}
+
+.privacy-policy-content h3 {
+  font-size: 15px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  margin-top: 15px;
+  text-decoration: underline;
+}
+
+.privacy-policy-content h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+
+.privacy-policy-content p {
+  font-size: 14px;
+  margin-bottom: 10px;
+  text-align: justify;
+}
+
+.privacy-policy-content ul {
+  padding-left: 40px;
+  list-style-type: disc;
+}
+
+.privacy-policy-content ul li {
+  font-size: 14px;
+}
+
+/* End Privacy Policy */
 
