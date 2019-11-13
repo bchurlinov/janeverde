@@ -129,7 +129,7 @@
                                                     $verif = $product->userAlter != null && $product->userAlter->verified == 1 ? true : false;
                                                     @endphp
                                                 <img src={!! !$verif  ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
-                                                        alt="Jane Verde - SVG Icon"  />
+                                                        alt="Jane Verde - SVG Icon" style="height: 30px!important" />
                                                         @if($verif)
                                                     <div class="popover above popover-content">
                                                         <h4>

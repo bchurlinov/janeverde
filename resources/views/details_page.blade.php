@@ -63,13 +63,20 @@ $fhf = ProductsController::checkfhf();
                                 <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img
                                             src="{{asset('images/left-arrow_green.svg')}}"
                                             alt="Jane Verde SVG Icon" />PREV</button></a>
-                                <a href="{{ session()->get('goToPrevious') != 'null' ? session()->get('goToPrevious') : session()->get('type').'/0/search' }}"><button>BACK TO SEARCH</button></a>
-                                <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img src="{{asset('images/right-arrow_green.svg')}}" alt="Jane Verde SVG Icon" /></button></a>
+                                <a
+                                    href="{{ session()->get('goToPrevious') != 'null' ? session()->get('goToPrevious') : session()->get('type').'/0/search' }}"><button>BACK
+                                        TO SEARCH</button></a>
+                                <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img
+                                            src="{{asset('images/right-arrow_green.svg')}}"
+                                            alt="Jane Verde SVG Icon" /></button></a>
                             </div>
                             <div class="search-filters__sorting details-filters__sorting">
-                                <span><i id="{{$product->id}}" class="far fa-star favorite" {{in_array($product->id, $fhf['favorites']) ? ' style=color:#FFD700;' : ""}}></i><br />Favorite</span>
-                                <span><i id="{{$product->id}}" class="far fa-window-close hide" {{in_array($product->id, $fhf['hidden']) ? ' style=color:#FF8C00' : ""}}></i><br />Hide</span>
-                                <span><i id="{{$product->id}}" class="far fa-flag flag"{{in_array($product->id, $fhf['flagged']) ? ' style=color:indianred;' : ""}}></i><br />Flag</span>
+                                <span><i id="{{$product->id}}" class="far fa-star favorite"
+                                        {{in_array($product->id, $fhf['favorites']) ? ' style=color:#FFD700;' : ""}}></i><br />Favorite</span>
+                                <span><i id="{{$product->id}}" class="far fa-window-close hide"
+                                        {{in_array($product->id, $fhf['hidden']) ? ' style=color:#FF8C00' : ""}}></i><br />Hide</span>
+                                <span><i id="{{$product->id}}" class="far fa-flag flag"
+                                        {{in_array($product->id, $fhf['flagged']) ? ' style=color:indianred;' : ""}}></i><br />Flag</span>
                             </div>
                         </div>
                     </div>
@@ -81,8 +88,10 @@ $fhf = ProductsController::checkfhf();
                                     <li class="reply-email">
                                         <p>Reply by email:</p>
                                         <p class="reply-email-address">
-                                            <a href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}">
-                                                    <img src="{{asset('images/email-icon.png')}}" alt="aol-logo" />someemail@janeverde.com
+                                            <a
+                                                href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}">
+                                                <img src="{{asset('images/email-icon.png')}}"
+                                                    alt="aol-logo" />someemail@janeverde.com
                                             </a>
                                         </p>
                                     </li>
@@ -126,17 +135,23 @@ $fhf = ProductsController::checkfhf();
                                         <p>Copy & Paste into your email:</p>
                                         <a href="javascript:;">someemail@janeverde.com</a>
                                     </li>
-                                    <hr style="margin-top: 10px; margin-bottom: 10px"/>
+                                   
+                                    @isset($products->phone)
+                                    <hr style="margin-top: 10px; margin-bottom: 10px" />
                                     <li><b>Phone: </b> {{$product->phone}}</li>
+                                    @endisset
                                     @php
                                     if($product->contact_preferences != null){
-                                        $prefs = explode(",", $product->contact_preferences);
-                                        if($prefs[0] == 1){
-                                            echo "<li><img src='/images/smartphone.svg' alt='Jane Verde - Smartphone Logo' />Phone calls - <b>OK</b></li>";
-                                        }
-                                        if($prefs[1] == 1){
-                                        echo "<li><li><img src='/images/sms-text.svg' alt='Jane Verde - Smartphone Logo' />Text/SMS - <b>OK</b></li>";
-                                        }
+                                    $prefs = explode(",", $product->contact_preferences);
+                                    if($prefs[0] == 1){
+                                    echo "<li><img src='/images/smartphone.svg'
+                                            alt='Jane Verde - Smartphone Logo' />Phone calls - <b>OK</b></li>";
+                                    }
+                                    if($prefs[1] == 1){
+                                    echo "<li>
+                                    <li><img src='/images/sms-text.svg' alt='Jane Verde - Smartphone Logo' />Text/SMS -
+                                        <b>OK</b></li>";
+                                    }
                                     }
                                     @endphp
                                 </ul>
@@ -153,16 +168,15 @@ $fhf = ProductsController::checkfhf();
                                 </h2>
 
                                 <div class="product-information-wrap__slider">
-                                    <div class="fotorama" data-nav="thumbs" data-transition="crossfade">
+                                    <div class="fotorama" data-nav="thumbs" data-transition="crossfade" data-width="100%"  data-maxheight="100%"  data-arrows="true">
                                         @php
-                                            for($i = 1; $i < 11; $i++){
-                                                $img = "img$i";
-                                                if($product->$img !== null){
-                                                echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde Image" data-width="100%" data-minheight="100%">';
-                                                }
+                                        for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
+                                            echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde
+                                                Image" data-width="100%" data-minheight="100%">';
+                                            }
                                             }
 
-                                        @endphp
+                                            @endphp
                                     </div>
                                 </div>
 

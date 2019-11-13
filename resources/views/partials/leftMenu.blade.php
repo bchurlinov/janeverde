@@ -38,6 +38,7 @@
             </a>
             <a href="javascript:;" class="button-link">Help / Faq</a>
             <a href="/privacy-policy" class="button-link">Privacy Policy</a>
+            <a href="/terms-of-use" class="button-link">Terms of Use</a>
             <a href="javascript:;" class="button-link">Avoid Scams & Fraud</a>
         </div>
     </div>

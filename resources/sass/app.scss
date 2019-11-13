@@ -10,6 +10,12 @@
 @import "publicauth.scss";
 @import "dashboard.scss";
 
+.fotorama {
+  img {
+    object-fit: cover !important;
+  }
+}
+
 .wrapper {
   margin-top: 15px;
   margin-bottom: 15px;
@@ -121,7 +127,8 @@
     font-size: 10px;
     font-weight: bold;
     letter-spacing: 1px;
-    border: 1px solid $main-green-color;
+    border: 1px solid lightgray;
+    opacity: 0.5;
     &:first-of-type {
       @include border-radius(2px 0 0 2px);
     }
@@ -138,8 +145,8 @@
 .toggle-active {
   background:$main-green-color !important;
   color: white !important;
-  transform: scale(1.1);
-  border: 1px solid $main-green-color!important;
+  opacity: 1 !important;
+  border: none !important;
 }
 
 // fieldset {
@@ -875,7 +882,7 @@ footer {
 .privacy-policy-content {
   padding: 18px 0 30px;
   h3 {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: bold;
     margin-bottom: 15px;
     margin-top: 15px;
@@ -883,14 +890,14 @@ footer {
   }
 
   h2 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
     margin-bottom: 15px;
     margin-top: 15px;
   }
 
   p {
-    font-size: 14px;
+    font-size: 13px;
     margin-bottom: 10px;
     text-align: justify;
   }
@@ -898,10 +905,15 @@ footer {
   ul {
     padding-left: 40px;
     list-style-type: disc;
+    margin-bottom: 15px;
     li {
-      font-size: 14px;
+      font-size: 13px;
     }
   }
+}
+
+.terms-of-use-content {
+  @extend .privacy-policy-content;
 }
 
 /* End Privacy Policy */

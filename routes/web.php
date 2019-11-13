@@ -142,6 +142,10 @@ Route::get('/privacy-policy', function () {
     return view('privacy_policy');
 });
 
+Route::get('/terms-of-use', function () {
+    return view('terms_of_use');
+});
+
 //by default, redirect to /cannabis, otherwise, hemp. redirect to /cannabis if other category is entered that does not comply with hemp/cannabis
 // Route::get('/{type?}', function($type = ""){
 //     if($type != "" && ($type == "cannabis" || $type == "hemp")){
