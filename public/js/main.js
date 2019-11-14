@@ -55,8 +55,14 @@ $(document).ready(function () {
             "/flag", {
                 c: t
             },
-            function (d) {
-               location.reload();
+            function (data) {
+                data = data.trim();
+                if(data === "-1"){
+                    alert("You have to be logged in in order to flag a post");
+                }
+                else{
+                    location.reload();
+                }
             }
         );
     });
@@ -67,8 +73,14 @@ $(document).ready(function () {
             "/hide", {
                 c: t
             },
-            function (d) {
-               location.reload();
+            function (data) {
+                data = data.trim();
+                if(data === "-1"){
+                    alert("You have to be logged in in order to hide a post");
+                }
+                else{
+                    location.reload();
+                }
             }
         );
     });
@@ -79,9 +91,14 @@ $(document).ready(function () {
             "/favorite", {
                 c: t
             },
-            function (d) {
-                console.log(d);
-               location.reload();
+            function (data) {
+                data = data.trim();
+                if(data === "-1"){
+                    alert("You have to be logged in in order to set a post as favorite");
+                }
+                else{
+                    location.reload();
+                }
             }
         );
     });

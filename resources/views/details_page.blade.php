@@ -163,7 +163,7 @@ $fhf = ProductsController::checkfhf();
                         <div class="details-product__information">
                             <div class="product-information-wrap">
                                 <h2>
-                                    <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
+                                    <img src="{{$product->verified == "1" ? asset('images/shield_green.svg') : asset('images/shield_gray.jpg')}}" alt="Jane Verde SVG Icon" />
                                     {{$product->title}} ( {{$product->location}} )
                                 </h2>
 
@@ -181,8 +181,7 @@ $fhf = ProductsController::checkfhf();
                                             echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane Verde
                                                 Image" style="width:100%; height:400px;" data-width="100%" data-minheight="100%">';
                                         }
-
-                                            @endphp
+                                        @endphp
                                     </div>
                                 </div>
 
@@ -195,44 +194,90 @@ $fhf = ProductsController::checkfhf();
 
                         <div class="details-product__facts">
                             <div class="user-verification-info">
-                                @if(Gate::check('isVerified') || Gate::check('isAdmin'))
-                                <h5> <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
-                                    Verified Business</h5>
+                                @if(Gate::check('isAdmin') || !empty($_COOKIE['_main']))
+                                <h5> <img src="{{$product->verified == "1" ? asset('images/shield_green.svg') : asset('images/shield_gray.jpg')}}" alt="Jane Verde SVG Icon" />
+                                    {{$product->verified == "1" ? "Verified business" : "Non verified business"}}</h5>
+                                @if($product->verified == "1")
                                 <p>The bussiness has been verified for:</p>
                                 <ul>
                                     <li><i class="fas fa-check"></i>Bussiness Name</li>
                                     <li><i class="fas fa-check"></i>Location</li>
                                     <li><i class="fas fa-check"></i>Bus Liscense / Tax ID</li>
-                                    <li><i class="fas fa-check"></i>Agriculture License</li>
                                 </ul>
+                                @endif
                                 @else
                                 <img src="{{asset('/images/blurred.png')}}" style="width: 100%">
                                 <span>Verify your account to view other verified business details and post verified
                                     bussiness postings.
                                 </span>
                                 <p style="text-align: center">
-                                    <a href="http://localhost:3000/">My Account</a>
+                                    <a href="{{config('variables.reacturl')}}">My Account</a>
                                 </p>
                                 @endif
                             </div>
 
                             <div class="user-other-adds">
                                 <ul>
-                                    <li>MOQ: 100 units</li>
+                                    <!--<li>MOQ: 100 units</li>
                                     <li>Direct Business Sales Only</li>
-                                    <li>Delivery Available: ALL States</li>
-                                    <li>More Adds by this User</li>
+                                    <li>Delivery Available: ALL States</li>-->
+
+                                    <li><a href="{{config('variables.phpurl')."/".session()->get('type')."/0/0/search?user=".$product->user->id}}">More Adds by this User</a></li>
                                 </ul>
                             </div>
                         </div>
 
                     </div>
+                    @php
+                    $today = new Datetime(date("Y-m-d h:m:s"));
+                    $created = new DateTime($product->created_at);
+                    $updated = new Datetime($product->updated_at);
+                    $createdString = "";
+                    $updatedString = "";
+                    //created handle
+                    $createdDiff = $today->diff($created)->format('%m,%d');
+                    $createdArray = explode(",", $createdDiff);
+                    if($createdArray[0] == 1){
+                        $createdString .= "1 month";
+                    }
+                    elseif($createdArray[0] == 2){
+                        $createdString .= "2 months";
+                    }
+                    if($createdArray[1] == 0){
+                        $createdString .= " ago";
+                    }
+                    else{
+                        $createdString .= $createdString == "" ? $createdArray[1]." days ago" : ", ".$createdArray[1]." days ago";
+                    }
 
+                    if($createdDiff == "0,0"){
+                    $createdString = "Today";
+                    }
+
+                    $updatedDiff = $today->diff($updated)->format('%m,%d');
+                    $updatedArray = explode(",", $updatedDiff);
+                    if($updatedArray[0] == 1){
+                        $updatedString .= "1 month";
+                    }
+                    elseif($updatedArray[0] == 2){
+                        $updatedString .= "2 months";
+                    }
+                    if($updatedArray[1] == 0){
+                        $updatedString .= " ago";
+                    }
+                    else{
+                        $updatedString .= $updatedString == "" ? $updatedArray[1]." days ago" : ", ".$updatedArray[1]." days ago";
+                    }
+                    if($updatedDiff == "0,0"){
+                    $updatedString = "Today";
+                    }
+
+                    @endphp
                     <div class="product-footer">
                         <ul>
-                            <li>post id: 845738239</li>
-                            <li>posted: 19 days ago</li>
-                            <li>updated: about an hour ago</li>
+                            <li>post id: {{$product->id}}</li>
+                            <li>posted: {{$createdString}}</li>
+                            <li>updated: {{$updatedString}}</li>
                             <li>email to friend</li>
                         </ul>
                     </div>

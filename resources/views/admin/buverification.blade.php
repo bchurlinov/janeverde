@@ -79,8 +79,19 @@
                                                         <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
                                                             View uploaded picture
                                                             <img height="0" width="0" id="{{$licence->id}}" src="{{asset($licence->img1)}}" />
-
                                                         </a>
+                                                        @if($licence->img2 != null && $licence->img2 != "")
+                                                        <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
+                                                            &nbsp;| View uploaded picture
+                                                            <img height="0" width="0" id="{{$licence->id}}" src="{{asset($licence->img2)}}" />
+                                                        </a>
+                                                        @endif
+                                                        @if($licence->img3 != null && $licence->img3 != "")
+                                                        <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
+                                                           &nbsp;| View uploaded picture
+                                                            <img height="0" width="0" id="{{$licence->id}}" src="{{asset($licence->img3)}}" />
+                                                        </a>
+                                                        @endif
                                                     </td>
                                                     <td>
                                                         <form id="{{$licence->id}}" action="/buapprove" method="POST">

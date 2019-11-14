@@ -1,15 +1,8 @@
 <?php
 
-use App\Product;
-use App\Favorite;
-use App\User;
-
-
-Route::get('/pp', function(){
-    $fav = Favorite::where('user_id', '=', 19)->get();
-    dd($fav);
-    
-
+Route::get('/cc', function(){
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
 });
 
 Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');

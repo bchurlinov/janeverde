@@ -104,8 +104,36 @@ class ProductsController extends Controller
         }
         else{
             $keyword = $request->get('keyword');
-            $allProducts = $keyword == null ? $allProducts = Product::with('userAlter')->where($conditions)->orderBy('created_at', 'desc')->paginate(6) :
-                                                             Product::with('userAlter')->search($keyword)->where($conditions)->orderBy('created_at', 'desc')->paginate(6);
+            $usr = $request->get('user');
+            $searchUsrOrKwd = "kwd";
+            if($keyword == null && $usr != null){
+                $searchUsrOrKwd = "usr";
+            }
+            if($keyword != null && $usr != null){
+                $searchUsrOrKwd = "usr";
+            }
+            if($keyword != null && $usr == null){
+                $searchUsrOrKwd = "usr";
+            }
+            if($searchUsrOrKwd == "kwd"){
+                $allProducts = $keyword == null ? $allProducts = Product::with('userAlter')->where($conditions)->orderBy('created_at', 'desc')->paginate(6) :
+                    Product::with('userAlter')->search($keyword)->where($conditions)->orderBy('created_at', 'desc')->paginate(6);
+            }
+            else{
+                $conditions = [
+                    ['is_deleted', '=', 0]
+                ];
+                //check if user exists
+                $user = User::find($usr);
+                if($user == null){
+                    $allProducts = null;
+                }
+                else{
+                    $conditions[] = ["user_id", "=", $user->id];
+                    $whereinconditions = ['hemp', 'cannabis'];
+                    $allProducts = Product::with('userAlter')->where($conditions)->whereIn('type', $whereinconditions)->orderBy('created_at', 'desc')->paginate(6);
+                }
+            }
         }
         //return them to the view
         return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);
@@ -138,7 +166,8 @@ class ProductsController extends Controller
         //check if user is logged
         $user = 0;
         if(empty($_COOKIE['_main']) && auth()->user() == null){
-            $user = 0;
+            echo "-1";
+            return;
         }
         else{
             $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
@@ -228,7 +257,8 @@ class ProductsController extends Controller
         //check if user is logged
         $user = 0;
         if(empty($_COOKIE['_main']) && auth()->user() == null){
-            $user = 0;
+            echo "-1";
+            return;
         }
         else{
             $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
@@ -326,9 +356,11 @@ class ProductsController extends Controller
         $user = 0;
         if(empty($_COOKIE['_main']) && auth()->user() == null){
             $user = 0;
+            echo "-1";
+            return;
         }
         else{
-            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['_main'];
         }
         
         $product = Product::find($request->get('c'));
@@ -521,7 +553,7 @@ class ProductsController extends Controller
             //put this in session, we will need it
             session()->put('goToPrevious', $prev);
         }
-        $product = Product::with('user', 'country', 'category')->find($id);
+        $product = Product::with('user', 'country', 'category', 'userAlter')->find($id);
 
         //flagged, hidden or favorited by user
         $fhf = self::checkfhf();

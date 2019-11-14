@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\IndustrialLicense;
 use App\BusinessLicense;
 use App\SupportingDocuments;
+use App\Product;
 
 class LicencesController extends Controller
 {
@@ -64,6 +65,15 @@ class LicencesController extends Controller
     public function buapprove(Request $request){
         //get the agricultural licence by id
         $licence = BusinessLicense::find($request->input('id'));
+        $uid = $licence->user_id;
+        $userProducts = Product::where('user_id', '=', $uid)->get();
+        //we must also update the user products to be verified
+        if($userProducts->count() > 0){
+            foreach($userProducts as $product){
+                $product->verified = 1;
+                $product->save();
+            }
+        }
         //update the verification status
         $licence->verified = 1;
         //save the status

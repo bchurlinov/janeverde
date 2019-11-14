@@ -68,8 +68,11 @@
                             </div>
                                 
                                 @php
-                                echo $keyword == "" ? $products->links() : $products->appends(['keyword' =>
-                                $keyword])->links();
+                                if($products != null){
+                                    echo $keyword == "" ? $products->links() : $products->appends(['keyword' =>
+                                    $keyword])->links();
+                                }
+
                                 @endphp
                             
                             <div class="search-filters__views">
@@ -85,7 +88,7 @@
 
                     <div class="search-products-listing">
                         <div class="products-listing-wrap">
-                            @if(count($products) == 0)
+                            @if($products == null || count($products) == 0)
                             {{"No posts"}}
                             @else
                             @foreach($products as $product)
@@ -93,35 +96,56 @@
                                 <div class="product-template">
                                     <div class="product-template__image">
                                         <div class="slider">
-                                            <figure>
-                                                <a href="/view/{{$product->id}}">
-                                                    <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view/{{$product->id}}">
-                                                    <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
-                                            <figure>
-                                                <a href="/view/{{$product->id}}">
-                                                    <img src="https://www.dailymaverick.co.za/wp-content/uploads/openletter-cannabis-1600x875.jpg"
-                                                        alt="Jane Verde Image" />
-                                                </a>
-                                            </figure>
+                                            @php
+                                                $allImgs = 0;
+                                                for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
+                                                    $allImgs += 1;
+                                                    echo '<figure>
+                                                    <a href="/view/'.$product->id.'">
+                                                    ';
+                                                    echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde
+                                                        Image" data-width="100%" data-minheight="100%">';
+                                                        echo '</a>
+                                                        </figure>';
+                                                    }
+                                                }
+                                                if($allImgs == 0){
+                                                echo '<figure>
+                                                    <a href="/view/'.$product->id.'">
+                                                    ';
+                                                    echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane Verde
+                                                        Image" >';
+                                                         echo '</a>
+                                                        </figure>';
+                                                }
+                                            @endphp
+
                                         </div>
                                         <div class="price-box">
-                                            <span>$100</span>
+                                            <span>${{$product->price}}</span>
                                         </div>
                                     </div>
                                   
                                     <div class="product-template__info">
                                         <div>
                                             <div>
-                                                <img src="https://ei.marketwatch.com/Multimedia/2018/12/12/Photos/ZH/MW-HA201_Hemp_2_20181212143235_ZH.jpg?uuid=ad3498b2-fe44-11e8-bf68-ac162d7bc1f7"
-                                                    alt="Jane Verde Image" class="list-view-image" />
+                                                @php
+                                                    $allImgs = 0;
+                                                    $index = 0;
+                                                    for($i = 1; $i < 11; $i++){
+                                                    $img="img$i" ;
+                                                    if($product->$img !== null){
+                                                        $allImgs += 1;
+                                                        echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde
+                                                            Image" class="list-view-image">';
+                                                        break;
+                                                        }
+                                                    }
+                                                    if($allImgs == 0){
+                                                        echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane Verde
+                                                            Image" class="list-view-image">';
+                                                    }
+                                                @endphp
 
                                                 <div class="clearfix"></div>
                                                 <span class="qs">
@@ -130,13 +154,15 @@
                                                     @endphp
                                                 <img src={!! !$verif  ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                         alt="Jane Verde - SVG Icon" style="height: 30px!important" />
-                                                        @if($verif)
+
                                                     <div class="popover above popover-content">
                                                         <h4>
                                                             <img src={!! !$verif ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                                 alt="Jane Verde - SVG Icon" />
                                                             @if($verif)
                                                             Verified Business
+                                                            @else
+                                                            Not Verified
                                                             @endif
                                                         </h4>
                                                         @if($verif)
@@ -144,15 +170,20 @@
                                                             <li><i class="fas fa-check"></i>Location: {{$product->location}}</li>
                                                             <li><i class="fas fa-check"></i>License number: {!! $product->userAlter->licensenumber !!}</li>
                                                         </ul>
+                                                        @else
+                                                        <ul>
+                                                            <li></li>
+                                                        </ul>
                                                         @endif
                                                     </div>
-                                                    @endif
                                                 </span>
                                             </div>
                                         </div>
                                         <div>
                                             <h4>
-                                                <span>Aug 21</span>
+                                                <span>@php
+                                                    echo date('M d', strtotime($product->created_at));
+                                                @endphp</span>
                                                 <a href="/view/{{$product->id}}">
                                                     @php
                                                         echo strlen($product->title) > 45 ? substr($product->title, 0, 50) . "..." : $product->title;    
@@ -164,13 +195,14 @@
                                                 <span class="qs qs-list-view" >
                                                     <img src= {!! !$verif  ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                         alt="Jane Verde - SVG Icon" />
-                                                         @if($verif)
                                                     <div class="popover above popover-content">
                                                         <h4>
                                                             <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
                                                                 alt="Jane Verde - SVG Icon" />
                                                             @if($verif)
                                                             Verified Business
+                                                            @else
+                                                            Not Verified
                                                             @endif
                                                         </h4>
                                                         @if($verif)
@@ -178,9 +210,12 @@
                                                             <li><i class="fas fa-check"></i>Location: {{$product->location}}</li>
                                                             <li><i class="fas fa-check"></i>License number: {!! $product->userAlter->licensenumber !!}</li>
                                                         </ul>
+                                                        @else
+                                                        <ul>
+                                                            <li></li>
+                                                        </ul>
                                                         @endif
                                                     </div>
-                                                    @endif
                                                 </span>
                                                
                                             </h4>
