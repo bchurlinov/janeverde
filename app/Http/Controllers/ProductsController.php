@@ -806,6 +806,16 @@ class ProductsController extends Controller
         if($count($img) > 0){
             //set them all to null, since we are overriding them
             $img1 = $img2 = $img3 = $img4 = $img5 = $img6 = $img7 = $img8 = $img9 = $img10 = null;
+            
+            //delete the old images, unlink them
+            for($i = 1; $i < 11; $i++){
+                $im = "img$i";
+                if($product->$im != null && $product->$im != ""){
+                    unlink(public_path(). '/products/'.$product->$im);
+                }
+            }
+
+            //add the new images now
             for($i = 0; $i < count($img); $i++){
                 $count = $i + 1;
                 $image="img$count";
