@@ -6,7 +6,7 @@ use App\Http\Controllers\ProductsController;
 $fhf = ProductsController::checkfhf();
 @endphp
 @endsection
-@php $country = json_decode(session()->get('country'), true); @endphp
+@php $country = json_decode(session()->get('country'), true); $type = session()->get('type'); @endphp
 @section('content')
 
 <div class="wrapper">
@@ -64,7 +64,7 @@ $fhf = ProductsController::checkfhf();
                                             src="{{asset('images/left-arrow_green.svg')}}"
                                             alt="Jane Verde SVG Icon" />PREV</button></a>
                                 <a
-                                    href="{{ session()->get('goToPrevious') != 'null' ? session()->get('goToPrevious') : session()->get('type').'/0/search' }}"><button>BACK
+                                    href="<?=config('phpurl').'/'.$type.'/0/0/search'?>"><button>BACK
                                         TO SEARCH</button></a>
                                 <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img
                                             src="{{asset('images/right-arrow_green.svg')}}"
@@ -186,6 +186,11 @@ $fhf = ProductsController::checkfhf();
                                 <div class="product-information-wrap__information">
                                     <p>{{$product->description}}
                                     </p>
+                                    <ul>
+                                        <li><b>Price</b>: ${{$product->price}}</li>
+                                        <li><b>State</b>: {{$product->location}}</li>
+                                        <li><b>Type</b>: {{ucfirst($product->type)}}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>

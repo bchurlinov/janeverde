@@ -545,13 +545,13 @@ class ProductsController extends Controller
         }
         //get previous url, match it with url segments
         $preurl = url()->previous();
-        $prev = "/";
+        $prev = session()->get('type')."/0/0/search";
         if(strpos($preurl, "/search")){
-            $preurl = explode("/", url()->previous());
-            //came from search
-            $prev = "/".$preurl[count($preurl) - 3]."/".$preurl[count($preurl) - 2]."/".$preurl[count($preurl) - 1];
+            // $preurl = explode("/", url()->previous());
+            // //came from search
+            // $prev = "/".$preurl[count($preurl) - 3]."/".$preurl[count($preurl) - 2]."/".$preurl[count($preurl) - 1];
             //put this in session, we will need it
-            session()->put('goToPrevious', $prev);
+            //session()->put('goToPrevious', $prev);
         }
         $product = Product::with('user', 'country', 'category', 'userAlter')->find($id);
 
