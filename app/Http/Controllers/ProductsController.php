@@ -826,7 +826,7 @@ class ProductsController extends Controller
             for($i = 1; $i < 11; $i++){
                 $im = "img$i";
                 if($product->$im != null && $product->$im != ""){
-                    //unlink(public_path(). '/products/'.$product->$im);
+                    unlink(public_path(). '/products/'.$product->$im);
                 }
             }
 
@@ -834,7 +834,7 @@ class ProductsController extends Controller
             for($i = 0; $i < count($img); $i++){
                 $count = $i + 1;
                 $image="img$count";
-                $$image = $this->processImage($image, $i);
+                $$image = $this->processImage($img, $i);
             }
         }
 
