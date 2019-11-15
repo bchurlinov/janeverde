@@ -2191,9 +2191,10 @@ a:hover {
 .details-product__information .product-information-wrap h2 img {
   display: inline-block;
   position: relative;
-  top: 6px;
+  top: 8px;
   width: 25px;
-  height: 25px;
+  height: 30px;
+  margin-right: 7px;
 }
 
 .details-product__information .product-information-wrap__slider {
@@ -2207,7 +2208,7 @@ a:hover {
 }
 
 .details-product__information .product-information-wrap__information p {
-  line-height: 1.1em;
+  line-height: 1.2em;
   text-align: justify;
   margin-top: 15px;
   margin-bottom: 15px;
@@ -2255,8 +2256,9 @@ a:hover {
   display: inline-block;
   position: relative;
   width: 20px;
-  height: 20px;
-  top: 4px;
+  height: 27px;
+  top: 6px;
+  margin-right: 5px;
 }
 
 .details-product__facts .user-verification-info p {
@@ -2333,6 +2335,15 @@ a:hover {
   display: inline-block;
   text-align: center;
   font-style: italic;
+}
+
+.product-description-wrap-info {
+  margin-top: 30px;
+}
+
+.product-description-wrap-info li {
+  display: inline-block;
+  margin-right: 20px;
 }
 
 .form {

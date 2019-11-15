@@ -186,11 +186,11 @@ $fhf = ProductsController::checkfhf();
                                 <div class="product-information-wrap__information">
                                     <p>{{$product->description}}
                                     </p>
-                                    <ul>
-                                        <li><b>Price</b>: ${{$product->price}}</li>
-                                        <li><b>State</b>: {{$product->location}}</li>
-                                        <li><b>Type</b>: {{ucfirst($product->type)}}</li>
-                                    </ul>
+                                        <ul class="product-description-wrap-info">
+                                            <li><b>Price</b>: ${{$product->price}}</li>
+                                            <li><b>State</b>: {{$product->location}}</li>
+                                            <li><b>Type</b>: {{ucfirst($product->type)}}</li>
+                                        </ul>
                                 </div>
                             </div>
                         </div>
@@ -278,7 +278,7 @@ $fhf = ProductsController::checkfhf();
                     @endphp
                     <div class="product-footer">
                         <ul>
-                            <li>post id: {{$product->id}}</li>
+                            <li>post id: #{{$product->id}}</li>
                             <li>posted: {{$createdString}}</li>
                             <li>updated: {{$updatedString}}</li>
                             <li>email to friend</li>
