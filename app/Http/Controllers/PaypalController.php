@@ -84,8 +84,8 @@ class PaypalController extends Controller
                 // every invoice id must be unique, else you'll get an error from paypal
                 'invoice_id' => config('paypal.invoice_prefix') . '_' . $invoice_id,
                 'invoice_description' => "Order #". $invoice_id ." Invoice",
-                'cancel_url' => url(config('variables.reacturl').'verification-payment?payment=0'),
-                'notify_url' => url('paypal/notify'),
+                'cancel_url' => url(config('variables.reacturl').'/verification-payment?payment=0'),
+                'notify_url' => url(config('variables.reacturl').'/paypal/notify'),
                 // total is calculated by multiplying price with quantity of all cart items and then adding them up
                 // in this case total is 9.99 because price is 9.99 and quantity is 1
                 'total' => 9.99, // Total price of the cart
@@ -185,6 +185,7 @@ class PaypalController extends Controller
         if ($recurring === true) {
             $invoice->recurring_id = $response['PROFILEID'];
         }
+        $invoice->active = 1;
         // save the invoice
         $invoice->save();
 

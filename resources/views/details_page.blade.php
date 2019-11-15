@@ -89,7 +89,7 @@ $fhf = ProductsController::checkfhf();
                                         <p>Reply by email:</p>
                                         <p class="reply-email-address">
                                             <a
-                                                href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}">
+                                                href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0{{config('variables.phpurl')}}/view/{{$product->id}}">
                                                 <img src="{{asset('images/email-icon.png')}}"
                                                     alt="aol-logo" />someemail@janeverde.com
                                             </a>
@@ -102,14 +102,14 @@ $fhf = ProductsController::checkfhf();
                                             <li>
                                                 <p>
                                                     <img src="{{asset('images/gmail-logo.jpg')}}" alt="gmail-logo" />
-                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}"
+                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email gmail">gmail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
                                                     <img src="{{asset('images/yahoo-logo.jpg')}}" alt="yahoo-logo" />
-                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}"
+                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email yahoo">yahoo mail</a>
                                                 </p>
                                             </li>
@@ -117,7 +117,7 @@ $fhf = ProductsController::checkfhf();
                                                 <p>
                                                     <img src="{{asset('images/hotmail-logo.png')}}"
                                                         alt="hotmail-logo" />
-                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.tricond.com/view/{{$product->id}}"
+                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email msmail">hotmail, outlook,
                                                         live mail</a>
                                                 </p>
@@ -125,7 +125,7 @@ $fhf = ProductsController::checkfhf();
                                             <li>
                                                 <p>
                                                     <img src="{{asset('images/aol-logo.png')}}" alt="aol-logo" />
-                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0Ahttp://janeverde.com/view/{{$product->id}}"
+                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email aol">aol mail</a>
                                                 </p>
                                             </li>
@@ -136,24 +136,22 @@ $fhf = ProductsController::checkfhf();
                                         <a href="javascript:;">someemail@janeverde.com</a>
                                     </li>
                                    
-                                    @isset($products->phone)
-                                    <hr style="margin-top: 10px; margin-bottom: 10px" />
-                                    <li><b>Phone: </b> {{$product->phone}}</li>
-                                    @endisset
-                                    @php
-                                    if($product->contact_preferences != null){
-                                    $prefs = explode(",", $product->contact_preferences);
+                                   @php
+                                   if($product->phone != null && $product->contact_preferences != null && $product->contact_preferences != "0,0"){
+                                   echo '<hr style="margin-top: 10px; margin-bottom: 10px" />';
+                                   echo '<li><b>Phone: </b> '.$product->phone.'</li>';
+                                   $prefs = explode(",", $product->contact_preferences);
                                     if($prefs[0] == 1){
-                                    echo "<li><img src='/images/smartphone.svg'
+                                        echo "<li><img src='/images/smartphone.svg'
                                             alt='Jane Verde - Smartphone Logo' />Phone calls - <b>OK</b></li>";
                                     }
                                     if($prefs[1] == 1){
-                                    echo "<li>
-                                    <li><img src='/images/sms-text.svg' alt='Jane Verde - Smartphone Logo' />Text/SMS -
+                                        echo "<li>
+                                        <li><img src='/images/sms-text.svg' alt='Jane Verde - Smartphone Logo' />Text/SMS -
                                         <b>OK</b></li>";
                                     }
-                                    }
-                                    @endphp
+                                   }
+                                   @endphp
                                 </ul>
                             </aside>
                         </div>

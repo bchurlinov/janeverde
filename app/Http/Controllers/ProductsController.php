@@ -170,7 +170,7 @@ class ProductsController extends Controller
             return;
         }
         else{
-            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['_main'];
         }
         $product = Product::find($request->get('c'));
 
@@ -261,7 +261,7 @@ class ProductsController extends Controller
             return;
         }
         else{
-            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['main'];
+            $user = auth()->user() != null ? auth()->user()->id : $_COOKIE['_main'];
         }
         
         $product = Product::find($request->get('c'));

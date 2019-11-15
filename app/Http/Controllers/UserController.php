@@ -756,14 +756,14 @@ class UserController extends Controller
             $user->password = bcrypt($newpass);
             $user->save();
 
-            $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
-                ->setUsername('janeverdeonline@gmail.com')->setPassword('JaneVerde001');
+            $transport = (new \Swift_SmtpTransport('relay-hosting.secureserver.net', 25))
+                ->setUsername('contact@bojanchurlinov.com')->setPassword('a6oj&v}iGC3u');
             $mailer = new \Swift_Mailer($transport);
 
             $body  = "your new password is: ".$newpass;
-            $body .= "<br /> Visit <a href='http://localhost:3000/signin'> your profile</a> to change the password in user settings.";
+            $body .= "<br /> Visit <a href='".config('variables.reacturl')."/signin'> your profile</a> to change the password in user settings.";
 
-            $message = (new \Swift_Message("Password reset"))->setFrom(['john@doe.com' => 'JaneVerde password reset'])
+            $message = (new \Swift_Message("Password reset"))->setFrom(['contact@bojanchurlinov.com' => 'JaneVerde password reset'])
                 ->setTo([$email])->setBody($body);
 
             $message->setContentType("text/html");

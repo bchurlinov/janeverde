@@ -9,10 +9,7 @@
     RewriteCond %{HTTP:Authorization} .
     RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-    # Redirect Trailing Slashes If Not A Folder...
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_URI} (.+)/$
-    RewriteRule ^ %1 [L,R=301]
+   
 
     # Handle Front Controller...
     RewriteCond %{REQUEST_FILENAME} !-d
@@ -20,7 +17,7 @@
     RewriteRule ^ index.php [L]
 </IfModule>
 <IfModule mod_headers.c>
-    
+    Header always set Access-Control-Allow-Origin "*"
     Header always set Access-Control-Allow-Origin %{REQUEST_ORIGIN}e env=REQUEST_ORIGIN
     Header always set Access-Control-Allow-Methods "GET, POST, PUT, DELETE"
     

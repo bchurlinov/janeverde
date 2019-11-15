@@ -22,7 +22,7 @@ use App\User;
                 if(!empty($_COOKIE['_main'])){
                     $user = $_COOKIE['_main'];
                     $user = User::find($user);
-                    if($user->verification_step_1 == 0){
+                    if($user != null && $user->verification_step_1 == 0){
                     $showVerifyLink = true;
                     }
                 }
