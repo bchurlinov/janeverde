@@ -768,25 +768,40 @@ class ProductsController extends Controller
         }
 
         //first, get country details
-        $country = Countries::where('name', '=', request()->get('country'))->get()->first();
-        if($country == null){
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
-            return;
+        $country = null;
+        if(request()->get('country') != null){
+            $country = Countries::where('name', '=', request()->get('country'))->get()->first();
+            if($country == null){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+                return;
+            }
         }
+       
         //all is fine with the country, check category
-        $subcategory = Subcategories::where('number', '=', request()->get('category'))->get()->first();
-        if($subcategory == null){
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid category']);
-            return;
+        $subcategory = null;
+        if(request()->get('category') != null){
+            $subcategory = Subcategories::where('number', '=', request()->get('category'))->get()->first();
+            if($subcategory == null){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid category']);
+                return;
+            }
         }
-        $category = Categories::where('number', '=', $subcategory->category_id)->get()->first();
+        $category = null;
+        if($subcategory != null){
+            $category = Categories::where('number', '=', $subcategory->category_id)->get()->first();
+        }
+        
         //all is fine with category, check type
-        $type = request()->get('type');
+        $type = null;
+        if(request()->get('type') != null){
+            $type = request()->get('type');
 
-        if($type != "hemp" && $type != "cannabis"){
-            echo json_encode(['status' => 'failed', 'reason' => 'invalid type']);
-            return;
+            if($type != "hemp" && $type != "cannabis"){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid type']);
+                return;
+            }
         }
+        
         //all is fine with type, proceed with image
 
         $img = request()->get('image');
@@ -803,7 +818,7 @@ class ProductsController extends Controller
         $img8 = $product->img8;
         $img9 = $product->img9;
         $img10 = $product->img10;
-        if($count($img) > 0){
+        if($img != null && count($img) > 0){
             //set them all to null, since we are overriding them
             $img1 = $img2 = $img3 = $img4 = $img5 = $img6 = $img7 = $img8 = $img9 = $img10 = null;
             
@@ -811,7 +826,7 @@ class ProductsController extends Controller
             for($i = 1; $i < 11; $i++){
                 $im = "img$i";
                 if($product->$im != null && $product->$im != ""){
-                    unlink(public_path(). '/products/'.$product->$im);
+                    //unlink(public_path(). '/products/'.$product->$im);
                 }
             }
 
@@ -822,18 +837,29 @@ class ProductsController extends Controller
                 $$image = $this->processImage($image, $i);
             }
         }
+
+        $phonecalls = request()->get('phone_calls');
+        $textsms =  request()->get('text_sms');
+
+        $phonecalls = $phonecalls == false ? "0" : "1";
+        $textsms = $textsms == false ? ",0" : ",1";
+        $prefs = $phonecalls.$textsms;
+
+        if(request()->get('phone') == "" || request()->get('phone') == null){
+            $prefs = "0,0";
+        }
         
         $product->user_id = $loggedUserId;
         $product->title = request()->get('title') == null ? $product->title : request()->get('title');
         $product->description = request()->get('description') == null ? $product->description : request()->get('description');
         $product->price = request()->get('price') == null ? $product->price : request()->get('price');
-        $product->location = $country->full_country;
-        $product->country_id = $country->id;
+        $product->location = $country == null ? $product->location : $country->full_country;
+        $product->country_id = $country == null ? $product->country_id : $country->id;
         $product->is_deleted = 0;
-        $product->type = $type;
-        $product->category_id = $category->number;
-        $product->subcategory_id = $subcategory->number;
-        $product->state = $country->name;
+        $product->type = $type == null ? $product->type : $type;
+        $product->category_id = $category == null ? $product->category_id : $category->number;
+        $product->subcategory_id = $subcategory == null ? $product->subcategory_id : $subcategory->number;
+        $product->state = $country == null ? $product->state : $country->name;
         $product->img1 = $img1;
         $product->img2 = $img2;
         $product->img3 = $img3;
@@ -844,8 +870,8 @@ class ProductsController extends Controller
         $product->img8 = $img8;
         $product->img9 = $img9;
         $product->img10 = $img10;
-        $product->phone = request()->get('phone');
-        $product->contact_preferences = request()->get('contact_preferences');
+        $product->phone = request()->get('phone') == null ? $product->phone : request()->get('phone');
+        $product->contact_preferences = $prefs;
 
         //save product
         $product->save();
