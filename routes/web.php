@@ -1,8 +1,30 @@
 <?php
 
+use App\User;
+
 Route::get('/cc', function(){
     Artisan::call('config:cache');
     Artisan::call('view:clear');
+});
+
+
+Route::get('/verifyemail', function(){
+    $email = $_GET['e'];
+    //sanitize the email
+    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+    $usr = User::where("email", "=", $email)->get()->first();
+    if($usr == null){
+        //user is not existent, return him to janeverde front page
+        return redirect('/');
+    }
+    else{
+        if($usr->email_verified_at == null){
+            $usr->email_verified_at = date("Y-m-d h:i:s");
+            $usr->save();
+        }
+        //redirect him to the react app
+        return redirect(config('variables.reacturl'));
+    }
 });
 
 Route::get('paypal/express-checkout', 'PaypalController@expressCheckout')->name('paypal.express-checkout');
@@ -129,7 +151,7 @@ Route::get('/test', 'UserController@getProductDetailsByUserIDAPI');
 
 Route::get('/', function(){
     return view('home');
-})->middleware('cookies');
+})->name('home')->middleware('cookies');
 
 Route::get('/privacy-policy', function () {
     return view('privacy_policy');

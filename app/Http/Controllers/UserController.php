@@ -270,10 +270,16 @@ class UserController extends Controller
     {
         $user = \App\User::where('email', $request->email)->get()->first();
         if ($user && \Hash::check($request->password, $user->password)) {
-            $token = self::getToken($request->email, $request->password);
-            $user->auth_token = $token;
-            $user->save();
-            $response = ['success' => true, 'data' => ['id' => $user->id, 'auth_token' => $user->auth_token, 'name' => $user->name, 'email' => $user->email]];
+            if($user->email_verified_at == null){
+                $response = ['success' => false, 'data' => 'Your email is not verified. Please check your email for verification'];
+            }
+            else{
+                $token = self::getToken($request->email, $request->password);
+                $user->auth_token = $token;
+                $user->save();
+                $response = ['success' => true, 'data' => ['id' => $user->id, 'auth_token' => $user->auth_token, 'name' => $user->name, 'email' => $user->email]];
+            }
+            
         } else {
             $response = ['success' => false, 'data' => "Username and/or password don't match our records"];
         }
@@ -312,8 +318,22 @@ class UserController extends Controller
             $token = self::getToken($request->email, $request->password); // generate user token
             if (!is_string($token))  return response()->json(['success' => false, 'data' => 'Token generation failed'], 201);
             $user = \App\User::where('email', $request->email)->get()->first();
+            $email = $user->email;
             $user->auth_token = $token; // update user token
             $user->save();
+            //$user->sendEmailVerificationNotification();
+            //send email
+
+            $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+                ->setUsername('janeverdeonline@gmail.com')->setPassword('JaneVerde001');
+            $mailer = new \Swift_Mailer($transport);
+            $body  = "Click <a href='".config('variables.phpurl')."/verifyemail?e=".$email."'>here</a> ";
+            $body .= "to verify your email address.";
+            $message = (new \Swift_Message("Email verification"))->setFrom(['john@doe.com' => 'JaneVerde email verification'])
+                ->setTo([$email])->setBody($body);
+            $message->setContentType("text/html");
+            $mailer->send($message);
+
             //add email validation here
             $response = ['success' => true, 'data' => ['name' => $user->name, 'id' => $user->id, 'email' => $request->email, 'auth_token' => $token]];
         } else {
@@ -757,8 +777,8 @@ class UserController extends Controller
             $user->password = bcrypt($newpass);
             $user->save();
 
-            $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
-                ->setUsername('janeverdeonline@gmail.com')->setPassword('JaneVerde001');
+            $transport = (new \Swift_SmtpTransport('relay-hosting.secureserver.net', 25))
+                ->setUsername('contact@janeverde.com')->setPassword('ocbAA7O}O{o3');
             $mailer = new \Swift_Mailer($transport);
 
             $body  = "Your new password is: ".$newpass;
