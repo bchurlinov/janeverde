@@ -63,8 +63,7 @@ $fhf = ProductsController::checkfhf();
                                 <a href="{{$previous == null ? 'javascript:;' : '/view/'.$previous}}"><button><img
                                             src="{{asset('images/left-arrow_green.svg')}}"
                                             alt="Jane Verde SVG Icon" />PREV</button></a>
-                                <a
-                                    href="<?=config('phpurl').'/'.$type.'/0/0/search'?>"><button>BACK
+                                <a href="<?=config('phpurl').'/'.$type.'/0/0/search'?>"><button>BACK
                                         TO SEARCH</button></a>
                                 <a href="{{$next == null ? 'javascript:;' : '/view/'.$next}}"><button>NEXT<img
                                             src="{{asset('images/right-arrow_green.svg')}}"
@@ -135,23 +134,25 @@ $fhf = ProductsController::checkfhf();
                                         <p>Copy & Paste into your email:</p>
                                         <a href="javascript:;">someemail@janeverde.com</a>
                                     </li>
-                                   
-                                   @php
-                                   if($product->phone != null && $product->contact_preferences != null && $product->contact_preferences != "0,0"){
-                                   echo '<hr style="margin-top: 10px; margin-bottom: 10px" />';
-                                   echo '<li><b>Phone: </b> '.$product->phone.'</li>';
-                                   $prefs = explode(",", $product->contact_preferences);
+
+                                    @php
+                                    if($product->phone != null && $product->contact_preferences != null &&
+                                    $product->contact_preferences != "0,0"){
+                                    echo '
+                                    <hr style="margin-top: 10px; margin-bottom: 10px" />';
+                                    echo '<li><b>Phone: </b> '.$product->phone.'</li>';
+                                    $prefs = explode(",", $product->contact_preferences);
                                     if($prefs[0] == 1){
-                                        echo "<li><img src='/images/smartphone.svg'
+                                    echo "<li><img src='/images/smartphone.svg'
                                             alt='Jane Verde - Smartphone Logo' />Phone calls - <b>OK</b></li>";
                                     }
                                     if($prefs[1] == 1){
-                                        echo "<li>
-                                        <li><img src='/images/sms-text.svg' alt='Jane Verde - Smartphone Logo' />Text/SMS -
+                                    echo "<li>
+                                    <li><img src='/images/sms-text.svg' alt='Jane Verde - Smartphone Logo' />Text/SMS -
                                         <b>OK</b></li>";
                                     }
-                                   }
-                                   @endphp
+                                    }
+                                    @endphp
                                 </ul>
                             </aside>
                         </div>
@@ -161,12 +162,14 @@ $fhf = ProductsController::checkfhf();
                         <div class="details-product__information">
                             <div class="product-information-wrap">
                                 <h2>
-                                    <img src="{{$product->verified == "1" ? asset('images/shield_green.svg') : asset('images/shield_gray.jpg')}}" alt="Jane Verde SVG Icon" />
+                                    <img src="{{$product->verified == "1" ? asset('images/shield_green.svg') : asset('images/shield_gray.jpg')}}"
+                                        alt="Jane Verde SVG Icon" />
                                     {{$product->title}} ( {{$product->location}} )
                                 </h2>
 
                                 <div class="product-information-wrap__slider">
-                                    <div class="fotorama" data-nav="thumbs" data-transition="crossfade" data-width="100%"  data-maxheight="100%"  data-arrows="true">
+                                    <div class="fotorama" data-nav="thumbs" data-transition="crossfade"
+                                        data-width="100%" data-maxheight="100%" data-arrows="true">
                                         @php
                                         $allImgs = 0;
                                         for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
@@ -174,23 +177,24 @@ $fhf = ProductsController::checkfhf();
                                             echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde
                                                 Image" data-width="100%" data-minheight="100%">';
                                             }
-                                        }
-                                        if($allImgs == 0){
+                                            }
+                                            if($allImgs == 0){
                                             echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane Verde
-                                                Image" style="width:100%; height:400px;" data-width="100%" data-minheight="100%">';
-                                        }
-                                        @endphp
+                                                Image" style="width:100%; height:400px;" data-width="100%"
+                                                data-minheight="100%">';
+                                            }
+                                            @endphp
                                     </div>
                                 </div>
 
                                 <div class="product-information-wrap__information">
                                     <p>{{$product->description}}
                                     </p>
-                                        <ul class="product-description-wrap-info">
-                                            <li><b>Price</b>: ${{$product->price}}</li>
-                                            <li><b>State</b>: {{$product->location}}</li>
-                                            <li><b>Type</b>: {{ucfirst($product->type)}}</li>
-                                        </ul>
+                                    <ul class="product-description-wrap-info">
+                                        <li><b>Price</b>: ${{$product->price}}</li>
+                                        <li><b>State</b>: {{$product->location}}</li>
+                                        <li><b>Type</b>: {{ucfirst($product->type)}}</li>
+                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -198,7 +202,9 @@ $fhf = ProductsController::checkfhf();
                         <div class="details-product__facts">
                             <div class="user-verification-info">
                                 @if(Gate::check('isAdmin') || !empty($_COOKIE['_main']))
-                                <h5> <img src="{{$product->verified == "1" ? asset('images/shield_green.svg') : asset('images/shield_gray.jpg')}}" alt="Jane Verde SVG Icon" />
+                                <h5> <img
+                                        src="{{$product->verified == "1" ? asset('images/shield_green.svg') : asset('images/shield_gray.jpg')}}"
+                                        alt="Jane Verde SVG Icon" />
                                     {{$product->verified == "1" ? "Verified business" : "Non verified business"}}</h5>
                                 @if($product->verified == "1")
                                 <p>The bussiness has been verified for:</p>
@@ -225,7 +231,12 @@ $fhf = ProductsController::checkfhf();
                                     <li>Direct Business Sales Only</li>
                                     <li>Delivery Available: ALL States</li>-->
 
-                                    <li><a href="{{config('variables.phpurl')."/".session()->get('type')."/0/0/search?user=".$product->user->id}}">More Adds by this User</a></li>
+                                    <li>
+                                        <a
+                                            href="{{config('variables.phpurl')."/".session()->get('type')."/0/0/search?user=".$product->user->id}}">
+                                            More Ads by this User
+                                        </a>
+                                    </li>
                                 </ul>
                             </div>
                         </div>
@@ -241,16 +252,17 @@ $fhf = ProductsController::checkfhf();
                     $createdDiff = $today->diff($created)->format('%m,%d');
                     $createdArray = explode(",", $createdDiff);
                     if($createdArray[0] == 1){
-                        $createdString .= "1 month";
+                    $createdString .= "1 month";
                     }
                     elseif($createdArray[0] == 2){
-                        $createdString .= "2 months";
+                    $createdString .= "2 months";
                     }
                     if($createdArray[1] == 0){
-                        $createdString .= " ago";
+                    $createdString .= " ago";
                     }
                     else{
-                        $createdString .= $createdString == "" ? $createdArray[1]." days ago" : ", ".$createdArray[1]." days ago";
+                    $createdString .= $createdString == "" ? $createdArray[1]." days ago" : ", ".$createdArray[1]." days
+                    ago";
                     }
 
                     if($createdDiff == "0,0"){
@@ -260,16 +272,17 @@ $fhf = ProductsController::checkfhf();
                     $updatedDiff = $today->diff($updated)->format('%m,%d');
                     $updatedArray = explode(",", $updatedDiff);
                     if($updatedArray[0] == 1){
-                        $updatedString .= "1 month";
+                    $updatedString .= "1 month";
                     }
                     elseif($updatedArray[0] == 2){
-                        $updatedString .= "2 months";
+                    $updatedString .= "2 months";
                     }
                     if($updatedArray[1] == 0){
-                        $updatedString .= " ago";
+                    $updatedString .= " ago";
                     }
                     else{
-                        $updatedString .= $updatedString == "" ? $updatedArray[1]." days ago" : ", ".$updatedArray[1]." days ago";
+                    $updatedString .= $updatedString == "" ? $updatedArray[1]." days ago" : ", ".$updatedArray[1]." days
+                    ago";
                     }
                     if($updatedDiff == "0,0"){
                     $updatedString = "Today";

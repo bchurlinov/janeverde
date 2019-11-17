@@ -12,17 +12,23 @@
         @include('partials.mobileMenu')
         <div class="outer-wrap">
             <div align="right">
-            @if(auth()->user())
-                {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname, 0, 1) . "</a>" !!}
+                @if(auth()->user())
+                {!! "<a href='/dashboard'>" .substr(auth()->user()->name, 0, 1) . " " . substr(auth()->user()->lastname,
+                    0, 1) . "</a>" !!}
                 <a href="{{ route('logout') }}"
-                   onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     {{ __('Logout') }}
                 </a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                     @csrf
                 </form>
-            @endif
+                @endif
             </div>
+            <div class="welcome-user">
+                <p><a href="http://account.janeverde.com">Welcome, User</a></p>
+                
+            </div>
+            <div class="clearfix"></div>
             <div class="home-wrap">
                 @include('partials.leftMenu')
                 @include('partials.mainCategories')

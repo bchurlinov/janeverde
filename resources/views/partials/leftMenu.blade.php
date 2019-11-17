@@ -40,8 +40,8 @@ use App\User;
             @endif
         </div>
         <div class="listing-account">
+                <a href="http://account.janeverde.com" class="button-link">Create a Listing</a>
             <a href="{{config('variables.reacturl')}}" class="button-link">User Account</a>
-            <a href="{{config('variables.phpurl')}}/auth" class="button-link">Owner Account</a>
         </div>
         <div class="useful-links">
         @if($showVerifyLink)
