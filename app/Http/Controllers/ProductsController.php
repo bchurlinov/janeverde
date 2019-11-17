@@ -18,6 +18,20 @@ class ProductsController extends Controller
 {
     public $country;
 
+    public function checkLogged(){
+        
+        if(auth()->user()){
+            return true;
+        }
+        elseif(!empty($_COOKIE['_main'])){
+            $usr = User::find($_COOKIE['_main']);
+            if($usr != null){
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * Get all products from database
      *
@@ -134,6 +148,13 @@ class ProductsController extends Controller
                     $allProducts = Product::with('userAlter')->where($conditions)->whereIn('type', $whereinconditions)->orderBy('created_at', 'desc')->paginate(6);
                 }
             }
+        }
+        
+        //if the user is not logged in, and he chooses cannabis, or keyword, or just clicks search, then we return no results
+        $logged = $this->checkLogged();
+        if(!$logged && $hOrC == "cannabis"){
+            $allProducts = Product::where('user_id', '=', 0)->paginate(6);
+            //dd($allProducts);
         }
         //return them to the view
         return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);
@@ -446,41 +467,8 @@ class ProductsController extends Controller
      */
     public function sethc(Request $request){
         $horc = $request->get('c');
-        
-        if(empty($_COOKIE['_main']) && auth()->user() == null){
-            session()->put('type', 'hemp');
-        }
-        else{
-            $sess = session()->get('type');
-            if($sess == null){
-                session()->put('type', 'hemp');
-            }
-            else{
-                if($horc != 'hemp' || $horc != "cannabis"){
-                    session()->put('type', 'hemp');
-                }
-                else{
-                    session()->put('type', $horc);
-                }
-            }
-        }
-
-
-        if($horc != "hemp" && $horc != "cannabis"){
-            session()->put('type', 'hemp');
-            echo "hemp";
-        }
-        else{
-            if(empty($_COOKIE['_main']) && auth()->user() == null){
-                $horc = 'hemp';
-                session()->put('type', 'hemp');
-            }
-            else{
-                session()->put('type', $horc);
-            }
-        }
-        
-        return back();
+        $allowed = ["hemp", "cannabis"];
+        !in_array($horc, $allowed) ? session()->put('type', 'hemp') : session()->put('type', $horc);
     }
 
     public function setav(Request $request){

@@ -9,28 +9,23 @@ use App\User;
         @endphp
         <h1><a href="/"><img src="{{asset('/images/Janeverde_logo.svg')}}" /></a></h1>
         <div class="toggle-countries toggle-desktop">
-
-            @php
-            $disabled = "disabled title='Log in to be able to toggle between Hemp and Cannabis'";
-            if(!empty($_COOKIE['_main']) || auth()->user() != null){
-                $disabled = "";
-            }
-            //check for logged in user
-            $showVerifyLink = false;
-            $user = 0;
-            if(!empty($_COOKIE['_main']) || auth()->user() != null){
-                if(!empty($_COOKIE['_main'])){
-                    $user = $_COOKIE['_main'];
-                    $user = User::find($user);
-                    if($user != null && $user->verification_step_1 == 0){
-                    $showVerifyLink = true;
-                    }
+        @php
+        //check for logged in user
+        $showVerifyLink = false;
+        $user = 0;
+        if(!empty($_COOKIE['_main']) || auth()->user() != null){
+            if(!empty($_COOKIE['_main'])){
+                $user = $_COOKIE['_main'];
+                $user = User::find($user);
+                if($user != null && $user->verification_step_1 == 0){
+                $showVerifyLink = true;
                 }
             }
-            @endphp
+        }
+        @endphp
             <div class="hemp-cannabis-toggle">
-                <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp" {!! $disabled !!}>HEMP</button>
-                <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis" {!! $disabled !!}>CANNABIS</button>
+                <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp" >HEMP</button>
+                <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}" id="cannabis">CANNABIS</button>
             </div>
 
             <div id="country" style="display:none;">{{$country['dropdown']}}</div>
@@ -40,12 +35,12 @@ use App\User;
             @endif
         </div>
         <div class="listing-account">
-                <a href="http://account.janeverde.com" class="button-link">Create a Listing</a>
+            <a href="{{config('variables.reacturl')}}/post" class="button-link">Create a Listing</a>
             <a href="{{config('variables.reacturl')}}" class="button-link">User Account</a>
         </div>
         <div class="useful-links">
         @if($showVerifyLink)
-            <a href="http://account.jv.com/verification-step" class="button-link" data-account="verify" >
+            <a href="{{config('variables.reacturl')}}/verification-step" class="button-link" data-account="verify" >
                 <img src="{{asset('images/shield_green.svg')}}" alt="Jane Verde SVG Icon" />
                 Verify Account
             </a>

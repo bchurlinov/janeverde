@@ -23,39 +23,47 @@ class Cookies
 
     public function handleCookies(){
         //===================== TYPE =====================
-        //if cookie is not set
         $type = session()->get('type');
-        if(empty($_COOKIE['main']) || auth()->user() == null){
-            if($type == null){
-                session()->put('type', 'hemp');
-            }
-            else{
-                if($type != "hemp" && $type != "cannabis"){
-                    session()->put('type', 'hemp');
-                }
-            }
-        }
-        else{
-            if($type == null){
-                session()->put('type', 'hemp');
-            }
-            else{
-                if($type != "hemp" && $type != "cannabis"){
-                    session()->put('type', 'hemp');
-                }
-            }
-        }
-
-
-        if(empty($_COOKIE['_main'])){
+        if($type == null){
             session()->put('type', 'hemp');
         }
         else{
-            if(session()->get('type') == null){
+            $allowed = ['hemp', 'cannabis'];
+            if(!in_array($type, $allowed)){
                 session()->put('type', 'hemp');
             }
-
         }
+        // if(empty($_COOKIE['main']) || auth()->user() == null){
+        //     if($type == null){
+        //         session()->put('type', 'hemp');
+        //     }
+        //     else{
+        //         if($type != "hemp" && $type != "cannabis"){
+        //             session()->put('type', 'hemp');
+        //         }
+        //     }
+        // }
+        // else{
+        //     if($type == null){
+        //         session()->put('type', 'hemp');
+        //     }
+        //     else{
+        //         if($type != "hemp" && $type != "cannabis"){
+        //             session()->put('type', 'hemp');
+        //         }
+        //     }
+        // }
+
+
+        // if(empty($_COOKIE['_main'])){
+        //     session()->put('type', 'hemp');
+        // }
+        // else{
+        //     if(session()->get('type') == null){
+        //         session()->put('type', 'hemp');
+        //     }
+
+        // }
 
 
         //===================== PRODUCTS SEARCH =====================

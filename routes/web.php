@@ -15,7 +15,7 @@ Route::get('/{hc}/{cat}/{subcat}/search', 'ProductsController@index')->middlewar
 
 Route::get('/view/{id}', 'ProductsController@view')->middleware('cookies');
 
-Route::get('/auth', function () {
+Route::get('/protected-owner-route', function () {
     return view('auth_page');
 })->middleware('cookies');
 
