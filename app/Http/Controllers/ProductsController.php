@@ -42,7 +42,7 @@ class ProductsController extends Controller
         $postFields = $request->all();
         $horcTypes = ['cannabis', 'hemp'];
         $allProducts = [];
-
+        $hideFields = false;
         if(empty($_COOKIE['_main']) && auth()->user() != null){
             session()->put('type', 'hemp');
             $hOrC = "hemp";
@@ -154,10 +154,11 @@ class ProductsController extends Controller
         $logged = $this->checkLogged();
         if(!$logged && $hOrC == "cannabis"){
             $allProducts = Product::where('user_id', '=', 0)->paginate(6);
+            $hideFields = true;
             //dd($allProducts);
         }
         //return them to the view
-        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword]);
+        return view('search_page')->with(['products' => $allProducts, "keyword" => $keyword, "hideFields" => $hideFields]);
     }
 
     /**

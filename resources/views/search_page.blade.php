@@ -35,7 +35,6 @@
                         </div>
                         <div class="current-state-heading__item current-state-heading__desktop">
                             <form method="GET"
-                                  <?php //TODO: GET PARENT CATEGORY AND PUT IT BEFORE SEGMENT 2 BELOW  ?>
                                 action="/{{session()->get('type') == 'null' ? 'hemp' : session()->get('type')}}/{{request()->segment(2)}}/{{request()->segment(3)}}/search">
                                 <input type="text" name="keyword" placeholder="Search listings" autocomplete="off" />
                                 <button type="submit">
@@ -44,9 +43,10 @@
                             </form>
                         </div>
                     </div>
-
+                   
                     <div class="search-wrap">
                         <div class="search-filters">
+                        @if(!$hideFields)
                             <div class="search-filters__sorting">
                                 <div class="hemp-cannabis-toggle">
                                     <button class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'viewAll' ? "toggle-active" : ""}}" id="viewAll">View All</button>
@@ -70,13 +70,19 @@
                                     data-toggle="list"><i class="fas fa-bars toggle-icon"></i>
                                 </button>
                             </div>
+                        @endif
                         </div>
                     </div>
+                    
 
                     <div class="search-products-listing">
                         <div class="products-listing-wrap">
                             @if($products == null || count($products) == 0)
-                            {{"No posts"}}
+                                @if($hideFields)
+                                {!! "<h1>Please log in to view Cannabis products</h1>" !!}
+                                @else
+                                    {{"No posts"}}
+                                @endif
                             @else
                             @foreach($products as $product)
                             <div class="product-template-wrap">

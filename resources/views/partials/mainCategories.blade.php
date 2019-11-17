@@ -2,6 +2,10 @@
 $type = session()->get('type') == 'null' ? 'hemp' : session()->get('type');
 $country = session()->get('country') == 'null' ? ["dropdown" => "all", "fullName" => "All states"] :
 json_decode(session()->get('country'), true);
+$isloggedin = empty($_COOKIE['_main']) && !auth()->user() && $type == "cannabis" ? false : true;
+if(!$isloggedin){
+    $div = "<div><h1>Please log in to view Cannabis products</h1></div>";
+}
 @endphp
 <div class="home-wrap__item">
     <div class="current-state-heading">
@@ -17,6 +21,10 @@ json_decode(session()->get('country'), true);
             </form>
         </div>
     </div>
+
+    @if(!$isloggedin)
+        {!! $div !!}
+    @else
 
     <div class="home-categories">
 
@@ -136,4 +144,5 @@ json_decode(session()->get('country'), true);
 
         {{-- End Third Row --}}
     </div>
+    @endif
 </div>

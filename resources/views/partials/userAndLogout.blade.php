@@ -6,19 +6,20 @@ if(auth()->user() || !empty($_COOKIE['_main'])){
     if(!empty($_COOKIE['_main'])){
         $user = $_COOKIE['_main'];
         $user = User::find($user);
-        $name = $user->name;
-        $lastname = $user->lastname;
-        $dashboard = config('variables.reacturl');
-        $reactOrLaravelUser = 1;
+        if($user != null){
+            $name = ucfirst($user->name);
+            $dashboard = config('variables.reacturl');
+            echo "Welcome <a href='$dashboard'><b>" .$name . "</b></a>";
+            $reactOrLaravelUser = 1;
+        }        
     }
     else{ 
-        $name = auth()->user()->name;
-        $lastname = auth()->user->lastname;
+        $name = ucfirst(auth()->user()->name);
         $dashboard = "/dashboard";
         $reactOrLaravelUser = 2;
+        echo "Welcome <a href='$dashboard'><b>" .$name . "</b></a>";
     }
     ?>
-    {!! "Welcome <a href='$dashboard'>" .substr($name, 0, 1) . " " . substr($lastname, 0, 1) . "</a>" !!}
     
     @if($reactOrLaravelUser == 2)
         <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

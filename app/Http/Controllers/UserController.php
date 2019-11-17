@@ -314,6 +314,7 @@ class UserController extends Controller
             $user = \App\User::where('email', $request->email)->get()->first();
             $user->auth_token = $token; // update user token
             $user->save();
+            //add email validation here
             $response = ['success' => true, 'data' => ['name' => $user->name, 'id' => $user->id, 'email' => $request->email, 'auth_token' => $token]];
         } else {
             $response = ['success' => false, 'data' => 'Couldnt register user, please try again later'];
