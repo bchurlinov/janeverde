@@ -595,7 +595,7 @@ class ProductsController extends Controller
         text_sms: true
         */
         //load the user with all his relations
-        $canPost = false;
+        $canPost = true;
         $threeAMonth = 1;
 
         $users = User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(auth()->user()->id);
