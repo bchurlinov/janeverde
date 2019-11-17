@@ -757,8 +757,8 @@ class UserController extends Controller
             $user->password = bcrypt($newpass);
             $user->save();
 
-            $transport = (new \Swift_SmtpTransport('relay-hosting.secureserver.net', 25))
-                ->setUsername('contact@janeverde.com')->setPassword('ocbAA7O}O{o3');
+            $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+                ->setUsername('janeverdeonline@gmail.com')->setPassword('JaneVerde001');
             $mailer = new \Swift_Mailer($transport);
 
             $body  = "Your new password is: ".$newpass;

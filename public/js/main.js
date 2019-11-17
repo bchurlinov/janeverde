@@ -6,8 +6,14 @@ $(document).ready(function () {
         states_selectric += `<option class="${state.class}" value="${state.value}">${state.name}</option>`
     });
 
-    // Append Selectric Options - Mobile Native Look
+    // Append Selectric Options - Desktop Version
     $("#select-states").append(states_selectric).selectric({
+        disableOnMobile: false,
+        nativeOnMobile: false
+    });
+
+    // Append Selectric Options - Mobile Version
+    $("#select-states-mobile").append(states_selectric).selectric({
         disableOnMobile: false,
         nativeOnMobile: false
     });
@@ -124,6 +130,19 @@ $(document).ready(function () {
         $.get(
             "/setcountry", {
                 c: $("#select-states").val()
+            },
+            function (data) {
+                location.reload();
+            }
+        );
+    });
+
+    $("#select-states-mobile").on("change", function () {
+        
+        processSelectricLabel();
+        $.get(
+            "/setcountry", {
+                c: $("#select-states-mobile").val()
             },
             function (data) {
                 location.reload();

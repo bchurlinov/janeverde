@@ -1,3 +1,32 @@
+@php
+use App\User;
+$country = json_decode(session()->get('country'), true);
+$cookieSet = session()->get('type') == null ? "hemp" : session()->get('type');
+
+$type = session()->get('type') == 'null' ? 'hemp' : session()->get('type');
+$country = session()->get('country') == 'null' ? ["dropdown" => "all", "fullName" => "All states"] :
+json_decode(session()->get('country'), true);
+$isloggedin = empty($_COOKIE['_main']) && !auth()->user() && $type == "cannabis" ? false : true;
+if(!$isloggedin){
+$div = "<div>
+    <h1>Please log in to view Cannabis products</h1>
+</div>";
+}
+
+//check for logged in user
+$showVerifyLink = false;
+$user = 0;
+if(!empty($_COOKIE['_main']) || auth()->user() != null){
+if(!empty($_COOKIE['_main'])){
+$user = $_COOKIE['_main'];
+$user = User::find($user);
+if($user != null && $user->verification_step_1 == 0){
+$showVerifyLink = true;
+}
+}
+}
+@endphp
+
 
 <div class="container">
     <div class="outer-wrap outer-wrap-mobile">
@@ -15,16 +44,17 @@
 
             <div class="home-wrap-mobile__togles">
                 <div class="toggle-countries">
-                    <fieldset>
-                        <input class="input-switch" id="mobile-switch" type="checkbox" />
-                        <label for="mobile-switch"></label>
-                        <span class="switch-bg"></span>
-                        <span class="switch-labels" data-on="Hemp" data-off="Cannabis"></span>
-                    </fieldset>
+                    <div class="hemp-cannabis-toggle">
+                        <button class="ctype {{$cookieSet == "hemp" ? "toggle-active" : ""}}" id="hemp">HEMP</button>
+                        <button class="ctype {{$cookieSet == "cannabis" ? "toggle-active" : "" }}"
+                            id="cannabis">CANNABIS</button>
+                    </div>
                 </div>
 
                 <div class="selectric-mobile">
+                    @if (request()->segment(1) !== "view")
                     <select id="select-states-mobile"></select>
+                    @endif
                 </div>
 
                 <div class="search-mobile">
@@ -39,128 +69,128 @@
                 </div>
             </div>
 
-            <div class="mobile-categories__item" data-click="sale" data-category="sale"
-                 onclick="toggleCategory(this)">
+            <div class="mobile-categories__item" data-click="sale" data-category="sale" onclick="toggleCategory(this)">
                 <h4>For Sale
                     <span>
-                            <i class="fas fa-chevron-down" data-clicked="sale"></i>
-                        </span>
+                        <i class="fas fa-chevron-down" data-clicked="sale"></i>
+                    </span>
                 </h4>
                 <div data-target="sale">
                     <ul>
-                        <li><a href="product_search.html" target="_blank">Biomass</a></li>
-                        <li><a href="product_search.html" target="_blank">Conentrates</a></li>
-                        <li><a href="product_search.html" target="_blank">Retail Products</a></li>
-                        <li><a href="product_search.html" target="_blank">Grow Equipment</a></li>
-                        <li><a href="product_search.html" target="_blank">Lab Equipment</a></li>
-                        <li><a href="product_search.html" target="_blank">Promotional</a></li>
-                        <li><a href="product_search.html" target="_blank">Misc</a></li>
+                        <li><a href="/{{$type}}/7395/4296/search">Biomass</a></li>
+                        <li><a href="/{{$type}}/7395/6581/search">Concentrates</a></li>
+                        <li><a href="/{{$type}}/7395/4617/search">Retail Products</a></li>
+                        <li><a href="/{{$type}}/7395/4537/search">Grow Equipment/Supplies</a></li>
+                        <li><a href="/{{$type}}/7395/4184/search">Lab Equipment Supplies</a></li>
+                        <li><a href="/{{$type}}/7395/2971/search">Promotional</a></li>
+                        <li><a href="/{{$type}}/7395/2073/search">In Search of</a></li>
                     </ul>
                 </div>
             </div>
 
-            <div class="mobile-categories__item" data-click="jobs" data-category="jobs"
-                 onclick="toggleCategory(this)">
+            <div class="mobile-categories__item" data-click="jobs" data-category="jobs" onclick="toggleCategory(this)">
                 <h4>Jobs
                     <span>
-                            <i class="fas fa-chevron-down" data-clicked="jobs"></i>
-                        </span>
+                        <i class="fas fa-chevron-down" data-clicked="jobs"></i>
+                    </span>
                 </h4>
                 <div data-target="jobs">
                     <ul>
-                        <li><a href="product_search.html" target="_blank">Grow Indoor</a></li>
-                        <li><a href="product_search.html" target="_blank">Grow Outdoor</a></li>
-                        <li><a href="product_search.html" target="_blank">Trimming</a></li>
-                        <li><a href="product_search.html" target="_blank">Hemp Extract</a></li>
-                        <li><a href="product_search.html" target="_blank">THC Extract</a></li>
-                        <li><a href="product_search.html" target="_blank">Drying</a></li>
-                        <li><a href="product_search.html" target="_blank">Sales</a></li>
-                        <li><a href="product_search.html" target="_blank">Marketing</a></li>
-                        <li><a href="product_search.html" target="_blank">Business</a></li>
-                        <li><a href="product_search.html" target="_blank">Admin</a></li>
-                        <li><a href="product_search.html" target="_blank">Design / Web</a></li>
-                        <li><a href="product_search.html" target="_blank">Retail</a></li>
-                        <li><a href="product_search.html" target="_blank">Distribution</a></li>
-                        <li><a href="product_search.html" target="_blank">Laboratory</a></li>
-                        <li><a href="product_search.html" target="_blank">Regulatory</a></li>
-                        <li><a href="product_search.html" target="_blank">Construction</a></li>
+                        <li><a href="/{{$type}}/1210/5191/search">All</a></li>
+                        <li><a href="/{{$type}}/1210/4111/search">Agriculture</a></li>
+                        <li><a href="/{{$type}}/1210/3043/search">Processing</a></li>
+                        <li><a href="/{{$type}}/1210/6999/search">Sales / Marketing</a></li>
+                        <li><a href="/{{$type}}/1210/2350/search">Admin / Executive</a></li>
+                        <li><a href="/{{$type}}/1210/6762/search">Other/General</a></li>
+                        <li><a href="/{{$type}}/1210/5911/search">Distribution</a></li>
+                        <li><a href="/{{$type}}/1210/6509/search">Laboratory</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="mobile-categories__item" data-click="real-estate" data-category="real-estate"
-                 onclick="toggleCategory(this)">
+                onclick="toggleCategory(this)">
                 <h4>Real Estate
                     <span>
-                            <i class="fas fa-chevron-down" data-clicked="real-estate"></i>
-                        </span>
+                        <i class="fas fa-chevron-down" data-clicked="real-estate"></i>
+                    </span>
                 </h4>
                 <div data-target="real-estate">
                     <ul>
-                        <li><a href="product_search.html" target="_blank">Commercial for Sale</a></li>
-                        <li><a href="product_search.html" target="_blank">Commercial for Rent</a></li>
-                        <li><a href="product_search.html" target="_blank">Farm / Land</a></li>
+                        <li><a href="/{{$type}}/3098/2152/search">Commercial for Sale</a></li>
+                        <li><a href="/{{$type}}/3098/5266/search">Commercial for Rent</a></li>
+                        <li><a href="/{{$type}}/3098/2340/search">Land for Sale</a></li>
+                        <li><a href="/{{$type}}/3098/3668/search">Business for Sale</a></li>
+                        <li><a href="/{{$type}}/3098/6150/search">Investment Opportunities</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="mobile-categories__item" data-click="vendor-listings" data-category="vendor-listings"
-                 onclick="toggleCategory(this)">
+                onclick="toggleCategory(this)">
                 <h4>Vendor Listings
                     <span>
-                            <i class="fas fa-chevron-down" data-clicked="vendor-listings"></i>
-                        </span>
+                        <i class="fas fa-chevron-down" data-clicked="vendor-listings"></i>
+                    </span>
                 </h4>
                 <div data-target="vendor-listings">
                     <ul>
-                        <li><a href="product_search.html" target="_blank">Legal / Attorney</a></li>
-                        <li><a href="product_search.html" target="_blank">Account / Bank</a></li>
-                        <li><a href="product_search.html" target="_blank">Web / Design</a></li>
-                        <li><a href="product_search.html" target="_blank">Brokers</a></li>
-                        <li><a href="product_search.html" target="_blank">Consulting</a></li>
-                        <li><a href="product_search.html" target="_blank">Tolling Facilities</a></li>
-                        <li><a href="product_search.html" target="_blank">Lab / Testing</a></li>
-                        <li><a href="product_search.html" target="_blank">Equipment / Manufacturers</a></li>
-                        <li><a href="product_search.html" target="_blank">Telecom</a></li>
-                        <li><a href="product_search.html" target="_blank">Labor</a></li>
-                        <li><a href="product_search.html" target="_blank">Marketing</a></li>
-                        <li><a href="product_search.html" target="_blank">General</a></li>
+                        <li><a href="/{{$type}}/4712/4644/search">Other</a></li>
+                        <li><a href="/{{$type}}/4712/4715/search">Point of Sale</a></li>
+                        <li><a href="/{{$type}}/4712/5981/search">Equipment Rental</a></li>
+                        <li><a href="/{{$type}}/4712/8788/search">Logistics / Trucking</a></li>
+                        <li><a href="/{{$type}}/4712/9121/search">Labor</a></li>
+                        <li><a href="/{{$type}}/4712/4910/search">Attorney</a></li>
+                        <li><a href="/{{$type}}/4712/5777/search">Marketing / Advertising</a></li>
+                        <li><a href="/{{$type}}/4712/3285/search">Telecom</a></li>
+                        <li><a href="/{{$type}}/4712/7854/search">Equipment Manufacturers</a></li>
+                        <li><a href="/{{$type}}/4712/1090/search">Consulting</a></li>
+                        <li><a href="/{{$type}}/4712/6000/search">Sales Brokers</a></li>
+                        <li><a href="/{{$type}}/4712/2528/search">Web / Design</a></li>
+                        <li><a href="/{{$type}}/4712/9132/search">Insurance</a></li>
+                        <li><a href="/{{$type}}/4712/4764/search">Banking</a></li>
+                        <li><a href="/{{$type}}/4712/7856/search">Lab Testing</a></li>
+                        <li><a href="/{{$type}}/4712/4112/search">Ag Processing Facilities</a></li>
+                        <li><a href="/{{$type}}/4712/8090/search">Concentrate Facilities</a></li>
+                        <li><a href="/{{$type}}/4712/3331/search">Processing</a></li>
+                        <li><a href="/{{$type}}/4712/2057/search">Farms</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="mobile-categories">
                 <div class="mobile-categories__item" data-category="forums" data-click="discussions-forums"
-                     onclick="toggleCategory(this)">
+                    onclick="toggleCategory(this)">
                     <h4>Discussions / Forums
                         <span>
-                                <i class="fas fa-chevron-down" data-clicked="discussions-forums"></i>
-                            </span>
+                            <i class="fas fa-chevron-down" data-clicked="discussions-forums"></i>
+                        </span>
                     </h4>
                     <div data-target="discussions-forums">
                         <ul>
-                            <li><a href="product_search.html" target="_blank">Outdoor Grow</a></li>
-                            <li><a href="product_search.html" target="_blank">Indoor Grow</a></li>
-                            <li><a href="product_search.html" target="_blank">Extraction</a></li>
-                            <li><a href="product_search.html" target="_blank">Lab / Testing</a></li>
-                            <li><a href="product_search.html" target="_blank">Production / Distribution</a></li>
-                            <li><a href="product_search.html" target="_blank">General</a></li>
+                            <li><a href="javascript:;">Outdoor Grow</a></li>
+                            <li><a href="javascript:;">Indoor Grow</a></li>
+                            <li><a href="javascript:;">Extraction</a></li>
+                            <li><a href="javascript:;">Lab / Testing</a></li>
+                            <li><a href="javascript:;">Production / Distribution</a></li>
+                            <li><a href="javascript:;">General</a></li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="mobile-categories__item" data-click="misc" data-category="misc"
-                     onclick="toggleCategory(this)">
+                    onclick="toggleCategory(this)">
                     <h4>Misc
                         <span>
-                                <i class="fas fa-chevron-down" data-clicked="misc"></i>
-                            </span>
+                            <i class="fas fa-chevron-down" data-clicked="misc"></i>
+                        </span>
                     </h4>
                     <div data-target="misc">
                         <ul>
-                            <li><a href="product_search.html" target="_blank">Events / Promotional</a></li>
-                            <li><a href="product_search.html" target="_blank">Groups / Activites</a></li>
-                            <li><a href="product_search.html" target="_blank">General</a></li>
+                            <li><a href="/{{$type}}/5655/2572/search">Events / Promotional</a></li>
+                            <li><a href="/{{$type}}/5655/2724/search">Groups / Activities</a></li>
+                            <li><a href="/{{$type}}/5655/3824/search">Groups / Clubs / Memberships</a></li>
+                            <li><a href="/{{$type}}/5655/6095/search">General</a></li>
                         </ul>
                     </div>
                 </div>
