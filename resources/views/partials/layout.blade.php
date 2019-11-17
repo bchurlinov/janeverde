@@ -12,11 +12,13 @@
     <meta name="author" content="Jane Verde">
     <meta name="google-site-verification" content="">
     <META NAME="ROBOTS" CONTENT="@yield('robots','INDEX, FOLLOW')">
+
     <meta property="og:url" content="https://www.janeverde.com">
     <meta property="og:type" content="website">
     <meta property="og:title" content="@yield('title','Jane Verde')">
     <meta property="og:description" content="@yield('description','')">
-    <meta property="og:image" content="">
+    <meta property="og:image" content="{{asset('images/cannabis-background.jpg')}}">
+
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89265552-2"></script>
 
@@ -37,7 +39,7 @@
 
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
-    <link rel="shortcut icon" type="image/png" href="../../images/favicon.ico">
+    <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.ico')}}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
     <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">

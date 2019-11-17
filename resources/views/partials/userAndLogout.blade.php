@@ -9,7 +9,7 @@ if(auth()->user() || !empty($_COOKIE['_main'])){
         if($user != null){
             $name = ucfirst($user->name);
             $dashboard = config('variables.reacturl');
-            echo "Welcome <a href='$dashboard'><b>" .$name . "</b></a>";
+            echo "Welcome, <a href='$dashboard'><b>" .$name . "</b></a>";
             $reactOrLaravelUser = 1;
         }        
     }

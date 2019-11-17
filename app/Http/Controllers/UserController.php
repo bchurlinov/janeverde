@@ -325,7 +325,7 @@ class UserController extends Controller
             //send email
 
             $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
-                ->setUsername('janeverdeonline@gmail.com')->setPassword('JaneVerde001');
+                ->setUsername('janeverdetestonline@gmail.com')->setPassword('JaneVerde001');
             $mailer = new \Swift_Mailer($transport);
             $body  = "Click <a href='".config('variables.phpurl')."/verifyemail?e=".$email."'>here</a> ";
             $body .= "to verify your email address.";

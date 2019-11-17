@@ -13,6 +13,7 @@
             <div class="welcome-user">
                 <p>@include('partials.userAndLogout')</p>
             </div>
+            <div class="clearfix"></div>
             <div class="home-wrap">
                 @include('partials.leftMenu')
                 <div class="home-wrap__item">

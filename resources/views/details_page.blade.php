@@ -21,6 +21,7 @@ $fhf = ProductsController::checkfhf();
             <div class="welcome-user">
                 <p>@include('partials.userAndLogout')</p>
             </div>
+            <div class="clearfix"></div>
             <div class="home-wrap home-search-wrap">
                 @include('partials.leftMenu')
 

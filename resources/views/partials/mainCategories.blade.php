@@ -4,7 +4,9 @@ $country = session()->get('country') == 'null' ? ["dropdown" => "all", "fullName
 json_decode(session()->get('country'), true);
 $isloggedin = empty($_COOKIE['_main']) && !auth()->user() && $type == "cannabis" ? false : true;
 if(!$isloggedin){
-    $div = "<div><h1>Please log in to view Cannabis products</h1></div>";
+    $div = "<div class='desktop-user-cannabis-error'>
+                <h3><span>!</span>Please <a href='http://account.janeverde.com'>log in</a> to view Cannabis products</h3>
+            </div>";
 }
 @endphp
 <div class="home-wrap__item">

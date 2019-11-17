@@ -321,10 +321,17 @@
     left: 0;
     img {
       width: 25px;
-      height: 25px;
-      top: 12px;
+      height: 30px;
+      top: 8px;
       position: relative;
       display: block;
+      @media(max-width: 1300px){
+        right: -5px;
+      }
+
+      @media(max-width: 992px){
+        right: 20px;
+      }
     }
   }
 

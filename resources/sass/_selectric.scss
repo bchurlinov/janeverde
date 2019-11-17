@@ -40,7 +40,8 @@
   -webkit-filter: blur(0);
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  @media (min-width: 992px) and (max-width: 1199px) {
+  @media (min-width: 992px) and (max-width: 1300px) {
+    margin: 0 0 0 9px;
   }
 }
 
@@ -252,4 +253,13 @@
 
 .selectric-items .selectric-group li {
   padding-left: 25px;
+}
+
+.selectric-mobile {
+  .selectric {
+    .label {
+      margin: 0 10px 2px 15px!important;
+      width: 20px;
+    }
+  }
 }

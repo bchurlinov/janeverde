@@ -8,19 +8,22 @@
 
 @section("content")
 <div class="wrapper">
-    <div class="container">
+    <div>
         @include('partials.mobileMenu')
-        <div class="outer-wrap">
-            <div class="welcome-user">
-                <p>@include('partials.userAndLogout')</p>
+        <div class="container">
+            <div class="outer-wrap">
+                <div class="welcome-user">
+                    <p>@include('partials.userAndLogout')</p>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="home-wrap">
+                    @include('partials.leftMenu')
+                    @include('partials.mainCategories')
+                </div>
             </div>
-            <div class="clearfix"></div>
-            <div class="home-wrap">
-                @include('partials.leftMenu')
-                @include('partials.mainCategories')
-            </div>
+            @include("partials.footer")
         </div>
-        @include("partials.footer")
     </div>
 </div>
 </div>

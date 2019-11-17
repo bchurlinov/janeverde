@@ -433,6 +433,12 @@ a:hover {
   transform: translate(-50%, -50%);
 }
 
+@media (min-width: 992px) and (max-width: 1300px) {
+  .selectric .label {
+    margin: 0 0 0 9px;
+  }
+}
+
 .selectric .button {
   display: block;
   position: absolute;
@@ -642,6 +648,11 @@ a:hover {
 
 .selectric-items .selectric-group li {
   padding-left: 25px;
+}
+
+.selectric-mobile .selectric .label {
+  margin: 0 10px 2px 15px !important;
+  width: 20px;
 }
 
 @media (max-width: 991px) {
@@ -1011,10 +1022,22 @@ a:hover {
 
 .product-template-wrap-listview .qs-list-view img {
   width: 25px;
-  height: 25px;
-  top: 12px;
+  height: 30px;
+  top: 8px;
   position: relative;
   display: block;
+}
+
+@media (max-width: 1300px) {
+  .product-template-wrap-listview .qs-list-view img {
+    right: -5px;
+  }
+}
+
+@media (max-width: 992px) {
+  .product-template-wrap-listview .qs-list-view img {
+    right: 20px;
+  }
 }
 
 .product-template-wrap-listview .popover-content {
@@ -2234,7 +2257,7 @@ a:hover {
 
 .details-product__facts .user-verification-info {
   padding: 15px 10px;
-  margin-top: 62px;
+  margin-top: 66px;
   border: 1px solid #1c6d5a;
   border-radius: 1px;
 }
@@ -2259,6 +2282,18 @@ a:hover {
   height: 27px;
   top: 6px;
   margin-right: 5px;
+}
+
+@media (max-width: 1300px) {
+  .details-product__facts .user-verification-info h5 img {
+    top: 12px;
+  }
+}
+
+@media (max-width: 767px) {
+  .details-product__facts .user-verification-info h5 img {
+    top: 6px;
+  }
 }
 
 .details-product__facts .user-verification-info p {
@@ -2627,6 +2662,64 @@ a:hover {
      object-fit: cover !important;
 }
 
+.mobile-user-cannabis-error {
+  padding: 20px 30px;
+  border-top: 2px solid #9c9a99;
+  text-align: center;
+}
+
+.mobile-user-cannabis-error span {
+  color: indianred;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 23px;
+  margin-right: 10px;
+}
+
+.mobile-user-cannabis-error a {
+  transition: all 0.1s ease-in-out;
+  font-weight: bold;
+  color: #1c6d5a;
+}
+
+.mobile-user-cannabis-error a:hover {
+  color: #26967c;
+}
+
+.desktop-user-cannabis-error {
+  padding: 20px 30px;
+  text-align: center;
+  border: 2px solid #9c9a99;
+  border-radius: 4px;
+  box-shadow: 10px 10px 8px -8px #cccccc;
+  max-width: 500px;
+  margin: 100px auto;
+}
+
+.desktop-user-cannabis-error span {
+  color: indianred;
+  font-weight: bold;
+  display: inline-block;
+  font-size: 23px;
+  margin-right: 10px;
+}
+
+.desktop-user-cannabis-error a {
+  transition: all 0.1s ease-in-out;
+  font-weight: bold;
+  color: #1c6d5a;
+}
+
+.desktop-user-cannabis-error a:hover {
+  color: #26967c;
+}
+
+@media (max-width: 767px) {
+  .desktop-user-cannabis-error {
+    display: none;
+  }
+}
+
 .welcome-user {
   float: right;
   margin-right: 20px;
@@ -2637,6 +2730,7 @@ a:hover {
 
 .welcome-user p {
   font-size: 14px !important;
+  text-decoration: underline;
 }
 
 .welcome-user p a {
@@ -2645,6 +2739,40 @@ a:hover {
 
 .welcome-user p a:hover {
   color: #1c6d5a;
+}
+
+@media (max-width: 992px) {
+  .welcome-user {
+    display: none !important;
+  }
+}
+
+.welcome-user-mobile {
+  display: none;
+  float: right;
+  margin-right: 20px;
+  position: relative;
+  top: 7px;
+  font-style: italic;
+}
+
+.welcome-user-mobile p {
+  font-size: 14px !important;
+  text-decoration: underline;
+}
+
+.welcome-user-mobile p a {
+  color: #393536;
+}
+
+.welcome-user-mobile p a:hover {
+  color: #1c6d5a;
+}
+
+@media (max-width: 991px) {
+  .welcome-user-mobile {
+    display: block;
+  }
 }
 
 .wrapper {
@@ -2679,6 +2807,7 @@ a:hover {
 @media (max-width: 991px) {
   .home-wrap {
     display: none;
+    padding-right: 15px;
   }
 }
 
@@ -2773,6 +2902,13 @@ a:hover {
   position: relative;
 }
 
+@media (max-width: 992px) {
+  .hemp-cannabis-toggle {
+    position: relative;
+    top: 1px;
+  }
+}
+
 .hemp-cannabis-toggle button {
   flex: 0 0 50%;
   height: 36px;
@@ -2808,6 +2944,12 @@ a:hover {
   border: none !important;
   transform: scale(1.08);
   z-index: 99;
+}
+
+@media (max-width: 991px) {
+  .toggle-active {
+    transform: scale(1) !important;
+  }
 }
 
 .listing-account {
@@ -2851,7 +2993,7 @@ a:hover {
 
 @media (max-width: 767px) {
   .current-state-heading {
-    display: none;
+    display: none !important;
   }
 }
 
@@ -3289,7 +3431,7 @@ footer div:last-of-type ul li a:after {
   border-bottom: none;
 }
 
-@media (max-width: 545px) {
+@media (max-width: 767px) {
   .home-wrap-mobile__togles .toggle-countries {
     flex: 0 0 100%;
     padding-left: 0;
@@ -3309,7 +3451,7 @@ footer div:last-of-type ul li a:after {
   padding-right: 10px;
 }
 
-@media (max-width: 545px) {
+@media (max-width: 767px) {
   .home-wrap-mobile__togles .selectric-mobile {
     flex: 0 0 calc(50% - 10px);
     padding-left: 0;
@@ -3358,7 +3500,7 @@ footer div:last-of-type ul li a:after {
 }
 
 .search-mobile {
-  flex: 0 0 33.333%;
+  flex: 0 0 50%;
   position: relative;
   text-align: center;
   flex: none;
@@ -3385,7 +3527,7 @@ footer div:last-of-type ul li a:after {
 
 @media (max-width: 600px) {
   .search-mobile {
-    flex: 0 0 33%;
+    flex: 0 0 50%;
   }
 }
 

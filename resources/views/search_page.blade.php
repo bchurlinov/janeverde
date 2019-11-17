@@ -1,7 +1,7 @@
 @extends('partials.layout')
 @php
-    $category =
-    $country = json_decode(session()->get('country'), true);
+$category =
+$country = json_decode(session()->get('country'), true);
 @endphp
 @section("css_links")
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.min.css">
@@ -23,6 +23,7 @@
             <div class="welcome-user">
                 <p>@include('partials.userAndLogout')</p>
             </div>
+            <div class="clearfix"></div>
             <div class="home-wrap home-search-wrap">
                 @include('partials.leftMenu')
 
@@ -31,7 +32,8 @@
                         <div class="current-state-heading__item">
                             <h3>{{$country['fullName']}} /
                                 {{session()->get('type') == 'null' ? 'HEMP' : strtoupper(session()->get('type'))}} /
-                                {{strtoupper(App\Http\Controllers\ProductsController::getCategoryName(request()->segment(2)))}}</h3>
+                                {{strtoupper(App\Http\Controllers\ProductsController::getCategoryName(request()->segment(2)))}}
+                            </h3>
                         </div>
                         <div class="current-state-heading__item current-state-heading__desktop">
                             <form method="GET"
@@ -43,25 +45,29 @@
                             </form>
                         </div>
                     </div>
-                   
+
                     <div class="search-wrap">
                         <div class="search-filters">
-                        @if(!$hideFields)
+                            @if(!$hideFields)
                             <div class="search-filters__sorting">
                                 <div class="hemp-cannabis-toggle">
-                                    <button class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'viewAll' ? "toggle-active" : ""}}" id="viewAll">View All</button>
-                                    <button class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'verifiedOnly' ? "toggle-active" : ""}}" id="verifiedOnly">Verified</button>
+                                    <button
+                                        class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'viewAll' ? "toggle-active" : ""}}"
+                                        id="viewAll">View All</button>
+                                    <button
+                                        class="ftype {{session()->get('searchType') != 'null' && session()->get('searchType') == 'verifiedOnly' ? "toggle-active" : ""}}"
+                                        id="verifiedOnly">Verified</button>
                                 </div>
                             </div>
-                                
-                                @php
-                                if($products != null){
-                                    echo $keyword == "" ? $products->links() : $products->appends(['keyword' =>
-                                    $keyword])->links();
-                                }
 
-                                @endphp
-                            
+                            @php
+                            if($products != null){
+                            echo $keyword == "" ? $products->links() : $products->appends(['keyword' =>
+                            $keyword])->links();
+                            }
+
+                            @endphp
+
                             <div class="search-filters__views">
                                 <button onclick="renderGridView(this)" class="grid-list-button" data-toggle="grid"><i
                                         class="fas fa-th-large toggle-icon" title="Gallery View"></i>
@@ -70,19 +76,22 @@
                                     data-toggle="list"><i class="fas fa-bars toggle-icon"></i>
                                 </button>
                             </div>
-                        @endif
+                            @endif
                         </div>
                     </div>
-                    
+
 
                     <div class="search-products-listing">
                         <div class="products-listing-wrap">
                             @if($products == null || count($products) == 0)
-                                @if($hideFields)
-                                {!! "<h1>Please log in to view Cannabis products</h1>" !!}
-                                @else
-                                    {{"No posts"}}
-                                @endif
+                            @if($hideFields)
+                            {!! "<div class='desktop-user-cannabis-error' style='margin-top: 40px;'>
+                                <h3><span>!</span>Please <a href='http://account.janeverde.com'>log in</a> to view
+                                    Cannabis products</h3>
+                            </div>"; !!}
+                            @else
+                            {{"No posts"}}
+                            @endif
                             @else
                             @foreach($products as $product)
                             <div class="product-template-wrap">
@@ -90,108 +99,119 @@
                                     <div class="product-template__image">
                                         <div class="slider">
                                             @php
-                                                $allImgs = 0;
-                                                for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
-                                                    $allImgs += 1;
-                                                    echo '<figure>
+                                            $allImgs = 0;
+                                            for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
+                                                $allImgs += 1;
+                                                echo '<figure>
                                                     <a href="/view/'.$product->id.'">
-                                                    ';
-                                                    echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde
-                                                        Image" data-width="100%" data-minheight="100%">';
+                                                        ';
+                                                        echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane
+                                                            Verde Image" data-width="100%" data-minheight="100%">';
                                                         echo '</a>
-                                                        </figure>';
-                                                    }
+                                                </figure>';
+                                                }
                                                 }
                                                 if($allImgs == 0){
                                                 echo '<figure>
                                                     <a href="/view/'.$product->id.'">
-                                                    ';
-                                                    echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane Verde
-                                                        Image" >';
-                                                         echo '</a>
-                                                        </figure>';
+                                                        ';
+                                                        echo '<img
+                                                            src="'.asset("/images/image_placeholder.jpg").'"alt="Jane
+                                                            Verde Image">';
+                                                        echo '</a>
+                                                </figure>';
                                                 }
-                                            @endphp
+                                                @endphp
 
                                         </div>
                                         <div class="price-box">
                                             <span>${{$product->price}}</span>
                                         </div>
                                     </div>
-                                  
+
                                     <div class="product-template__info">
                                         <div>
                                             <div>
                                                 @php
-                                                    $allImgs = 0;
-                                                    $index = 0;
-                                                    for($i = 1; $i < 11; $i++){
-                                                    $img="img$i" ;
-                                                    if($product->$img !== null){
-                                                        $allImgs += 1;
-                                                        echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane Verde
-                                                            Image" class="list-view-image">';
-                                                        break;
-                                                        }
+                                                $allImgs = 0;
+                                                $index = 0;
+                                                for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
+                                                    $allImgs += 1;
+                                                    echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane
+                                                        Verde Image" class="list-view-image">';
+                                                    break;
+                                                    }
                                                     }
                                                     if($allImgs == 0){
-                                                        echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane Verde
-                                                            Image" class="list-view-image">';
+                                                    echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane
+                                                        Verde Image" class="list-view-image">';
                                                     }
-                                                @endphp
-
-                                                <div class="clearfix"></div>
-                                                <span class="qs">
-                                                    @php
-                                                    $verif = $product->userAlter != null && $product->userAlter->verified == 1 ? true : false;
                                                     @endphp
-                                                <img src={!! !$verif  ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
-                                                        alt="Jane Verde - SVG Icon" style="height: 30px!important" />
 
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={!! !$verif ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
-                                                                alt="Jane Verde - SVG Icon" />
+                                                    <div class="clearfix"></div>
+                                                    <span class="qs">
+                                                        @php
+                                                        $verif = $product->userAlter != null &&
+                                                        $product->userAlter->verified == 1 ? true : false;
+                                                        @endphp
+                                                        <img src={!! !$verif ? asset('images/shield_gray.jpg') :
+                                                            asset('images/shield_green.svg') !!}
+                                                            alt="Jane Verde - SVG Icon"
+                                                            style="height: 30px!important" />
+
+                                                        <div class="popover above popover-content">
+                                                            <h4>
+                                                                <img src={!! !$verif ? asset('images/shield_gray.jpg') :
+                                                                    asset('images/shield_green.svg') !!}
+                                                                    alt="Jane Verde - SVG Icon" />
+                                                                @if($verif)
+                                                                Verified Business
+                                                                @else
+                                                                Not Verified
+                                                                @endif
+                                                            </h4>
                                                             @if($verif)
-                                                            Verified Business
+                                                            <ul>
+                                                                <li><i class="fas fa-check"></i>Location:
+                                                                    {{$product->location}}</li>
+                                                                <li><i class="fas fa-check"></i>License number: {!!
+                                                                    $product->userAlter->licensenumber !!}</li>
+                                                            </ul>
                                                             @else
-                                                            Not Verified
+                                                            <ul>
+                                                                <li></li>
+                                                            </ul>
                                                             @endif
-                                                        </h4>
-                                                        @if($verif)
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Location: {{$product->location}}</li>
-                                                            <li><i class="fas fa-check"></i>License number: {!! $product->userAlter->licensenumber !!}</li>
-                                                        </ul>
-                                                        @else
-                                                        <ul>
-                                                            <li></li>
-                                                        </ul>
-                                                        @endif
-                                                    </div>
-                                                </span>
+                                                        </div>
+                                                    </span>
                                             </div>
                                         </div>
                                         <div>
                                             <h4>
                                                 <span>@php
                                                     echo date('M d', strtotime($product->created_at));
-                                                @endphp</span>
+                                                    @endphp</span>
                                                 <a href="/view/{{$product->id}}">
                                                     @php
-                                                        echo strlen($product->title) > 45 ? substr($product->title, 0, 50) . "..." : $product->title;    
-                                                        $verif = $product->userAlter != null && $product->userAlter->verified == 1 ? true : false;
+                                                    echo strlen($product->title) > 45 ? substr($product->title, 0, 50) .
+                                                    "..." : $product->title;
+                                                    $verif = $product->userAlter != null &&
+                                                    $product->userAlter->verified == 1 ? true : false;
                                                     @endphp
                                                 </a>
-                                                <span class="product-location" style="display: inline">({{$product->location}})</span>
-                                              
-                                                <span class="qs qs-list-view" >
-                                                    <img src= {!! !$verif  ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
+                                                <span class="product-location"
+                                                    style="display: inline">({{$product->location}})</span>
+
+                                                <span class="qs qs-list-view">
+                                                    <img src={!! !$verif ? asset('images/shield_gray.jpg') :
+                                                        asset('images/shield_green.svg') !!}
                                                         alt="Jane Verde - SVG Icon" />
                                                     <div class="popover above popover-content">
                                                         <h4>
-                                                            <img src={!! $product->verified === 0 ? asset('images/shield_gray.jpg') : asset('images/shield_green.svg') !!}
-                                                                alt="Jane Verde - SVG Icon" />
+                                                            <img src={!! $product->verified === 0 ?
+                                                            asset('images/shield_gray.jpg') :
+                                                            asset('images/shield_green.svg') !!}
+                                                            alt="Jane Verde - SVG Icon" />
                                                             @if($verif)
                                                             Verified Business
                                                             @else
@@ -200,8 +220,10 @@
                                                         </h4>
                                                         @if($verif)
                                                         <ul>
-                                                            <li><i class="fas fa-check"></i>Location: {{$product->location}}</li>
-                                                            <li><i class="fas fa-check"></i>License number: {!! $product->userAlter->licensenumber !!}</li>
+                                                            <li><i class="fas fa-check"></i>Location:
+                                                                {{$product->location}}</li>
+                                                            <li><i class="fas fa-check"></i>License number: {!!
+                                                                $product->userAlter->licensenumber !!}</li>
                                                         </ul>
                                                         @else
                                                         <ul>
@@ -210,7 +232,7 @@
                                                         @endif
                                                     </div>
                                                 </span>
-                                               
+
                                             </h4>
                                         </div>
                                         <div class="details-page-link">

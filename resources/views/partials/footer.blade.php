@@ -8,7 +8,7 @@
             <li><a href="/privacy-policy" >Privacy Policy</a></li>
             <li><a href="javascript:;" >Avoid Scams & Fraud</a></li>
             <li><a href="javascript:;" >Become verified member</a></li>
-            <li><a href="javascript:;"  class="last-footer-item">Espanol - ES</a></li>
+            {{-- <li><a href="javascript:;"  class="last-footer-item">Espanol - ES</a></li> --}}
         </ul>
         <div class="clearfix"></div>
     </div>

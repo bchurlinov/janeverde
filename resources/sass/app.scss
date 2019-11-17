@@ -16,6 +16,58 @@
   }
 }
 
+.mobile-user-cannabis-error {
+  padding: 20px 30px;
+  border-top: 2px solid #9c9a99;
+  text-align: center;
+  span {
+    color: indianred;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 23px;
+    margin-right: 10px;
+  }
+
+  a {
+    @include transition-1;
+    font-weight: bold;
+    color: $main-green-color;
+    &:hover {
+      color: lighten($main-green-color, 10%);
+    }
+  }
+}
+
+.desktop-user-cannabis-error {
+  padding: 20px 30px;
+  text-align: center;
+  border: 2px solid #9c9a99;
+  @include border-radius(4px);
+  box-shadow: 10px 10px 8px -8px #cccccc;
+  max-width: 500px;
+  margin: 100px auto;
+  span {
+    color: indianred;
+    font-weight: bold;
+    display: inline-block;
+    font-size: 23px;
+    margin-right: 10px;
+  }
+
+  a {
+    @include transition-1;
+    font-weight: bold;
+    color: $main-green-color;
+    &:hover {
+      color: lighten($main-green-color, 10%);
+    }
+  }
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
 .welcome-user {
   float: right;
   margin-right: 20px;
@@ -23,13 +75,39 @@
   top: 7px;
   font-style: italic;
   p {
-    font-size: 14px!important;
+    font-size: 14px !important;
+    text-decoration: underline;
     a {
       color: $font-color;
       &:hover {
         color: $main-green-color;
       }
     }
+  }
+  @media(max-width: 992px) {
+    display: none !important;
+  }
+}
+
+.welcome-user-mobile {
+  display: none;
+  float: right;
+  margin-right: 20px;
+  position: relative;
+  top: 7px;
+  font-style: italic;
+  p {
+    font-size: 14px !important;
+    text-decoration: underline;
+    a {
+      color: $font-color;
+      &:hover {
+        color: $main-green-color;
+      }
+    }
+  }
+  @media (max-width: 991px) {
+    display: block;
   }
 }
 
@@ -59,7 +137,9 @@
   padding-right: 0;
   @media (max-width: 991px) {
     display: none;
+    padding-right: 15px;
   }
+
   &__item {
     &:first-of-type {
       flex: 0 0 calc(25% - 15px);
@@ -135,6 +215,12 @@
   flex-flow: row wrap;
   margin-top: -1px;
   position: relative;
+
+  @media(max-width: 992px){
+    position: relative;
+    top: 1px;
+  }
+
   button {
     flex: 0 0 50%;
     height: 36px;
@@ -168,6 +254,9 @@
   border: none !important;
   @include transform(scale(1.08));
   z-index: 99;
+  @media (max-width: 991px) {
+    @include transform(scale(1)!important);
+  }
 }
 
 // fieldset {
@@ -299,9 +388,11 @@
   padding: 20px;
   background: $grey-color;
   border: 1px solid lightgray;
+
   @media (max-width: 767px) {
-    display: none;
+    display: none !important;
   }
+ 
   &__item {
     &:first-of-type {
       flex: 0 0 70%;
@@ -694,15 +785,8 @@ footer {
     flex: 0 0 calc(33.33% - 20px);
     padding: 10px;
     border-bottom: none;
-    // fieldset {
-    //   height: 35px;
-    //   span.switch-labels {
-    //     margin-top: -5px;
-    //     font-size: 12px;
-    //   }
-    // }
 
-    @media (max-width: 545px) {
+    @media (max-width: 767px) {
       flex: 0 0 100%;
       padding-left: 0;
       padding-right: 0;
@@ -717,7 +801,7 @@ footer {
     flex: 0 0 calc(33.33% - 20px);
     padding-left: 10px;
     padding-right: 10px;
-    @media (max-width: 545px) {
+    @media (max-width: 767px) {
       flex: 0 0 calc(50% - 10px);
       padding-left: 0;
       padding-right: 20px;
@@ -756,7 +840,7 @@ footer {
 }
 
 .search-mobile {
-  flex: 0 0 33.333%;
+  flex: 0 0 50%;
   position: relative;
   text-align: center;
   flex: none;
@@ -773,8 +857,9 @@ footer {
       text-indent: 20px;
     }
   }
+
   @media (max-width: 600px) {
-    flex: 0 0 33%;
+    flex: 0 0 50%;
   }
 
   @media (max-width: 545px) {
