@@ -147,28 +147,26 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
            ];
         }
         
-        $users->canPost = 0;
+        $users->canPost = 1;
         //can the user post?
-        if($users->verification_step_1 == 1){
-            $users->canPost = 1;
-            $year = date('Y');
-            $month = date('m');
-            $startday = "01";
-            $endDay = date('t');
-            $from = date("$year-$month-$startday");
-            $to = date("$year-$month-$endDay");
-            $res = Product::where('user_id', '=', auth()->user()->id)->whereBetween('created_at', [$from, $to])->get();
-            if($res->count() == 3){
-                $users->canPost = 0;
-            }
-        }
+        $users->canPost = 1;
+        $year = date('Y');
+        $month = date('m');
+        $startday = "01";
+        $endDay = date('t');
+        $from = date("$year-$month-$startday");
+        $to = date("$year-$month-$endDay");
+        $res = Product::where('user_id', '=', auth()->user()->id)->whereBetween('created_at', [$from, $to])->get();
+        if($res->count() == 3){
+            $users->canPost = 0;
+        }        
 
-        if($users->verification_step_1 == 1 && $users->picture_i_d['verified'] == 1 &&
+        if($users->picture_i_d['verified'] == 1 &&
            $users->subscription['id'] > 0 && $users->subscription['active'] == 1){
             $users->canPost = 1;
         }
 
-        if($users->verification_step_1 == 1 && $users->picture_i_d['verified'] == 1 &&
+        if($users->picture_i_d['verified'] == 1 &&
            $users->business_license['verified'] == 1 && $users->industrial_license['verified'] == 1){
             $users->canPost = 1;
         }

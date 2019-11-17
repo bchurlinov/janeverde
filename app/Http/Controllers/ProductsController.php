@@ -596,21 +596,17 @@ class ProductsController extends Controller
         */
         //load the user with all his relations
         $canPost = false;
-        $threeAMonth = 0;
+        $threeAMonth = 1;
 
         $users = User::with('industrialLicense', 'businessLicense', 'pictureID', 'country', 'supportingDocuments', 'subscription')->find(auth()->user()->id);
 
-        if($users->verification_step_1 == 1){
-            $canPost = 1;
-            $threeAMonth = 1;
-        }
-        if($users->verification_step_1 == 1 && $users->pictureID != null && $users->pictureID->verified == 1 &&
+        if($users->pictureID != null && $users->pictureID->verified == 1 &&
             $users->businessLicense != null && $users->businessLicense->verified == 1 &&
             $users->subscription != null && $users->subscription->id > 0 && $users->subscription->active == 1){
             $canPost = 1;
             $threeAMonth = 2;
         }
-        if($users->verification_step_1 == 1 && $users->pictureID != null && $users->pictureID->verified == 1 &&
+        if($users->pictureID != null && $users->pictureID->verified == 1 &&
             $users->businessLicense != null && $users->businessLicense->verified == 1 &&
             $users->industrialLicense != null && $users->industrialLicense->verified == 1){
             $canPost = 1;
