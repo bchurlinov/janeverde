@@ -298,14 +298,15 @@ $fhf = ProductsController::checkfhf();
                                 <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
                             </div>
                             <div class="modal-body">
-                                <form onsubmit="submitEmailFriend(event, this)">
+                                <form onsubmit="submitEmailFriend(event, this)" id="form">
                                     <label>Your name</label>
                                     <input type="text" name="name" />
                                     <label>Friend's e-mail address</label>
                                     <input type="email" name="friends_name" />
-                                    <input type="hidden" name="product_url" value="34"/>
+                                    <input type="hidden" name="product_url" value="{{$product->id}}"/>
                                     <div class="modal-footer">
                                         <button class="btn-link" type="submit" id="btn_ingresar">Send</button>
+                                        <div id="status"></div>
                                     </div>
                                 </form>
                             </div>

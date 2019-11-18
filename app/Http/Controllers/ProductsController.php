@@ -491,6 +491,20 @@ class ProductsController extends Controller
         return $this->manageProducts(true);
     }
 
+    public function deleteproductapi(Request $request){
+        $loggedUserId = auth()->user()->id;
+        $product = Product::find($request->input('id'));
+        if($product == null){
+            return json_encode(['status' => 'failed', 'reason' => 'Post not found.']);
+        }
+        if($loggedUserId != $product->user_id){
+            return json_encode(['status' => 'failed', 'reason' => 'Deletion failed']);
+        }
+        $product->is_deleted = 1;
+        $product->save();
+        return json_encode(['status' => 'failed', 'reason' => 'Post deleted successfully']);
+    }
+
     /**
      * restore a product
      * @param int $id the id of the product

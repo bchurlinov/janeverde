@@ -17,5 +17,19 @@ $(document).ready(function () {
 
 function submitEmailFriend(event, t) {
     event.preventDefault();
-    console.log($(t).serialize());
+    var c = $(t).serialize();
+    
+    $.get(
+        "/sendemailfriend", {
+            fdata: c
+        },
+        function (data) {
+            data = data.trim();
+            if(data === "1"){
+                $('#form').trigger("reset");
+                $("#status").html('<br />Post emailed successfully!').fadeOut(5000);
+            }
+        }
+    );
+
 }

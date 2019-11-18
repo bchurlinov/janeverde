@@ -7,6 +7,8 @@ Route::get('/cc', function(){
     Artisan::call('view:clear');
 });
 
+Route::get('/sendemailfriend', 'UserController@sendemailfriend');
+
 
 Route::get('/verifyemail', function(){
     $email = $_GET['e'];

@@ -792,4 +792,20 @@ class UserController extends Controller
         }
         return json_encode(['status' => 'success', 'reason' => 'Please check your email']);
     }
+
+    public function sendemailfriend(Request $request){
+        parse_str($request->get('fdata'), $output);
+
+        $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
+                ->setUsername('janeverdetestonline@gmail.com')->setPassword('JaneVerde001');
+        $mailer = new \Swift_Mailer($transport);
+        $body  = "Hey ".$output['name'].",check this <a href='".config('variables.phpurl')."/view/".$output['product_url']."'>post</a> ";
+        $body .= " on JaneVERDE!";
+        $message = (new \Swift_Message("Check this post!"))->setFrom(['john@doe.com' => 'JaneVERDE'])
+            ->setTo([$output['friends_name']])->setBody($body);
+        $message->setContentType("text/html");
+        $mailer->send($message);
+
+        echo "1";
+    }
 }

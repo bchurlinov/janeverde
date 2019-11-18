@@ -213,6 +213,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //forgot password
     Route::post('/user/forgotPassword', 'UserController@forgotPasswordReset');
 
+    //product delete
+    Route::post('/user/deleteproduct', 'ProductsController@deleteproductapi');
+
     //user logout
     Route::post('user/logout', function(Request $request){
         $request->validate(['token' => 'required']);
