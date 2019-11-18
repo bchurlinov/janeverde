@@ -495,6 +495,18 @@ class ProductsController extends Controller
         $pid = $request->input('id');
         $loggedUserId = auth()->user()->id;
         $favorite = Favorite::where('user_id', '=', $loggedUserId)->get()->first();
+        if($favorite == null){
+            return json_encode(['status' => 'failed', 'reason' => 'No such post']);
+        }
+        $ids = array_filter(explode(",", $favorite->product_id));
+        $key = array_search($pid, $ids);
+        if($key != false){
+            unset($ids[$key]);
+        }
+        $ids = implode(",", $ids);
+        $favorite->product_id = $ids;
+        $favorite->save();
+        return json_encode(['status' => 'success', 'reason' => 'Post removed from saved posts successfully']);
     }
 
     public function deleteproductapi(Request $request){
