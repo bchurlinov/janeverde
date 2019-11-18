@@ -428,7 +428,7 @@ class UserController extends Controller
             'product_id' => 'required|numeric'
         ]);
 
-        $product = Product::where([['user_id', '=', $request->user_id], ['id', '=', $request->product_id]])->get();
+        $product = Product::where([['user_id', '=', $request->user_id], ['id', '=', $request->product_id], ['is_deleted', '=', '0']])->get();
 
         $response = ['status' => 'success', 'product' => []];
 
