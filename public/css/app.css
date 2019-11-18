@@ -2354,6 +2354,16 @@ a:hover {
   border-radius: 4px;
 }
 
+.user-other-adds ul li a {
+  color: #393536;
+  transition: all 0.1s ease-in-out;
+}
+
+.user-other-adds ul li a:hover {
+  color: #1c6d5a;
+  text-decoration: none;
+}
+
 .product-footer {
   border-top: 1px solid #9c9a99;
   padding: 15px 10px;
@@ -2380,6 +2390,117 @@ a:hover {
   display: inline-block;
   margin-right: 20px;
 }
+
+/* Email to Friend Modal */
+
+.openmodale {
+  cursor: pointer;
+}
+
+.btn-close {
+  color: #aaaaaa;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 10px;
+  position: absolute;
+  right: 7px;
+  top: 0;
+}
+
+.btn-close:hover {
+  color: #919191;
+}
+
+.modale:before {
+  content: "";
+  display: none;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.opened:before {
+  display: block;
+}
+
+.opened .modal-dialog {
+  transform: translate(0, 0);
+  top: 20%;
+}
+
+.modal-dialog {
+  background: #fefefe;
+  border: #333333 solid 0px;
+  border-radius: 5px;
+  margin-left: -200px;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: -100%;
+  z-index: 999;
+  width: 360px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  transform: translate(0, -500%);
+  transition: transform 0.3s ease-out;
+}
+
+.modal-body {
+  padding: 20px;
+}
+
+.modal-body input {
+  width: 100%;
+  padding: 8px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+  color: #393536;
+  margin-bottom: 15px;
+  outline: 0;
+  font-size: 14px;
+}
+
+.modal-body label {
+  display: block;
+  text-align: left !important;
+  font-size: 12px;
+}
+
+.modal-header,
+.modal-footer {
+  padding: 15px 20px;
+}
+
+.modal-footer button {
+  color: white;
+  font-size: 15px;
+  padding: 8px 17px;
+  background: #1c6d5a;
+  border: 1px solid #1c6d5a;
+  position: relative;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.1s ease-in-out;
+}
+
+.modal-footer button:hover {
+  color: #1c6d5a;
+  border: 1px solid #1c6d5a;
+  background: white;
+}
+
+.modal-header {
+  border-bottom: #eeeeee solid 1px;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+}
+
+/* End Email to Friend Modal */
 
 .form {
   background: #fafafa;
@@ -3253,6 +3374,7 @@ a:hover {
 footer {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   padding: 20px;
   background: #1c6d5a;
 }
@@ -3292,6 +3414,7 @@ footer div:first-of-type h4 img {
 
 footer div:last-of-type {
   flex: 0 0 75%;
+  text-align: center;
 }
 
 @media (max-width: 991px) {

@@ -285,9 +285,35 @@ $fhf = ProductsController::checkfhf();
                             <li>post id: #{{$product->id}}</li>
                             <li>posted: {{$createdString}}</li>
                             <li>updated: {{$updatedString}}</li>
-                            <li>email to friend</li>
+                            <li><a class="openmodale">email to friend</a></li>
                         </ul>
                     </div>
+
+                    <!-- Email to Friend Modal -->
+
+                    <div class="modale" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-header">
+                                <h2>Send to Friend</h2>
+                                <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
+                            </div>
+                            <div class="modal-body">
+                                <form onsubmit="submitEmailFriend(event, this)">
+                                    <label>Your name</label>
+                                    <input type="text" name="name" />
+                                    <label>Friend's e-mail address</label>
+                                    <input type="email" name="friends_name" />
+                                    <input type="hidden" name="product_url" value="34"/>
+                                    <div class="modal-footer">
+                                        <button class="btn-link" type="submit" id="btn_ingresar">Send</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- End Modal -->
                 </div>
             </div>
         </div>

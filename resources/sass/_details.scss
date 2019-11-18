@@ -298,11 +298,11 @@
           height: 27px;
           top: 6px;
           margin-right: 5px;
-          @media(max-width: 1300px) {
+          @media (max-width: 1300px) {
             top: 12px;
           }
 
-          @media(max-width:767px) {
+          @media (max-width: 767px) {
             top: 6px;
           }
         }
@@ -360,6 +360,14 @@
       border: 1px solid #e0e0e0 !important;
       font-size: 13px;
       @include border-radius(4px);
+      a {
+        color: $font-color;
+        @include transition-1;
+        &:hover {
+          color: $main-green-color;
+          text-decoration: none;
+        }
+      }
     }
   }
 }
@@ -381,9 +389,126 @@
 }
 
 .product-description-wrap-info {
- margin-top: 30px;
+  margin-top: 30px;
   li {
     display: inline-block;
     margin-right: 20px;
   }
 }
+
+/* Email to Friend Modal */
+
+.openmodale {
+  cursor: pointer;
+}
+
+.btn-close {
+  color: #aaaaaa;
+  font-size: 20px;
+  text-decoration: none;
+  padding: 10px;
+  position: absolute;
+  right: 7px;
+  top: 0;
+}
+
+.btn-close:hover {
+  color: #919191;
+}
+
+.modale:before {
+  content: "";
+  display: none;
+  background: rgba(0, 0, 0, 0.6);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+}
+
+.opened:before {
+  display: block;
+}
+
+.opened .modal-dialog {
+  -webkit-transform: translate(0, 0);
+  -ms-transform: translate(0, 0);
+  transform: translate(0, 0);
+  top: 20%;
+}
+
+.modal-dialog {
+  background: #fefefe;
+  border: #333333 solid 0px;
+  border-radius: 5px;
+  margin-left: -200px;
+  text-align: center;
+  position: fixed;
+  left: 50%;
+  top: -100%;
+  z-index: 999;
+  width: 360px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+  -webkit-transform: translate(0, -500%);
+  -ms-transform: translate(0, -500%);
+  transform: translate(0, -500%);
+  -webkit-transition: -webkit-transform 0.3s ease-out;
+  -moz-transition: -moz-transform 0.3s ease-out;
+  -o-transition: -o-transform 0.3s ease-out;
+  transition: transform 0.3s ease-out;
+}
+
+.modal-body {
+  padding: 20px;
+  input {
+    width: 100%;
+    padding: 8px;
+    @include border-radius(3px);
+    border: 1px solid #ddd;
+    color: $font-color;
+    margin-bottom: 15px;
+    outline: 0;
+    font-size: 14px;
+  }
+  label {
+    display: block;
+    text-align: left !important;
+    font-size: 12px;
+  }
+}
+
+.modal-header,
+.modal-footer {
+  padding: 15px 20px;
+}
+
+.modal-footer {
+  button {
+    color: white;
+    font-size: 15px;
+    padding: 8px 17px;
+    background: $main-green-color;
+    border: 1px solid $main-green-color;
+    position: relative;
+    cursor: pointer;
+    @include border-radius(3px);
+    @include transition-1;
+    &:hover {
+      color: $main-green-color;
+      border: 1px solid $main-green-color;
+      background: white;
+    }
+  }
+}
+
+.modal-header {
+  border-bottom: #eeeeee solid 1px;
+}
+
+.modal-header h2 {
+  font-size: 20px;
+}
+
+/* End Email to Friend Modal */

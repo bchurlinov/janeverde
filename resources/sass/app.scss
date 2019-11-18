@@ -649,6 +649,7 @@
 footer {
   display: flex;
   flex-flow: row wrap;
+  justify-content: center;
   padding: 20px;
   background: $main-green-color;
   @media (max-width: 991px) {
@@ -680,6 +681,7 @@ footer {
 
     &:last-of-type {
       flex: 0 0 75%;
+      text-align: center;
       @media (max-width: 991px) {
         flex: 0 0 100%;
       }
