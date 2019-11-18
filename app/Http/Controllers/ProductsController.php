@@ -500,7 +500,7 @@ class ProductsController extends Controller
         }
         $ids = array_filter(explode(",", $favorite->product_id));
         $key = array_search($pid, $ids);
-        if($key != false){
+        if($key !== false){
             unset($ids[$key]);
         }
         $ids = implode(",", $ids);

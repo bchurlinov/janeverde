@@ -219,6 +219,18 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //remove from saved search
     Route::post('/user/removefromsaved', 'ProductsController@removefromsaved');
 
+    //save product draft
+    Route::post('/user/savedraft', 'ProductsController@savedraft');
+
+    //edit product draft
+    Route::post('/user/editdraft', 'ProductsController@editdraft');
+
+    //get single product draft
+    Route::post('/user/getdraft', 'ProductsController@getdraft');
+
+    //delete draft
+    Route::post('/user/deletedraft', 'ProductsController@deletedraft');
+
     //user logout
     Route::post('user/logout', function(Request $request){
         $request->validate(['token' => 'required']);
