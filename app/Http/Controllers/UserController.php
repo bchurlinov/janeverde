@@ -366,19 +366,21 @@ class UserController extends Controller
         ];
         if ($products->count() > 0) {
             foreach ($products as $product) {
-                $product->id = (int)$product->id;
-                $product->user_id = (int)$product->user_id;
-                $product->price = (int)$product->price;
-                $product->country_id = (int)$product->country_id;
-                $product->is_deleted = (int)$product->is_deleted;
-                $product->type = ucfirst($product->type);
-                $product->category_id = (int)$product->category_id;
-                $product->verified = (int)$product->verified;
-                $product->subcategory_id = $this->getSubCategory($product->subcategory_id)[0]['name'];
-                $created = $product->created_at;
-                $today = Carbon::createFromFormat('Y-m-d h:i:s', date('Y-m-d h:i:s'));
-                $days = $today->diff($created)->days;
-                $days > 90 ? $response['products']['expired'][] = $product : $response['products']['active'][] = $product;
+                if($product->is_deleted == "0"){
+                    $product->id = (int)$product->id;
+                    $product->user_id = (int)$product->user_id;
+                    $product->price = (int)$product->price;
+                    $product->country_id = (int)$product->country_id;
+                    $product->is_deleted = (int)$product->is_deleted;
+                    $product->type = ucfirst($product->type);
+                    $product->category_id = (int)$product->category_id;
+                    $product->verified = (int)$product->verified;
+                    $product->subcategory_id = $this->getSubCategory($product->subcategory_id)[0]['name'];
+                    $created = $product->created_at;
+                    $today = Carbon::createFromFormat('Y-m-d h:i:s', date('Y-m-d h:i:s'));
+                    $days = $today->diff($created)->days;
+                    $days > 90 ? $response['products']['expired'][] = $product : $response['products']['active'][] = $product;
+                }
             }
         }
 
@@ -390,16 +392,19 @@ class UserController extends Controller
             $prd = Product::whereIn("id", $favorite)->get();
             if($prd->count() > 0){
                 foreach($prd as $p){
-                    $p->id = (int)$p->id;
-                    $p->user_id = (int)$p->user_id;
-                    $p->price = (int)$p->price;
-                    $p->country_id = (int)$p->country_id;
-                    $p->is_deleted = (int)$p->is_deleted;
-                    $p->type = ucfirst($p->type);
-                    $p->category_id = (int)$p->category_id;
-                    $p->verified = (int)$p->verified;
-                    $p->subcategory_id = $this->getSubCategory($p->subcategory_id)[0]['name'];
-                    $response['products']['favorite'][] = $p;
+                    if($p->is_deleted == "0"){
+                        $p->id = (int)$p->id;
+                        $p->user_id = (int)$p->user_id;
+                        $p->price = (int)$p->price;
+                        $p->country_id = (int)$p->country_id;
+                        $p->is_deleted = (int)$p->is_deleted;
+                        $p->type = ucfirst($p->type);
+                        $p->category_id = (int)$p->category_id;
+                        $p->verified = (int)$p->verified;
+                        $p->subcategory_id = $this->getSubCategory($p->subcategory_id)[0]['name'];
+                        $response['products']['favorite'][] = $p;
+                    }
+                    
                 }
             }
         }
@@ -799,8 +804,8 @@ class UserController extends Controller
         $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
                 ->setUsername('janeverdetestonline@gmail.com')->setPassword('JaneVerde001');
         $mailer = new \Swift_Mailer($transport);
-        $body  = "Hey ".$output['name'].",check this <a href='".config('variables.phpurl')."/view/".$output['product_url']."'>post</a> ";
-        $body .= " on JaneVERDE!";
+        $body  = "Hey, your friend ".$output['name']." sent you this <a href='".config('variables.phpurl')."/view/".$output['product_url']."'>post</a> ";
+        $body .= " from ".config('variables.phpurl').". Check it out!";
         $message = (new \Swift_Message("Check this post!"))->setFrom(['john@doe.com' => 'JaneVERDE'])
             ->setTo([$output['friends_name']])->setBody($body);
         $message->setContentType("text/html");

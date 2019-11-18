@@ -491,6 +491,12 @@ class ProductsController extends Controller
         return $this->manageProducts(true);
     }
 
+    public function removefromsaved(Request $request){
+        $pid = $request->input('id');
+        $loggedUserId = auth()->user()->id;
+        $favorite = Favorite::where('user_id', '=', $loggedUserId)->get()->first();
+    }
+
     public function deleteproductapi(Request $request){
         $loggedUserId = auth()->user()->id;
         $product = Product::find($request->input('id'));

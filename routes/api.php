@@ -216,6 +216,9 @@ Route::group(['middleware' => ['jwt.auth','api-header']], function () {
     //product delete
     Route::post('/user/deleteproduct', 'ProductsController@deleteproductapi');
 
+    //remove from saved search
+    Route::post('/user/removefromsaved', 'ProductsController@removefromsaved');
+
     //user logout
     Route::post('user/logout', function(Request $request){
         $request->validate(['token' => 'required']);
