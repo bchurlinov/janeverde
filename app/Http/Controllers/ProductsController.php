@@ -13,6 +13,7 @@ use App\User;
 use App\Flagged;
 use App\Hide;
 use App\Favorite;
+use App\Drafts;
 
 class ProductsController extends Controller
 {
@@ -520,7 +521,7 @@ class ProductsController extends Controller
         }
         $product->is_deleted = 1;
         $product->save();
-        return json_encode(['status' => 'failed', 'reason' => 'Post deleted successfully']);
+        return json_encode(['status' => 'success', 'reason' => 'Post deleted successfully']);
     }
 
     /**
@@ -1028,5 +1029,173 @@ class ProductsController extends Controller
         $product->save();
 
         return json_encode(["status" => "success"]);
+    }
+
+    public function savedraft(Request $request){
+        $country = null;
+        if(request()->get('country') != null){
+            $country = Countries::where('name', '=', request()->get('country'))->get()->first();
+            if($country == null){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+                return;
+            }
+        }
+       
+        //all is fine with the country, check category
+        $subcategory = null;
+        if(request()->get('category') != null){
+            $subcategory = Subcategories::where('number', '=', request()->get('category'))->get()->first();
+            if($subcategory == null){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid category']);
+                return;
+            }
+        }
+        $category = null;
+        if($subcategory != null){
+            $category = Categories::where('number', '=', $subcategory->category_id)->get()->first();
+        }
+        
+        //all is fine with category, check type
+        $type = null;
+        if(request()->get('type') != null){
+            $type = request()->get('type');
+
+            if($type != "hemp" && $type != "cannabis"){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid type']);
+                return;
+            }
+        }
+        
+        $phonecalls = request()->get('phone_calls');
+        $textsms =  request()->get('text_sms');
+
+        $phonecalls = $phonecalls == false || $phonecalls == null ? "0" : "1";
+        $textsms = $textsms == false || $textsms == null ? ",0" : ",1";
+        $prefs = $phonecalls.$textsms;
+
+        if(request()->get('phone') == "" || request()->get('phone') == null){
+            $prefs = "0,0";
+        }
+
+        $draft = new Drafts;
+        $draft->user_id = $loggedUserId;
+        $draft->title = request()->get('title');
+        $draft->description = request()->get('description');
+        $draft->price = request()->get('price');
+        $draft->location = $country == null ? null : $country->full_country;
+        $draft->country_id = $country == null ? null : $country->id;
+        $draft->type = $type;
+        $draft->category_id = $category == null ? null : $category->number;
+        $draft->subcategory_id = $subcategory == null ? null : $subcategory->number;
+        $draft->state = $country == null ? null : $country->name;
+        $draft->phone = request()->get('phone') == null ? $draft->phone : request()->get('phone');
+        $draft->contact_preferences = $prefs;
+
+        //save draft
+        $draft->save();
+
+        echo json_encode(['status' => 'success']);
+    }
+
+    public function deletedraft(Request $request){
+        $loggedUserId = auth()->user()->id;
+        $draft = Drafts::find($request->input('id'));
+        if($draft == null){
+            return json_encode(['status' => 'failed', 'reason' => 'Draft not found']);
+        }
+        if($loggedUserId != $draft->user_id){
+            return json_encode(['status' => 'failed', 'reason' => 'Deletion failed']);
+        }
+        $draft->delete();
+        return json_encode(['status' => 'success', 'reason' => 'Draft deleted successfully']);
+    }
+
+    public function getdraft(Request $request){
+        $validate = $request->validate([
+            'user_id' => 'required|numeric',
+            'product_id' => 'required|numeric'
+        ]);
+
+        $draft = Drafts::where([['user_id', '=', $request->user_id], ['id', '=', $request->product_id]])->get()->first();
+        $response = ['status' => 'success', 'product' => []];
+
+        if ($draft != null) {
+            $draft = $draft[0]->toArray();
+            $response['product'] = $draft;
+            return json_encode($response);
+            
+        }
+        return json_encode(['status' => 'failed', 'product' => []]);
+    }
+
+    public function editdraft(Request $request){
+        $country = null;
+        if(request()->get('country') != null){
+            $country = Countries::where('name', '=', request()->get('country'))->get()->first();
+            if($country == null){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid country']);
+                return;
+            }
+        }
+       
+        //all is fine with the country, check category
+        $subcategory = null;
+        if(request()->get('category') != null){
+            $subcategory = Subcategories::where('number', '=', request()->get('category'))->get()->first();
+            if($subcategory == null){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid category']);
+                return;
+            }
+        }
+        $category = null;
+        if($subcategory != null){
+            $category = Categories::where('number', '=', $subcategory->category_id)->get()->first();
+        }
+        
+        //all is fine with category, check type
+        $type = null;
+        if(request()->get('type') != null){
+            $type = request()->get('type');
+
+            if($type != "hemp" && $type != "cannabis"){
+                echo json_encode(['status' => 'failed', 'reason' => 'invalid type']);
+                return;
+            }
+        }
+        
+        $phonecalls = request()->get('phone_calls');
+        $textsms =  request()->get('text_sms');
+
+        $phonecalls = $phonecalls == false || $phonecalls == null ? "0" : "1";
+        $textsms = $textsms == false || $textsms == null ? ",0" : ",1";
+        $prefs = $phonecalls.$textsms;
+
+        if(request()->get('phone') == "" || request()->get('phone') == null){
+            $prefs = "0,0";
+        }
+
+        $draft = Drafts::find(request()->get('id'));
+        if($draft == null){
+            return json_encode(['status' => 'failed', 'reason' => 'Post not found']);
+        }
+        if($draft->user_id != $loggedUserId){
+            return json_encode(['status' => 'failed', 'reason' => 'Not allowed to edit this draft']);
+        }
+        $draft->title = request()->get('title');
+        $draft->description = request()->get('description');
+        $draft->price = request()->get('price');
+        $draft->location = $country == null ? null : $country->full_country;
+        $draft->country_id = $country == null ? null : $country->id;
+        $draft->type = $type;
+        $draft->category_id = $category == null ? null : $category->number;
+        $draft->subcategory_id = $subcategory == null ? null : $subcategory->number;
+        $draft->state = $country == null ? null : $country->name;
+        $draft->phone = request()->get('phone') == null ? $draft->phone : request()->get('phone');
+        $draft->contact_preferences = $prefs;
+
+        //save draft
+        $draft->save();
+
+        return json_encode(['status' => 'success']);
     }
 }

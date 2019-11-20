@@ -94,4 +94,8 @@ class User extends Authenticatable implements MustVerifyEmail,JWTSubject
     public function subscription(){
         return $this->hasOne('App\Invoice', 'user_id', 'id');
     }
+
+    public function drafts(){
+        return $this->hasMany('App\Drafts');
+    }
 }

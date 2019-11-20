@@ -18,6 +18,7 @@ use Carbon\Carbon;
 use App\Favorite;
 use App\SupportingDocuments;
 use Illuminate\Support\Str;
+use App\Drafts;
 
 class UserController extends Controller
 {
@@ -357,13 +358,16 @@ class UserController extends Controller
         
         $user = User::find($userId);
         $products = $user->products;
+        $drafts = $user->drafts;
         $response = ['status' => 'success', 'products' => 
             [
                 "active" => [],
                 "expired" => [],
-                "favorite" => []
+                "favorite" => [],
+                "drafts" => []
             ]
         ];
+
         if ($products->count() > 0) {
             foreach ($products as $product) {
                 if($product->is_deleted == "0"){
@@ -380,6 +384,19 @@ class UserController extends Controller
                     $today = Carbon::createFromFormat('Y-m-d h:i:s', date('Y-m-d h:i:s'));
                     $days = $today->diff($created)->days;
                     $days > 90 ? $response['products']['expired'][] = $product : $response['products']['active'][] = $product;
+                }
+            }
+        }
+
+        if ($drafts->count() > 0) {
+            foreach ($drafts as $product) {
+                if($product->is_deleted == "0"){
+                    $product->id = (int)$product->id;
+                    $product->user_id = (int)$product->user_id;
+                    $product->price = (int)$product->price;
+                    $product->country_id = (int)$product->country_id;
+                    $product->category_id = (int)$product->category_id;
+                    $response['drafts'][] = $product;
                 }
             }
         }
