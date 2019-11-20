@@ -432,14 +432,14 @@
   display: block;
 }
 
-.opened .modal-dialog {
+.opened .modal-dialog-email {
   -webkit-transform: translate(0, 0);
   -ms-transform: translate(0, 0);
   transform: translate(0, 0);
   top: 20%;
 }
 
-.modal-dialog {
+.modal-dialog-email {
   background: #fefefe;
   border: #333333 solid 0px;
   border-radius: 5px;
@@ -460,7 +460,7 @@
   transition: transform 0.3s ease-out;
 }
 
-.modal-body {
+.modal-body-email {
   padding: 20px;
   input {
     width: 100%;
@@ -479,12 +479,12 @@
   }
 }
 
-.modal-header,
-.modal-footer {
+.modal-header-email,
+.modal-footer-email {
   padding: 15px 20px;
 }
 
-.modal-footer {
+.modal-footer-email {
   button {
     color: white;
     font-size: 15px;
@@ -501,11 +501,11 @@
   }
 }
 
-.modal-header {
+.modal-header-email {
   border-bottom: #eeeeee solid 1px;
 }
 
-.modal-header h2 {
+.modal-header-email h2 {
   font-size: 20px;
 }
 

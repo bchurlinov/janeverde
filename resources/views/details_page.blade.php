@@ -292,19 +292,19 @@ $fhf = ProductsController::checkfhf();
                     <!-- Email to Friend Modal -->
 
                     <div class="modale" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-header">
+                        <div class="modal-dialog-email">
+                            <div class="modal-header-email">
                                 <h2>Send to Friend</h2>
                                 <a href="#" class="btn-close closemodale" aria-hidden="true">&times;</a>
                             </div>
-                            <div class="modal-body">
+                            <div class="modal-body-email">
                                 <form onsubmit="submitEmailFriend(event, this)" id="form">
                                     <label>Your name</label>
                                     <input type="text" name="name" required />
                                     <label>Friend's e-mail address</label>
                                     <input type="email" name="friends_name" required />
                                     <input type="hidden" name="product_url" value="{{$product->id}}" />
-                                    <div class="modal-footer">
+                                    <div class="modal-footer-email">
                                         <button class="btn-link" type="submit" id="btn_ingresar">Send<div
                                                 class="loader email-friend-loader" title="2">
                                                 <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
