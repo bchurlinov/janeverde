@@ -300,13 +300,27 @@ $fhf = ProductsController::checkfhf();
                             <div class="modal-body">
                                 <form onsubmit="submitEmailFriend(event, this)" id="form">
                                     <label>Your name</label>
-                                    <input type="text" name="name" />
+                                    <input type="text" name="name" required />
                                     <label>Friend's e-mail address</label>
-                                    <input type="email" name="friends_name" />
-                                    <input type="hidden" name="product_url" value="{{$product->id}}"/>
+                                    <input type="email" name="friends_name" required />
+                                    <input type="hidden" name="product_url" value="{{$product->id}}" />
                                     <div class="modal-footer">
-                                        <button class="btn-link" type="submit" id="btn_ingresar">Send</button>
-                                        <div id="status"></div>
+                                        <button class="btn-link" type="submit" id="btn_ingresar">Send<div
+                                                class="loader email-friend-loader" title="2">
+                                                <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg"
+                                                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                                                    width="40px" height="40px" viewBox="0 0 50 50"
+                                                    style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                                                    <path fill="#000"
+                                                        d="M43.935,25.145c0-10.318-8.364-18.683-18.683-18.683c-10.318,0-18.683,8.365-18.683,18.683h4.068c0-8.071,6.543-14.615,14.615-14.615c8.072,0,14.615,6.543,14.615,14.615H43.935z">
+                                                        <animateTransform attributeType="xml" attributeName="transform"
+                                                            type="rotate" from="0 25 25" to="360 25 25" dur="0.6s"
+                                                            repeatCount="indefinite" />
+                                                    </path>
+                                                </svg>
+                                            </div></button>
+                                        <div id="status" style="color: #00cc00"></div>
+                                        <div id="error-status" style="color: indianred"></div>
                                     </div>
                                 </form>
                             </div>

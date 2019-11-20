@@ -390,6 +390,28 @@ a:hover {
 
 /* End Popover */
 
+/* Loader */
+
+.loader {
+  display: inline-block;
+  position: relative;
+  left: 7px;
+  top: 2px;
+  display: none;
+}
+
+.loader svg {
+  width: 18px;
+  height: 18px;
+}
+
+.loader svg path,
+.loader svg rect {
+  fill: white;
+}
+
+/* End Loader */
+
 .selectric-wrapper {
   position: relative;
   cursor: pointer;
@@ -2487,9 +2509,7 @@ a:hover {
 }
 
 .modal-footer button:hover {
-  color: #1c6d5a;
-  border: 1px solid #1c6d5a;
-  background: white;
+  background: #21816b;
 }
 
 .modal-header {

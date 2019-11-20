@@ -496,9 +496,7 @@
     @include border-radius(3px);
     @include transition-1;
     &:hover {
-      color: $main-green-color;
-      border: 1px solid $main-green-color;
-      background: white;
+     background: lighten($main-green-color, 5%);
     }
   }
 }
