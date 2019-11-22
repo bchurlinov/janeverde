@@ -1,6 +1,11 @@
 var states_selectric = "";
 $(document).ready(function () {
 
+    var checkCookiePolicy = Cookies.get("_cookiePolicy");
+    if(checkCookiePolicy === undefined) {
+        $("#accept-cookies").show();
+    }
+
     // Looping through USA states to generate Selectric Options
     _.forOwn(states, function (state, index) {
         states_selectric += `<option class="${state.class}" value="${state.value}">${state.name}</option>`
@@ -152,6 +157,11 @@ $(document).ready(function () {
 
     processSelectricLabel();
 });
+
+function acceptCookies(t){
+    Cookies.set("_cookiePolicy", "cookie-policy-accepted");
+    $(t).parent().fadeOut(500);
+}
 
 function processSelectricLabel() {
     var label = $(".selectric .label").text();

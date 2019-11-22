@@ -85,85 +85,246 @@ $country = json_decode(session()->get('country'), true);
                         <div class="products-listing-wrap">
                             @if($products == null || count($products) == 0)
                             @if($hideFields)
-                            {!! "<div class='desktop-user-cannabis-error' style='margin-top: 40px;'>
+                            {!! "<div class='desktop-user-cannabis-error' style='margin-top: -65px'>
                                 <h3><span>!</span>Please <a href='http://account.janeverde.com'>log in</a> to view
                                     Cannabis products</h3>
-                            </div>"; !!}
-                            @else
-                            {{"No posts"}}
-                            @endif
-                            @else
-                            @foreach($products as $product)
-                            <div class="product-template-wrap">
-                                <div class="product-template">
-                                    <div class="product-template__image">
-                                        <div class="slider">
-                                            @php
-                                            $allImgs = 0;
-                                            for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
-                                                $allImgs += 1;
-                                                echo '<figure>
-                                                    <a href="/view/'.$product->id.'">
-                                                        ';
-                                                        echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane
-                                                            Verde Image" data-width="100%" data-minheight="100%">';
-                                                        echo '</a>
-                                                </figure>';
-                                                }
-                                                }
-                                                if($allImgs == 0){
-                                                echo '<figure>
-                                                    <a href="/view/'.$product->id.'">
-                                                        ';
-                                                        echo '<img
-                                                            src="'.asset("/images/image_placeholder.jpg").'"alt="Jane
-                                                            Verde Image">';
-                                                        echo '</a>
-                                                </figure>';
-                                                }
-                                                @endphp
+                                <div class='forbidden-access-cannabis'>
 
+                                    <div class='home-categories'>
+
+                                        <div class='home-categories__item'>
+                                            <div class='category-item' data-category='sale'>
+                                                <h5><a href='javascript:;'>For Sale</a></h5>
+                                                <ul>
+                                                    <li><a href='javascript:;'>Biomass</a></li>
+                                                    <li><a href='javascript:;'>Concentrates</a></li>
+                                                    <li><a href='javascript:;'>Retail Products</a></li>
+                                                    <li><a href='javascript:;'>Grow Equipment/Supplies</a></li>
+                                                    <li><a href='javascript:;'>Lab Equipment Supplies</a></li>
+                                                    <li><a href='javascript:;'>Promotional</a></li>
+                                                    <li><a href='javascript:;'>In Search of</a></li>
+                                                </ul>
+                                            </div>
                                         </div>
-                                        <div class="price-box">
-                                            <span>${{$product->price}}</span>
+
+                                        <div class='home-categories__item'>
+                                            <div class='category-item' data-category='misc'>
+                                                <h5><a href='javascript:;'>Misc</a></h5>
+                                                <ul>
+                                                    <li><a href='javascript:;'>Events / Promotional</a></li>
+                                                    <li><a href='javascript:;'>Groups / Activities</a></li>
+                                                    <li><a href='javascript:;'>Groups / Clubs / Memberships</a></li>
+                                                    <li><a href='javascript:;'>General</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class='home-categories__item'>
+                                            <div class='category-item' data-category='vendor-listings'>
+                                                <h5><a href='javascript:;'>Vendor Listings</a></h5>
+                                                <ul>'
+                                                    <li><a href='javascript:;'>Other</a></li>
+                                                    <li><a href='javascript:;'>Point of Sale</a></li>
+                                                    <li><a href='javascript:;'>Equipment Rental</a></li>
+                                                    <li><a href='javascript:;'>Logistics / Trucking</a></li>
+                                                    <li><a href='javascript:;'>Labor</a></li>
+                                                    <li><a href='javascript:;'>Attorney</a></li>
+                                                    <li><a href='javascript:;'>Marketing / Advertising</a></li>
+                                                    <li><a href='javascript:;'>Telecom</a></li>
+                                                    <li><a href='javascript:;'>Equipment Manufacturers</a></li>
+                                                    <li><a href='javascript:;'>Consulting</a></li>
+                                                </ul>
+                                                <ul>
+                                                    <li><a href='javascript:;'>Sales Brokers</a></li>
+                                                    <li><a href='javascript:;'>Web / Design</a></li>
+                                                    <li><a href='javascript:;'>Insurance</a></li>
+                                                    <li><a href='javascript:;'>Banking</a></li>
+                                                    <li><a href='javascript:;'>Lab Testing</a></li>
+                                                    <li><a href='javascript:;'>Ag Processing Facilities</a></li>
+                                                    <li><a href='javascript:;'>Concentrate Facilities</a></li>
+                                                    <li><a href='javascript:;'>Processing</a></li>
+                                                    <li><a href='javascript:;'>Farms</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class='home-categories__item'>
+                                            <div class='category-item' data-category='forums'>
+                                                <h5>Discussions / Forums</h5>
+                                                <ul>
+                                                    <li><a href='javascript:;'>Outdoor Grow</a></li>
+                                                    <li><a href='javascript:;'>Indoor Grow</a></li>
+                                                    <li><a href='javascript:;'>Extraction</a></li>
+                                                    <li><a href='javascript:;'>Lab / Testing</a></li>
+                                                </ul>
+                                                <ul>
+                                                    <li><a href='javascript:;'>Production / Distribution</a>
+                                                    </li>
+                                                    <li><a href='javascript:;'>General</a></li>
+                                                </ul>
+                                            </div>
+                                            <div class='clearfix'></div>
+                                        </div>
+
+                                        <div class='home-categories__item'>
+                                            <div class='category-item' data-category='jobs'>
+                                                <h5><a href='javascript:;'>Jobs</a></h5>
+                                                <ul>
+                                                    <li><a href='javascript:;'>All</a></li>
+                                                    <li><a href='javascript:;'>Agriculture</a></li>
+                                                    <li><a href='javascript:;'>Processing</a></li>
+                                                    <li><a href='javascript:;'>Sales / Marketing</a></li>
+                                                    <li><a href='javascript:;'>Admin / Executive</a></li>
+                                                    <li><a href='javascript:;'>Other/General</a></li>
+                                                    <li><a href='javascript:;'>Distribution</a></li>
+                                                    <li><a href='javascript:;'>Laboratory</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+
+                                        <div class='home-categories__item'>
+                                            <div class='category-item' data-category='real-estate'>
+                                                <h5><a href='javascript:;'>Business / Real Estate</a></h5>
+                                                <ul>
+                                                    <li><a href='javascript:;'>Commercial for Sale</a></li>
+                                                    <li><a href='javascript:;'>Commercial for Rent</a></li>
+                                                    <li><a href='javascript:;'>Land for Sale</a></li>javascript:;
+                                                    <li><a href='javascript:;'>Business for Sale</a></li>
+                                                    <li><a href='javascript:;'>Investment Opportunities</a></li>
+                                                </ul>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    <div class="product-template__info">
-                                        <div>
-                                            <div>
+                                </div>"; !!}
+                                @else
+                                {{"No posts"}}
+                                @endif
+                                @else
+                                @foreach($products as $product)
+                                <div class="product-template-wrap">
+                                    <div class="product-template">
+                                        <div class="product-template__image">
+                                            <div class="slider">
                                                 @php
                                                 $allImgs = 0;
-                                                $index = 0;
                                                 for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !== null){
                                                     $allImgs += 1;
-                                                    echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane
-                                                        Verde Image" class="list-view-image">';
-                                                    break;
+                                                    echo '<figure>
+                                                        <a href="/view/'.$product->id.'">
+                                                            ';
+                                                            echo '<img
+                                                                src="'.asset("/products/".$product->$img).'"alt="Jane
+                                                                Verde Image" data-width="100%" data-minheight="100%">';
+                                                            echo '</a>
+                                                    </figure>';
                                                     }
                                                     }
                                                     if($allImgs == 0){
-                                                    echo '<img src="'.asset("/images/image_placeholder.jpg").'"alt="Jane
-                                                        Verde Image" class="list-view-image">';
+                                                    echo '<figure>
+                                                        <a href="/view/'.$product->id.'">
+                                                            ';
+                                                            echo '<img
+                                                                src="'.asset("/images/image_placeholder.jpg").'"alt="Jane
+                                                                Verde Image">';
+                                                            echo '</a>
+                                                    </figure>';
                                                     }
                                                     @endphp
 
-                                                    <div class="clearfix"></div>
-                                                    <span class="qs">
+                                            </div>
+                                            <div class="price-box">
+                                                <span>${{$product->price}}</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="product-template__info">
+                                            <div>
+                                                <div>
+                                                    @php
+                                                    $allImgs = 0;
+                                                    $index = 0;
+                                                    for($i = 1; $i < 11; $i++){ $img="img$i" ; if($product->$img !==
+                                                        null){
+                                                        $allImgs += 1;
+                                                        echo '<img src="'.asset("/products/".$product->$img).'"alt="Jane
+                                                            Verde Image" class="list-view-image">';
+                                                        break;
+                                                        }
+                                                        }
+                                                        if($allImgs == 0){
+                                                        echo '<img
+                                                            src="'.asset("/images/image_placeholder.jpg").'"alt="Jane
+                                                            Verde Image" class="list-view-image">';
+                                                        }
+                                                        @endphp
+
+                                                        <div class="clearfix"></div>
+                                                        <span class="qs">
+                                                            @php
+                                                            $verif = $product->userAlter != null &&
+                                                            $product->userAlter->verified == 1 ? true : false;
+                                                            @endphp
+                                                            <img src={!! !$verif ? asset('images/shield_gray.jpg') :
+                                                                asset('images/shield_green.svg') !!}
+                                                                alt="Jane Verde - SVG Icon"
+                                                                style="height: 30px!important" />
+
+                                                            <div class="popover above popover-content">
+                                                                <h4>
+                                                                    <img src={!! !$verif ?
+                                                                        asset('images/shield_gray.jpg') :
+                                                                        asset('images/shield_green.svg') !!}
+                                                                        alt="Jane Verde - SVG Icon" />
+                                                                    @if($verif)
+                                                                    Verified Business
+                                                                    @else
+                                                                    Not Verified
+                                                                    @endif
+                                                                </h4>
+                                                                @if($verif)
+                                                                <ul>
+                                                                    <li><i class="fas fa-check"></i>Location:
+                                                                        {{$product->location}}</li>
+                                                                    <li><i class="fas fa-check"></i>License number: {!!
+                                                                        $product->userAlter->licensenumber !!}</li>
+                                                                </ul>
+                                                                @else
+                                                                <ul>
+                                                                    <li></li>
+                                                                </ul>
+                                                                @endif
+                                                            </div>
+                                                        </span>
+                                                </div>
+                                            </div>
+                                            <div>
+                                                <h4>
+                                                    <span>@php
+                                                        echo date('M d', strtotime($product->created_at));
+                                                        @endphp</span>
+                                                    <a href="/view/{{$product->id}}">
                                                         @php
+                                                        echo strlen($product->title) > 45 ? substr($product->title, 0,
+                                                        50) .
+                                                        "..." : $product->title;
                                                         $verif = $product->userAlter != null &&
                                                         $product->userAlter->verified == 1 ? true : false;
                                                         @endphp
+                                                    </a>
+                                                    <span class="product-location"
+                                                        style="display: inline">({{$product->location}})</span>
+
+                                                    <span class="qs qs-list-view">
                                                         <img src={!! !$verif ? asset('images/shield_gray.jpg') :
                                                             asset('images/shield_green.svg') !!}
-                                                            alt="Jane Verde - SVG Icon"
-                                                            style="height: 30px!important" />
-
+                                                            alt="Jane Verde - SVG Icon" />
                                                         <div class="popover above popover-content">
                                                             <h4>
-                                                                <img src={!! !$verif ? asset('images/shield_gray.jpg') :
-                                                                    asset('images/shield_green.svg') !!}
-                                                                    alt="Jane Verde - SVG Icon" />
+                                                                <img src={!! $product->verified === 0 ?
+                                                                asset('images/shield_gray.jpg') :
+                                                                asset('images/shield_green.svg') !!}
+                                                                alt="Jane Verde - SVG Icon" />
                                                                 @if($verif)
                                                                 Verified Business
                                                                 @else
@@ -184,76 +345,28 @@ $country = json_decode(session()->get('country'), true);
                                                             @endif
                                                         </div>
                                                     </span>
+
+                                                </h4>
                                             </div>
-                                        </div>
-                                        <div>
-                                            <h4>
-                                                <span>@php
-                                                    echo date('M d', strtotime($product->created_at));
-                                                    @endphp</span>
+                                            <div class="details-page-link">
                                                 <a href="/view/{{$product->id}}">
-                                                    @php
-                                                    echo strlen($product->title) > 45 ? substr($product->title, 0, 50) .
-                                                    "..." : $product->title;
-                                                    $verif = $product->userAlter != null &&
-                                                    $product->userAlter->verified == 1 ? true : false;
-                                                    @endphp
+                                                    <i class="fas fa-chevron-right"></i>
                                                 </a>
-                                                <span class="product-location"
-                                                    style="display: inline">({{$product->location}})</span>
-
-                                                <span class="qs qs-list-view">
-                                                    <img src={!! !$verif ? asset('images/shield_gray.jpg') :
-                                                        asset('images/shield_green.svg') !!}
-                                                        alt="Jane Verde - SVG Icon" />
-                                                    <div class="popover above popover-content">
-                                                        <h4>
-                                                            <img src={!! $product->verified === 0 ?
-                                                            asset('images/shield_gray.jpg') :
-                                                            asset('images/shield_green.svg') !!}
-                                                            alt="Jane Verde - SVG Icon" />
-                                                            @if($verif)
-                                                            Verified Business
-                                                            @else
-                                                            Not Verified
-                                                            @endif
-                                                        </h4>
-                                                        @if($verif)
-                                                        <ul>
-                                                            <li><i class="fas fa-check"></i>Location:
-                                                                {{$product->location}}</li>
-                                                            <li><i class="fas fa-check"></i>License number: {!!
-                                                                $product->userAlter->licensenumber !!}</li>
-                                                        </ul>
-                                                        @else
-                                                        <ul>
-                                                            <li></li>
-                                                        </ul>
-                                                        @endif
-                                                    </div>
-                                                </span>
-
-                                            </h4>
-                                        </div>
-                                        <div class="details-page-link">
-                                            <a href="/view/{{$product->id}}">
-                                                <i class="fas fa-chevron-right"></i>
-                                            </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
+                                @endif
                             </div>
-                            @endforeach
-                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        @include("partials.footer")
+            @include("partials.footer")
+        </div>
     </div>
-</div>
 </div>
 
 @section('js_links')
@@ -261,6 +374,7 @@ $country = json_decode(session()->get('country'), true);
 <script type="text/javascript" src={{asset('js/libraries/selectric.js')}}></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
 <script type="text/javascript" src={{asset('js/search.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
 <!-- Global site tag (gtag.js) - Google Analytics -->

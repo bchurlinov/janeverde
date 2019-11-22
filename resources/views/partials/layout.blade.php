@@ -41,12 +41,17 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="shortcut icon" type="image/png" href="{{asset('images/favicon.ico')}}">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans&display=swap" rel="stylesheet">
-    <link  href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/fotorama/4.6.4/fotorama.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
     <link rel="stylesheet" type="text/css" href={{asset('css/app.css')}}>
 </head>
 
 <body>
+    <div id="accept-cookies">
+        <p>This website uses cookies to ensure you get the best experience.</p>
+        <a href="{{asset('/terms-of-use')}}">Learn More</a><br/>
+        <button onclick="acceptCookies(this)">Accept Cookies</button>
+    </div>
     {{-- @include("partials.navigation") --}}
     @yield('content')
 
@@ -60,7 +65,6 @@
 
 
     @yield('js_links')
-
 </body>
 
 </html>

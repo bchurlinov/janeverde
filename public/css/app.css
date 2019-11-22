@@ -102,7 +102,7 @@ a:hover {
 
 @media (min-width: 1300px) {
   .container {
-    width: 1300px;
+    width: 1350px;
   }
 }
 
@@ -2797,6 +2797,54 @@ a:hover {
   font-weight: bold !important;
 }
 
+#accept-cookies {
+  display: none;
+  width: 300px;
+  padding: 20px;
+  height: auto;
+  background: #1c6d5a;
+  border: 1px solid #1c6d5a;
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  z-index: 10000000000000003000000000;
+  border-radius: 3px;
+}
+
+#accept-cookies p {
+  font-size: 12px;
+  color: white;
+}
+
+#accept-cookies a {
+  display: inline-block;
+  color: white;
+  text-decoration: underline;
+  font-size: 12px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#accept-cookies button {
+  background: white;
+  border: none;
+  border-radius: 3px;
+  padding: 5px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+}
+
+@media (max-width: 767px) {
+  #accept-cookies {
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
+    padding: 10px;
+  }
+}
+
 .fotorama img {
   -o-object-fit: cover !important;
      object-fit: cover !important;
@@ -2826,14 +2874,33 @@ a:hover {
   color: #26967c;
 }
 
+.forbidden-access-cannabis {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  -webkit-filter: blur(4px);
+  -moz-filter: blur(4px);
+  -ms-filter: blur(4px);
+  -o-filter: blur(4px);
+  filter: blur(8px);
+}
+
 .desktop-user-cannabis-error {
-  padding: 20px 30px;
-  text-align: center;
-  border: 2px solid #9c9a99;
+  position: relative;
+}
+
+.desktop-user-cannabis-error h3 {
+  position: absolute;
+  z-index: 99999;
+  left: 50%;
+  margin-left: -325px;
+  top: 300px;
+  border: 2px solid gray;
+  width: 650px;
   border-radius: 4px;
   box-shadow: 10px 10px 8px -8px #cccccc;
-  max-width: 500px;
-  margin: 100px auto;
+  padding: 20px 30px;
+  text-align: center;
 }
 
 .desktop-user-cannabis-error span {
@@ -2916,8 +2983,8 @@ a:hover {
 }
 
 .wrapper {
-  margin-top: 15px;
-  margin-bottom: 15px;
+  margin-top: 35px;
+  margin-bottom: 35px;
 }
 
 @media (max-width: 767px) {
@@ -3082,7 +3149,10 @@ a:hover {
   color: white !important;
   opacity: 1 !important;
   border: none !important;
-  transform: scale(1.08);
+  border-bottom: 2px solid white !important;
+  border-top: 2px solid white !important;
+  box-shadow: -1px 10px 5px -6px #8f8f8f;
+  transform: scale(1.07);
   z-index: 99;
 }
 
@@ -3327,7 +3397,7 @@ a:hover {
 
 [data-category=vendor-listings] ul li {
   display: inline-block;
-  width: 90%;
+  width: 95%;
 }
 
 [data-category=vendor-listings] ul li a {
@@ -3366,13 +3436,13 @@ a:hover {
 }
 
 [data-category=jobs] ul {
-  max-width: 50%;
+  max-width: 100%;
   float: left;
 }
 
 [data-category=jobs] ul li {
   display: inline-block;
-  width: 90%;
+  width: 100%;
 }
 
 [data-category=jobs] ul li a {
@@ -3576,14 +3646,16 @@ footer div:last-of-type ul li a:after {
 @media (max-width: 767px) {
   .home-wrap-mobile__togles .toggle-countries {
     flex: 0 0 100%;
-    padding-left: 0;
-    padding-right: 0;
+    padding-left: 5px;
+    padding-right: 5px;
   }
 }
 
 @media (max-width: 400px) {
   .home-wrap-mobile__togles .toggle-countries {
     flex: 0 0 100%;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 
@@ -3645,7 +3717,6 @@ footer div:last-of-type ul li a:after {
   flex: 0 0 50%;
   position: relative;
   text-align: center;
-  flex: none;
   margin-top: 10px;
 }
 
@@ -3664,6 +3735,12 @@ footer div:last-of-type ul li a:after {
     width: 100%;
     padding-left: 0 !important;
     text-indent: 20px;
+  }
+}
+
+@media (min-width: 767px) and (max-width: 992px) {
+  .search-mobile {
+    flex: none;
   }
 }
 

@@ -117,6 +117,7 @@
 <script type="text/javascript" src={{asset('js/libraries/jquery.js')}}></script>
 <script type="text/javascript" src={{asset('js/libraries/selectric.js')}}></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.15/lodash.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/js-cookie@2.2.1/src/js.cookie.min.js"></script>
 <script type="text/javascript" src={{asset('js/auth.js')}}></script>
 <script type="text/javascript" src={{asset('js/main.js')}}></script>
 <script>

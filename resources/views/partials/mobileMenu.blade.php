@@ -41,8 +41,8 @@ $showVerifyLink = true;
                     <h1><a href="/">jane <span>Verde</span></a></h1>
                 </div>
                 <div>
-                    <a href="/auth" class="button-link">Create Listing</a>
-                    <a href="/auth" class="button-link">My Account</a>
+                    <a href="{{config('variables.reacturl')}}/post" class="button-link">Create Listing</a>
+                    <a href="{{config('variables.reacturl')}}" class="button-link">My Account</a>
                 </div>
             </div>
 
