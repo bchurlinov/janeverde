@@ -19,6 +19,7 @@ use App\Favorite;
 use App\SupportingDocuments;
 use Illuminate\Support\Str;
 use App\Drafts;
+use App\UserEmails;
 
 class UserController extends Controller
 {
@@ -325,12 +326,12 @@ class UserController extends Controller
             //$user->sendEmailVerificationNotification();
             //send email
 
-            $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
-                ->setUsername('janeverdetestonline@gmail.com')->setPassword('JaneVerde001');
+            $transport = (new \Swift_SmtpTransport('a2plcpnl0781.prod.iad2.secureserver.net', 25))
+                ->setUsername('contact@janeverde.com')->setPassword('cxewke3)eT-;');
             $mailer = new \Swift_Mailer($transport);
             $body  = "Click <a href='".config('variables.phpurl')."/verifyemail?e=".$email."'>here</a> ";
             $body .= "to verify your email address.";
-            $message = (new \Swift_Message("Email verification"))->setFrom(['john@doe.com' => 'JaneVerde email verification'])
+            $message = (new \Swift_Message("Email verification"))->setFrom(['contact@janeverde.com' => 'JaneVerde email verification'])
                 ->setTo([$email])->setBody($body);
             $message->setContentType("text/html");
             $mailer->send($message);
@@ -358,13 +359,13 @@ class UserController extends Controller
         
         $user = User::find($userId);
         $products = $user->products;
-        $drafts = $user->drafts;
+        //$drafts = $user->drafts;
         $response = ['status' => 'success', 'products' => 
             [
                 "active" => [],
                 "expired" => [],
-                "favorite" => [],
-                "drafts" => []
+                "favorite" => []/*,
+                "drafts" => []*/
             ]
         ];
 
@@ -388,7 +389,7 @@ class UserController extends Controller
             }
         }
 
-        if ($drafts->count() > 0) {
+        /*if ($drafts->count() > 0) {
             foreach ($drafts as $product) {
                 if($product->is_deleted == "0"){
                     $product->id = (int)$product->id;
@@ -399,7 +400,7 @@ class UserController extends Controller
                     $response['drafts'][] = $product;
                 }
             }
-        }
+        }*/
 
         //get favorites, and add them to the favorite array
         $fav = Favorite::where('user_id', '=', (int)$userId)->get();
@@ -799,8 +800,8 @@ class UserController extends Controller
             $user->password = bcrypt($newpass);
             $user->save();
 
-            $transport = (new \Swift_SmtpTransport('relay-hosting.secureserver.net', 25))
-                ->setUsername('contact@janeverde.com')->setPassword('ocbAA7O}O{o3');
+            $transport = (new \Swift_SmtpTransport('a2plcpnl0781.prod.iad2.secureserver.net', 25))
+                ->setUsername('contact@janeverde.com')->setPassword('cxewke3)eT-;');
             $mailer = new \Swift_Mailer($transport);
 
             $body  = "Your new password is: ".$newpass;
@@ -818,16 +819,20 @@ class UserController extends Controller
     public function sendemailfriend(Request $request){
         parse_str($request->get('fdata'), $output);
 
-        $transport = (new \Swift_SmtpTransport('smtp.gmail.com', 587, 'tls'))
-                ->setUsername('janeverdetestonline@gmail.com')->setPassword('JaneVerde001');
+        $transport = (new \Swift_SmtpTransport('a2plcpnl0781.prod.iad2.secureserver.net', 25))
+            ->setUsername('contact@janeverde.com')->setPassword('cxewke3)eT-;');
         $mailer = new \Swift_Mailer($transport);
         $body  = "Hey, your friend ".$output['name']." sent you this <a href='".config('variables.phpurl')."/view/".$output['product_url']."'>post</a> ";
         $body .= " from ".config('variables.phpurl').". Check it out!";
-        $message = (new \Swift_Message("Check this post!"))->setFrom(['john@doe.com' => 'JaneVERDE'])
+        $message = (new \Swift_Message("Check this post!"))->setFrom(['contact@janeverde.com' => 'JaneVERDE'])
             ->setTo([$output['friends_name']])->setBody($body);
         $message->setContentType("text/html");
         $mailer->send($message);
 
         echo "1";
+    }
+    
+    public function mmm(){
+        $a = new xmlapi("127.0.0.1");
     }
 }

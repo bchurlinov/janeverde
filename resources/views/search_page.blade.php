@@ -87,7 +87,7 @@ $country = json_decode(session()->get('country'), true);
                             @if($hideFields)
                             {!! "<div class='desktop-user-cannabis-error' style='margin-top: -65px'>
                                 <h3><span>!</span>Please <a href='http://account.janeverde.com'>log in</a> to view
-                                    Cannabis products</h3>
+                                    Cannabis posts</h3>
                                 <div class='forbidden-access-cannabis'>
 
                                     <div class='home-categories'>
@@ -262,8 +262,7 @@ $country = json_decode(session()->get('country'), true);
                                                         <div class="clearfix"></div>
                                                         <span class="qs">
                                                             @php
-                                                            $verif = $product->userAlter != null &&
-                                                            $product->userAlter->verified == 1 ? true : false;
+                                                            $verif = $product->verified == 1 ? true : false;
                                                             @endphp
                                                             <img src={!! !$verif ? asset('images/shield_gray.jpg') :
                                                                 asset('images/shield_green.svg') !!}
@@ -308,8 +307,7 @@ $country = json_decode(session()->get('country'), true);
                                                         echo strlen($product->title) > 45 ? substr($product->title, 0,
                                                         50) .
                                                         "..." : $product->title;
-                                                        $verif = $product->userAlter != null &&
-                                                        $product->userAlter->verified == 1 ? true : false;
+                                                        $verif = $product->verified == 1 ? true : false;
                                                         @endphp
                                                     </a>
                                                     <span class="product-location"

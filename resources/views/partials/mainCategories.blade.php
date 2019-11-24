@@ -5,7 +5,7 @@ json_decode(session()->get('country'), true);
 $isloggedin = empty($_COOKIE['_main']) && !auth()->user() && $type == "cannabis" ? false : true;
 if(!$isloggedin){
 $div = "<div class='desktop-user-cannabis-error'>
-    <h3><span>!</span>Please <a href='http://account.janeverde.com'>log in</a> to view Cannabis products</h3>
+    <h3><span>!</span>Please <a href='http://account.janeverde.com'>log in</a> to view Cannabis posts</h3>
     <div class='forbidden-access-cannabis'>
         
         <div class='home-categories'>

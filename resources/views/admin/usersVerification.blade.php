@@ -78,7 +78,7 @@
                                     <td>
                                         <a href="#" class="img" data-toggle="modal" data-target="#myModal" >
                                             View uploaded picture ID
-                                            <img height="0" width="0" id="{{$user->user->id}}" src="{{asset($user->image)}}" />
+                                            <img height="0" width="0" id="{{$user->user->id}}" src="{{asset('/public/'.$user->image)}}" />
 
                                         </a>
                                     </td>

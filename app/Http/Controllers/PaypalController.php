@@ -63,6 +63,11 @@ class PaypalController extends Controller
         //dd($response);
     }
 
+    public static function cancelSubscription($subscriptionId){
+        $obj = new self;
+        $obj->provider->cancelRecurringPaymentsProfile($subscriptionId);
+    }
+
     private function getCart($recurring, $invoice_id)
     {
 

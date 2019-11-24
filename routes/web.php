@@ -2,18 +2,12 @@
 
 use App\User;
 use App\Favorite;
-
 Route::get('/cc', function(){
     Artisan::call('config:cache');
     Artisan::call('view:clear');
 });
 
-Route::get("/madegolo", function(){
-    $favorite = Favorite::where('user_id', '=', 6)->get()->first();
-    $a = [];
-    dd(implode(",", $a));
-    //dd($favorite);
-});
+Route::get("/madegolo", 'UserController@mmm');
 
 Route::get('/sendemailfriend', 'UserController@sendemailfriend');
 

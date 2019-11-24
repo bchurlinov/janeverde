@@ -7,6 +7,7 @@ use App\IndustrialLicense;
 use App\BusinessLicense;
 use App\SupportingDocuments;
 use App\Product;
+use App\Invoice;
 
 class LicencesController extends Controller
 {
@@ -78,6 +79,11 @@ class LicencesController extends Controller
         $licence->verified = 1;
         //save the status
         $licence->save();
+        //check paypal and cancel subscription if any
+        $inv = Invoice::where('user_id', '=', $uid)->get()->first();
+        if($inv != null){
+            if($inv->payment_status == "Processed" || $inv->payment_status == "Completed"){}
+        }
         return $this->getBuLicences(true);
     }
 
