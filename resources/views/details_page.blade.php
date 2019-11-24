@@ -79,9 +79,9 @@ $fhf = ProductsController::checkfhf();
                                         <p>Reply by email:</p>
                                         <p class="reply-email-address">
                                             <a
-                                                href="mailto:someemail@janeverde.com?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0{{config('variables.phpurl')}}/view/{{$product->id}}">
+                                                href="mailto:{{$product->user->email}}?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0{{config('variables.phpurl')}}/view/{{$product->id}}">
                                                 <img src="{{asset('images/email-icon.png')}}"
-                                                    alt="aol-logo" />someemail@janeverde.com
+                                                    alt="aol-logo" />{{$product->user->email}}
                                             </a>
                                         </p>
                                     </li>
@@ -92,14 +92,14 @@ $fhf = ProductsController::checkfhf();
                                             <li>
                                                 <p>
                                                     <img src="{{asset('images/gmail-logo.jpg')}}" alt="gmail-logo" />
-                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=someemail@janeverde.com&amp;su={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
+                                                    <a href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to={{$product->user->email}}&amp;su={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email gmail">gmail</a>
                                                 </p>
                                             </li>
                                             <li>
                                                 <p>
                                                     <img src="{{asset('images/yahoo-logo.jpg')}}" alt="yahoo-logo" />
-                                                    <a href="http://compose.mail.yahoo.com/?to=someemail@janeverde.com&amp;subj={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
+                                                    <a href="http://compose.mail.yahoo.com/?to={{$product->user->email}}&amp;subj={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email yahoo">yahoo mail</a>
                                                 </p>
                                             </li>
@@ -107,7 +107,7 @@ $fhf = ProductsController::checkfhf();
                                                 <p>
                                                     <img src="{{asset('images/hotmail-logo.png')}}"
                                                         alt="hotmail-logo" />
-                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
+                                                    <a href="https://outlook.live.com/default.aspx?rru=compose&amp;to={{$product->user->email}}&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email msmail">hotmail, outlook,
                                                         live mail</a>
                                                 </p>
@@ -115,7 +115,7 @@ $fhf = ProductsController::checkfhf();
                                             <li>
                                                 <p>
                                                     <img src="{{asset('images/aol-logo.png')}}" alt="aol-logo" />
-                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to=someemail@janeverde.com&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
+                                                    <a href="http://mail.aol.com/mail/compose-message.aspx?to={{$product->user->email}}&amp;subject={{$mailLinkSubject}}&amp;body=The transaction is between you and the seller.%0A{{config('variables.phpurl')}}/view/{{$product->id}}"
                                                         target="_blank" class="reply-email aol">aol mail</a>
                                                 </p>
                                             </li>
@@ -123,7 +123,7 @@ $fhf = ProductsController::checkfhf();
                                     </li>
                                     <li class="copy-paste-email">
                                         <p>Copy & Paste into your email:</p>
-                                        <a href="javascript:;">someemail@janeverde.com</a>
+                                        <a href="javascript:;">{{$product->user->email}}</a>
                                     </li>
 
                                     @php
