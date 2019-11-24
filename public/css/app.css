@@ -1017,6 +1017,18 @@ a:hover {
   padding-bottom: 15px !important;
 }
 
+@media (max-width: 767px) {
+  .product-template-wrap-listview .product-template__info h4 {
+    padding-left: 10px !important;
+    max-width: 550px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 8px !important;
+    margin-top: -5px !important;
+  }
+}
+
 .product-template-wrap-listview .product-template {
   box-shadow: none;
 }
@@ -1058,6 +1070,12 @@ a:hover {
 @media (max-width: 992px) {
   .product-template-wrap-listview .qs-list-view img {
     right: 20px;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-template-wrap-listview .qs-list-view {
+    display: none !important;
   }
 }
 
@@ -2878,11 +2896,11 @@ a:hover {
   width: 100%;
   height: 100%;
   background-size: cover;
-  -webkit-filter: blur(4px);
-  -moz-filter: blur(4px);
-  -ms-filter: blur(4px);
-  -o-filter: blur(4px);
-  filter: blur(8px);
+  -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -ms-filter: blur(3px);
+  -o-filter: blur(3px);
+  filter: blur(3px);
 }
 
 .desktop-user-cannabis-error {
@@ -2896,6 +2914,7 @@ a:hover {
   margin-left: -325px;
   top: 300px;
   border: 2px solid gray;
+  background: white;
   width: 650px;
   border-radius: 4px;
   box-shadow: 10px 10px 8px -8px #cccccc;
@@ -2995,7 +3014,6 @@ a:hover {
 
 .outer-wrap {
   border: 10px solid #e4e4e4;
-  outline: 2px solid #cdcdcd;
 }
 
 @media (min-width: 991px) {
