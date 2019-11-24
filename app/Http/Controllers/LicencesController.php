@@ -82,7 +82,11 @@ class LicencesController extends Controller
         //check paypal and cancel subscription if any
         $inv = Invoice::where('user_id', '=', $uid)->get()->first();
         if($inv != null){
-            if($inv->payment_status == "Processed" || $inv->payment_status == "Completed"){}
+            if($inv->payment_status == "Processed" || $inv->payment_status == "Completed"){
+                if($inv->recurring_id != null){
+                    app('App\Http\Controllers\PaypalController')::cancelSubscription($inv->recurring_id);
+                }
+            }
         }
         return $this->getBuLicences(true);
     }
