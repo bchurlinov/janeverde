@@ -81,7 +81,7 @@ $fhf = ProductsController::checkfhf();
                                             <a
                                                 href="mailto:{{$product->user->email}}?subject={{$product->title}}&amp;body=The transaction is between you and the seller.%0{{config('variables.phpurl')}}/view/{{$product->id}}">
                                                 <img src="{{asset('images/email-icon.png')}}"
-                                                    alt="aol-logo" />{{$product->user->email}}
+                                                    alt="aol-logo" />{{md5(uniqid(rand(), true))}}
                                             </a>
                                         </p>
                                     </li>
@@ -120,10 +120,6 @@ $fhf = ProductsController::checkfhf();
                                                 </p>
                                             </li>
                                         </ul>
-                                    </li>
-                                    <li class="copy-paste-email">
-                                        <p>Copy & Paste into your email:</p>
-                                        <a href="javascript:;">{{$product->user->email}}</a>
                                     </li>
 
                                     @php

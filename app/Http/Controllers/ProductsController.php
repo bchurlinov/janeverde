@@ -753,6 +753,7 @@ class ProductsController extends Controller
         $product->img8 = $img8;
         $product->img9 = $img9;
         $product->img10 = $img10;
+        $product->verified = $users->businessLicense != null && $users->businessLicense->verified == 1 ? 1 : 0;
         $product->phone = request()->get('phone');
         $product->contact_preferences = $prefs;
 
